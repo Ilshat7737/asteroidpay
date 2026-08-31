@@ -27,7 +27,7 @@ export function GlassModal({ open, onOpenChange, title, children }: GlassModalPr
                 transition={{ duration: 0.2 }}
               />
             </DialogPrimitive.Overlay>
-            <DialogPrimitive.Content asChild forceMount>
+            <DialogPrimitive.Content asChild forceMount aria-describedby={undefined}>
               <motion.div
                 className="fixed left-1/2 top-1/2 z-50 w-[92vw] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-[28px] border border-white/30 bg-white/20 p-6 shadow-2xl backdrop-blur-2xl"
                 style={{

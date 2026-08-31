@@ -28,7 +28,10 @@ export function ContactModal() {
     control,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<ContactInput>({ resolver: zodResolver(contactSchema) });
+  } = useForm<ContactInput>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { country: "", company: "", email: "", phone: "", comment: "" },
+  });
 
   const onSubmit = async (values: ContactInput) => {
     const res = await fetch("/api/contact", {
