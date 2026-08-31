@@ -18,7 +18,7 @@
 - Single route (`/`) plus `app/api/contact/route.ts` only. No `/login` route.
 - Login always fails after a fake delay with "Invalid email or password." — never implement or test a success path for login.
 - Do NOT introduce a test framework (no Vitest/Jest/Playwright-test runner). Verification per task is one or more of: `npm run build`, `npm run lint`, a manual `curl` against the running dev server, or a manual visual check via the `mcp__playwright__browser_navigate`, `mcp__playwright__browser_resize`, and `mcp__playwright__browser_take_screenshot` tools. These are one-off manual QA actions, not an automated suite.
-- **Do not create git commits during implementation** — the user has opted out of automated commits for this project. Leave changes uncommitted; the user will commit manually if/when they choose. Every task ends at its verification step, not at a commit.
+- Local git commits are allowed, one per completed task, on the isolated worktree branch only — never push, never commit directly to `main`. The user has explicitly opted out only of pushing/publishing anywhere; local history for review purposes is fine.
 - Tailwind v4 theme tokens (`--color-cream`, `--color-accent`, `--font-heading`, `--font-sans`) are defined once in Task 1 and referenced via generated utilities (`bg-cream`, `text-accent`, `font-heading`, etc.) everywhere else — never redefine them ad hoc in a component.
 - The 6 networks and 8 testimonials use the exact names/roles/companies/locations from the spec; task 3 is their single source of truth — later tasks only import from `lib/data/*`, never redeclare the copy.
 
