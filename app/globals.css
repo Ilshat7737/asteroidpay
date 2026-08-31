@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f5f1e8;
+  --color-accent: #ff5e7e;
+  --font-heading: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+}
+
+@layer base {
+  body {
+    @apply bg-cream font-sans text-black;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
