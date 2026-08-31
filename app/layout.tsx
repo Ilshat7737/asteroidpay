@@ -13,6 +13,31 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export const metadata: Metadata = {
+  metadataBase: new URL("https://hqclouds.com"),
+  title: {
+    default: "HQclouds — Fast, Low-Fee Crypto Payments",
+    template: "%s · HQclouds",
+  },
+  description:
+    "HQclouds is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+  openGraph: {
+    title: "HQclouds — Fast, Low-Fee Crypto Payments",
+    description:
+      "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HQclouds — Fast, Low-Fee Crypto Payments",
+    description:
+      "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
+  },
+  themeColor: "#0A0A0A",
+  robots: { index: true, follow: true },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
