@@ -1591,4 +1591,604 @@ Address every lint error/warning and build error directly in the affected file(s
 - [ ] **Step 3: Re-verify**
 
 Run: `npm run lint && npm run build`
-Expected: both complete with no errors. This is the last step of the plan — leave the working tree as-is (uncommitted), per the Global Constraints.
+Expected: both complete with no errors.
+
+---
+
+### Task 19: Terms of Use page
+
+**Files:**
+- Create: `app/terms/page.tsx`
+
+**Interfaces:**
+- Consumes: `Navbar` from `@/components/navbar`, `Footer` from `@/components/footer`.
+- Produces: the `/terms` route, linked to by Task 21's footer update.
+
+- [ ] **Step 1: Write the Terms of Use page**
+
+```tsx
+// app/terms/page.tsx
+import type { Metadata } from "next";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+
+export const metadata: Metadata = {
+  title: "Terms of Use",
+  description:
+    "The terms and conditions governing use of HQclouds' crypto payment gateway services.",
+};
+
+export default function TermsPage() {
+  return (
+    <>
+      <Navbar />
+      <main className="bg-cream pb-24 pt-32">
+        <article className="mx-auto max-w-3xl px-4">
+          <p className="text-sm font-medium text-accent">Legal</p>
+          <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
+            Terms of Use
+          </h1>
+          <p className="mt-4 text-sm text-black/50">Last updated: August 31, 2026</p>
+
+          <div className="mt-12 space-y-10 text-black/80">
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                1. Acceptance of Terms
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                By accessing or using the HQclouds website, dashboard, or payment infrastructure
+                (collectively, the &ldquo;Service&rdquo;), you agree to be bound by these Terms of
+                Use. If you are entering into these Terms on behalf of a company or other legal
+                entity, you represent that you have the authority to bind that entity, in which
+                case &ldquo;you&rdquo; refers to that entity. If you do not agree to these Terms,
+                you must not use the Service.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                2. Description of Service
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                HQclouds provides merchants with infrastructure to accept cryptocurrency payments
+                across multiple blockchain networks, including automatic conversion of received
+                funds into stablecoins or fiat currency at prevailing market rates. The Service is
+                made available to businesses onboarded through our sales process; it is not
+                currently offered as a self-service, instant-signup product.
+              </p>
+              <p className="mt-3 leading-relaxed">
+                HQclouds acts solely as a payment facilitator and technology gateway between you
+                and your customers. We are not a custodian: received funds are held only for the
+                brief period required to detect, convert, and settle each transaction through our
+                auto-convert process, and are not retained as a standing balance on your behalf.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">3. Eligibility</h2>
+              <p className="mt-3 leading-relaxed">
+                You must be at least 18 years old and have the legal capacity to enter into
+                binding contracts to use the Service. Businesses must be validly formed and in
+                good standing under the laws of their jurisdiction of incorporation. We may
+                decline to onboard, or may suspend, any applicant or merchant that does not meet
+                our eligibility or risk criteria.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                4. Account and User Obligations
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                You are responsible for maintaining the confidentiality of your account
+                credentials and for all activity that occurs under your account. You agree to
+                provide accurate, current, and complete information during onboarding and to
+                promptly update that information if it changes, and to notify us immediately of
+                any unauthorized use of your account.
+              </p>
+              <p className="mt-3 leading-relaxed">
+                You are solely responsible for the accuracy of any wallet address you provide or
+                configure for receiving settlement. Blockchain transactions are irreversible once
+                broadcast to the network: HQclouds cannot recover, reverse, or refund a transaction
+                sent to an incorrect or unsupported address, and has no obligation to do so.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">5. Fees</h2>
+              <p className="mt-3 leading-relaxed">
+                Use of the Service is subject to transaction fees starting from 0.3% per
+                successfully settled payment, as described on our website and confirmed in your
+                merchant agreement. Fees may vary based on transaction volume, network, and
+                settlement currency. We do not charge setup or monthly fees, and applicable fees
+                are always disclosed before they are applied.
+              </p>
+              <p className="mt-3 leading-relaxed">
+                Separately from our service fees, each blockchain network charges its own network
+                (miner or validator) fee to process a transaction. Network fees are set by the
+                network itself, fluctuate with real-time network conditions, and are outside
+                HQclouds&apos; control.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                6. Prohibited Uses
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                You may not use the Service to process payments related to illegal goods or
+                services, fraud, money laundering, terrorist financing, sanctions evasion, or any
+                activity that violates applicable law. We reserve the right to refuse, delay, or
+                reverse any transaction we reasonably believe violates this section, and to
+                terminate accounts engaged in prohibited activity.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                7. Intellectual Property
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                The Service, including its software, design, branding, and documentation, is
+                owned by HQclouds and protected by intellectual property laws. We grant you a
+                limited, non-exclusive, non-transferable license to use the Service in accordance
+                with these Terms. You may not copy, modify, reverse-engineer, or create derivative
+                works from the Service.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                8. Limitation of Liability
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                To the fullest extent permitted by law, HQclouds shall not be liable for any
+                indirect, incidental, special, or consequential damages arising out of or in
+                connection with your use of the Service, including losses resulting from
+                blockchain network congestion, third-party wallet errors, or market volatility
+                between the time a payment is received and converted.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                9. Indemnification
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                You agree to indemnify and hold HQclouds harmless from any claims, damages, or
+                expenses, including reasonable legal fees, arising from your use of the Service,
+                your violation of these Terms, or your violation of any rights of a third party.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">10. Termination</h2>
+              <p className="mt-3 leading-relaxed">
+                We may suspend or terminate your access to the Service at any time, with or
+                without cause, including where we reasonably suspect a violation of these Terms or
+                applicable law. You may terminate your use of the Service at any time by
+                contacting our team. Provisions that by their nature should survive termination
+                will survive.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">11. Governing Law</h2>
+              <p className="mt-3 leading-relaxed">
+                These Terms are governed by the laws of the applicable jurisdiction specified in
+                your merchant agreement, without regard to conflict-of-law principles. Any
+                disputes arising under these Terms will be resolved in the courts or arbitration
+                forum specified in that agreement.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                12. Changes to These Terms
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We may update these Terms from time to time to reflect changes in our Service or
+                legal requirements. We will post the updated Terms on this page with a revised
+                &ldquo;Last updated&rdquo; date. Continued use of the Service after changes take
+                effect constitutes acceptance of the revised Terms.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">13. Contact</h2>
+              <p className="mt-3 leading-relaxed">
+                Questions about these Terms can be directed to our team through the contact form
+                on this website.
+              </p>
+            </section>
+          </div>
+        </article>
+      </main>
+      <Footer />
+    </>
+  );
+}
+```
+
+- [ ] **Step 2: Verify**
+
+Run: `npm run build`
+Expected: build succeeds; `/terms` appears as a route in the build output.
+
+---
+
+### Task 20: Privacy Policy page
+
+**Files:**
+- Create: `app/privacy/page.tsx`
+
+**Interfaces:**
+- Consumes: `Navbar` from `@/components/navbar`, `Footer` from `@/components/footer`.
+- Produces: the `/privacy` route, linked to by Task 21's footer update.
+
+- [ ] **Step 1: Write the Privacy Policy page**
+
+```tsx
+// app/privacy/page.tsx
+import type { Metadata } from "next";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "How HQclouds collects, uses, and protects your personal data across our website and payment services.",
+};
+
+export default function PrivacyPage() {
+  return (
+    <>
+      <Navbar />
+      <main className="bg-cream pb-24 pt-32">
+        <article className="mx-auto max-w-3xl px-4">
+          <p className="text-sm font-medium text-accent">Legal</p>
+          <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
+            Privacy Policy
+          </h1>
+          <p className="mt-4 text-sm text-black/50">Last updated: August 31, 2026</p>
+
+          <div className="mt-12 space-y-10 text-black/80">
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                1. Information We Collect
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We collect information you provide directly, such as your name, company details,
+                email address, and phone number when you contact us or engage our services. We
+                also collect technical information automatically, including IP address, browser
+                type, and usage data when you interact with our website and dashboard.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                2. How We Use Your Information
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We use the information we collect to provide and improve the Service, respond to
+                inquiries, process merchant onboarding, communicate important updates, detect and
+                prevent fraud, and comply with our legal and regulatory obligations, including
+                those described in our AML Policy.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                3. Cookies and Tracking
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Our website uses cookies and similar technologies to keep you signed in, remember
+                your preferences, and understand how our site is used. You can control cookies
+                through your browser settings; disabling certain cookies may affect the
+                functionality of the website.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                4. Data Sharing and Third Parties
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We do not sell your personal data. We may share information with service providers
+                who help us operate the Service, such as hosting and communications providers,
+                under confidentiality obligations, and with regulators, law enforcement, or
+                professional advisors where required by law.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                5. Data Retention
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We retain personal data for as long as necessary to provide the Service, meet our
+                legal and regulatory obligations, including recordkeeping requirements described
+                in our AML Policy, resolve disputes, and enforce our agreements.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">6. Data Security</h2>
+              <p className="mt-3 leading-relaxed">
+                We use administrative, technical, and organizational safeguards designed to
+                protect personal data against unauthorized access, alteration, disclosure, or
+                destruction. No method of transmission or storage is completely secure, and we
+                cannot guarantee absolute security.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">7. Your Rights</h2>
+              <p className="mt-3 leading-relaxed">
+                Subject to applicable law, you may have the right to access, correct, delete, or
+                port your personal data, and to object to or restrict certain processing. To
+                exercise these rights, contact us through the form on this website; we will
+                respond within the timeframe required by applicable law.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                8. International Data Transfers
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                As we operate across multiple jurisdictions, your data may be transferred to and
+                processed in countries other than your own. Where required, we use appropriate
+                safeguards to ensure such transfers comply with applicable data protection law.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                9. Children&apos;s Privacy
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                The Service is intended for business use by adults and is not directed at
+                individuals under the age of 18. We do not knowingly collect personal data from
+                children.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                10. Changes to This Policy
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We may update this Privacy Policy from time to time. We will post the revised
+                policy on this page with an updated &ldquo;Last updated&rdquo; date. Material
+                changes will be communicated through the website or directly to merchants where
+                appropriate.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">11. Contact</h2>
+              <p className="mt-3 leading-relaxed">
+                Questions about this Privacy Policy or requests concerning your personal data can
+                be directed to our team through the contact form on this website.
+              </p>
+            </section>
+          </div>
+        </article>
+      </main>
+      <Footer />
+    </>
+  );
+}
+```
+
+- [ ] **Step 2: Verify**
+
+Run: `npm run build`
+Expected: build succeeds; `/privacy` appears as a route in the build output.
+
+---
+
+### Task 21: AML Policy page + wire footer legal links
+
+**Files:**
+- Create: `app/aml/page.tsx`
+- Modify: `components/footer.tsx`
+
+**Interfaces:**
+- Consumes: `Navbar` from `@/components/navbar`, `Footer` from `@/components/footer` (in the new page); modifies `Footer`'s own nav markup.
+- Produces: the `/aml` route; updates `Footer`'s Terms/Privacy links to point at Task 19/20's real routes instead of `#`, and adds an AML Policy link pointing at this task's own route.
+
+- [ ] **Step 1: Write the AML Policy page**
+
+```tsx
+// app/aml/page.tsx
+import type { Metadata } from "next";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+
+export const metadata: Metadata = {
+  title: "AML Policy",
+  description:
+    "HQclouds' approach to anti-money laundering compliance, customer due diligence, and transaction monitoring.",
+};
+
+export default function AmlPage() {
+  return (
+    <>
+      <Navbar />
+      <main className="bg-cream pb-24 pt-32">
+        <article className="mx-auto max-w-3xl px-4">
+          <p className="text-sm font-medium text-accent">Legal</p>
+          <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
+            AML Policy
+          </h1>
+          <p className="mt-4 text-sm text-black/50">Last updated: August 31, 2026</p>
+
+          <div className="mt-12 space-y-10 text-black/80">
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                1. Our Commitment
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                HQclouds is committed to preventing the use of our platform for money laundering,
+                terrorist financing, or other financial crime. This Anti-Money Laundering (AML)
+                Policy outlines the principles and controls we apply to our merchants and
+                transactions.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                2. Regulatory Framework
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Our AML program is designed to align with internationally recognized standards for
+                combating money laundering and the financing of terrorism, and is adapted to the
+                specific regulatory requirements applicable in each jurisdiction in which we
+                operate.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                3. Customer Due Diligence (CDD) and KYC
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Before onboarding, merchants undergo identity verification and Know Your Customer
+                (KYC) checks, including confirmation of business registration, beneficial
+                ownership, and the nature of the business. Enhanced due diligence is applied to
+                merchants or transactions presenting a higher risk profile.
+              </p>
+              <p className="mt-3 leading-relaxed">
+                Where a transaction or pattern of transactions warrants it, we may request
+                supporting evidence of the source of funds or source of wealth behind incoming
+                crypto deposits — for example, information tracing a deposit back to a known
+                exchange withdrawal, mining or staking reward, or other legitimate origin — before
+                releasing settlement.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                4. Risk-Based Approach
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We apply a risk-based approach to AML compliance, calibrating the level of due
+                diligence and ongoing monitoring to factors such as merchant industry,
+                transaction volume, geography, and payment network used. Merchants operating in,
+                or receiving a material share of transactions from, jurisdictions identified as
+                high-risk by international standard-setting bodies are subject to enhanced due
+                diligence, which may include more frequent reviews, lower transaction thresholds
+                for manual approval, and additional source-of-funds evidence.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                5. Transaction Monitoring
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Transactions processed through HQclouds are subject to ongoing automated and
+                manual monitoring designed to detect patterns consistent with money laundering,
+                fraud, or other illicit activity, including unusually large, rapid, or structured
+                transactions. This includes blockchain transaction monitoring and on-chain
+                analytics: incoming deposits are screened at the wallet-address level for exposure
+                to illicit sources such as sanctioned addresses, darknet markets, ransomware,
+                mixers and tumblers, and other high-risk services, and each transaction receives a
+                risk score based on transaction pattern and counterparty wallet risk before funds
+                are released.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                6. Reporting Suspicious Activity
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Where we identify activity that reasonably appears suspicious, we investigate and,
+                where required by applicable law, report it to the relevant financial intelligence
+                unit or competent authority. We may also suspend or restrict an account, decline to
+                release settlement, or flag the associated wallet address pending investigation. We
+                cooperate with law enforcement and regulators investigating suspicious blockchain
+                activity, including by providing transaction and wallet-screening records available
+                to us upon lawful request.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                7. Sanctions and Watchlist Screening
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Merchants and, where applicable, their beneficial owners and controlling parties
+                are screened against relevant sanctions lists, watchlists, and lists of politically
+                exposed persons (PEPs) prior to onboarding and on an ongoing basis. Incoming and
+                outgoing wallet addresses are likewise screened against known sanctioned-address
+                lists using blockchain analytics tooling. We do not knowingly provide services to
+                individuals or entities subject to applicable sanctions, and additional scrutiny is
+                applied to PEPs and their close associates.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                8. Record Keeping
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                We retain records related to customer due diligence, transaction monitoring, and
+                any related investigations for the period required by applicable law, to support
+                regulatory examinations and law enforcement requests.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                9. Employee Training
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Employees involved in onboarding, compliance, and transaction operations receive
+                periodic training on AML obligations, red flags for suspicious activity, and
+                internal escalation procedures.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-heading text-xl font-semibold text-black">
+                10. Compliance Contact
+              </h2>
+              <p className="mt-3 leading-relaxed">
+                Questions about this AML Policy, or reports of suspected misuse of the Service,
+                can be directed to our compliance team through the contact form on this website.
+              </p>
+            </section>
+          </div>
+        </article>
+      </main>
+      <Footer />
+    </>
+  );
+}
+```
+
+- [ ] **Step 2: Wire the footer's legal links to the new routes**
+
+In `components/footer.tsx`, replace the two placeholder links and add a third:
+
+```tsx
+<a href="/terms">Terms of Use</a>
+<a href="/privacy">Privacy Policy</a>
+<a href="/aml">AML Policy</a>
+```
+
+replacing the existing:
+
+```tsx
+<a href="#">Terms</a>
+<a href="#">Privacy</a>
+```
+
+- [ ] **Step 3: Verify**
+
+Run: `npm run build`
+Expected: build succeeds; `/aml` appears as a route in the build output; `components/footer.tsx`'s nav now links to `/terms`, `/privacy`, and `/aml` instead of `#`.

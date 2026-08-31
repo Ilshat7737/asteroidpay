@@ -9,7 +9,7 @@ A single-page marketing landing site for **HQclouds**, a crypto payment gateway,
 
 ## Tech Stack
 
-- Next.js 15, App Router, TypeScript, React 19
+- Next.js (App Router, `create-next-app@latest` resolved 16.3.3 at scaffold time), TypeScript, React 19
 - Tailwind CSS v4
 - shadcn/ui (Radix-based Dialog, Button, Input, Select, Textarea, Form primitives), restyled to match the brand
 - Framer Motion (`motion`) for scroll reveals, hover states, marquee/trust-bar animation
@@ -22,9 +22,10 @@ A single-page marketing landing site for **HQclouds**, a crypto payment gateway,
 
 ## Routes
 
-- `/` — the only page. Single scrolling landing page.
+- `/` — the main scrolling landing page.
 - `app/api/contact/route.ts` — POST endpoint. Validates payload with zod, logs it server-side, returns `{ ok: true }` after a short artificial delay. No email/CRM integration — explicitly a stub for now.
 - No `/login` route. Login is modal-only, triggered from the header.
+- `/terms`, `/privacy`, `/aml` — dedicated legal pages (Terms of Use, Privacy Policy, AML Policy), in the pattern real crypto payment gateways (Cryptomus, NowPayments, CoinGate) publish: real routes, not anchors or a modal, each reusing the site's `Navbar`/`Footer` around a centered prose article. Original writing, not copied from any real company; AML content is genuinely crypto-gateway-specific (source-of-funds checks, on-chain wallet screening, PEP/sanctions screening, risk scoring), and Terms covers blockchain-transaction irreversibility, wallet-address accuracy, network-fee variability, and HQclouds' role as a non-custodial payment facilitator. The Footer's Terms/Privacy links point here instead of `#`, plus a new AML Policy link.
 
 ## Page Sections (top to bottom)
 
@@ -52,7 +53,7 @@ A single-page marketing landing site for **HQclouds**, a crypto payment gateway,
    8. Isabela Rocha — Founder, LicenseKey Hub (Lisbon, Portugal)
 
 8. **Final CTA** — repeat "Contact us" pill, short reassurance line about speed/fees/reliability.
-9. **Footer** — logo, nav links, legal-style placeholder links (Terms, Privacy — static, non-functional is fine), copyright.
+9. **Footer** — logo, nav links, legal links (Terms of Use → `/terms`, Privacy Policy → `/privacy`, AML Policy → `/aml`, see Routes above), copyright.
 
 ## Modals
 
@@ -97,5 +98,5 @@ Mobile-first Tailwind breakpoints. Header collapses to hamburger + full-screen g
 - Real authentication / user accounts / database
 - Real contact-form delivery (email, CRM, webhook)
 - Real crypto payment processing, wallets, or blockchain integration
-- Additional pages/routes beyond `/`
+- No pages/routes beyond `/`, `/terms`, `/privacy`, and `/aml`
 - Analytics/tracking
