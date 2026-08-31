@@ -10,8 +10,9 @@ export function Footer() {
           <a href="#networks">Networks</a>
           <a href="#fees">Fees</a>
           <a href="#reviews">Reviews</a>
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
+          <a href="/terms">Terms of Use</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/aml">AML Policy</a>
         </nav>
         <p className="text-xs">© {new Date().getFullYear()} HQclouds. All rights reserved.</p>
       </div>
