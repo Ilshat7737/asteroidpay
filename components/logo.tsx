@@ -1,22 +1,21 @@
 import Link from "next/link";
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, invert }: { className?: string; invert?: boolean }) {
   return (
     <Link
       href="/"
       className={`flex items-center gap-2 ${className ?? ""}`}
       aria-label="HQclouds home"
     >
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="28" height="28" rx="9" fill="#FF5E7E" />
-        <path
-          d="M8 9L13 19L15 13L20 19L20 9"
-          stroke="black"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size static brand mark, next/image adds no benefit here */}
+      <img
+        src="/logo.png"
+        alt=""
+        aria-hidden="true"
+        width={28}
+        height={28}
+        className={`h-7 w-7 shrink-0 ${invert ? "invert" : ""}`}
+      />
       <span className="font-heading text-lg font-bold tracking-tight text-black">HQclouds</span>
     </Link>
   );

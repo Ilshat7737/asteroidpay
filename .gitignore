@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Claude Code harness state (worktrees, locks) — not part of the app
+/.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
