@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "How HQclouds collects, uses, and protects your personal data across our website and payment services.",
   alternates: { canonical: "/privacy" },
+  openGraph: { url: "/privacy" },
 };
 
 export default function PrivacyPage() {

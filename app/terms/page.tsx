@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "The terms and conditions governing use of HQclouds' crypto payment gateway services.",
   alternates: { canonical: "/terms" },
+  openGraph: { url: "/terms" },
 };
 
 export default function TermsPage() {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "HQclouds' approach to anti-money laundering compliance, customer due diligence, and transaction monitoring.",
   alternates: { canonical: "/aml" },
+  openGraph: { url: "/aml" },
 };
 
 export default function AmlPage() {
