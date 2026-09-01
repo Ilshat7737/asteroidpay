@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Terms of Use",
   description:
     "The terms and conditions governing use of HQclouds' crypto payment gateway services.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

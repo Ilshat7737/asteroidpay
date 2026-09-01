@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "AML Policy",
   description:
     "HQclouds' approach to anti-money laundering compliance, customer due diligence, and transaction monitoring.",
+  alternates: { canonical: "/aml" },
 };
 
 export default function AmlPage() {

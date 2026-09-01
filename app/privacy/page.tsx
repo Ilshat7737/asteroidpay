@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "How HQclouds collects, uses, and protects your personal data across our website and payment services.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {

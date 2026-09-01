@@ -24,10 +24,15 @@ export const metadata: Metadata = {
   },
   description:
     "HQclouds is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "HQclouds — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
+    url: "/",
+    siteName: "HQclouds",
     type: "website",
     locale: "en_US",
   },
@@ -37,7 +42,21 @@ export const metadata: Metadata = {
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+};
+
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "HQclouds",
+  url: "https://hqclouds.com",
+  logo: "https://hqclouds.com/icon.png",
+  description:
+    "HQclouds is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
 };
 
 export const viewport: Viewport = {
@@ -47,6 +66,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+        />
+      </head>
       <body>
         <ModalProvider>
           {children}
