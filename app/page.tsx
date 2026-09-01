@@ -7,8 +7,6 @@ import { Fees } from "@/components/sections/fees";
 import { Testimonials } from "@/components/sections/testimonials";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Footer } from "@/components/footer";
-import { LoginModal } from "@/components/login-modal";
-import { ContactModal } from "@/components/contact-modal";
 
 export default function Home() {
   return (
@@ -24,8 +22,6 @@ export default function Home() {
         <FinalCta />
       </main>
       <Footer />
-      <LoginModal />
-      <ContactModal />
     </>
   );
 }

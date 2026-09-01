@@ -7,3 +7,9 @@ Dockerfile
 docker-compose.yml
 .dockerignore
 npm-debug.log
+.superpowers
+*.tsbuildinfo
+README.md
+AGENTS.md
+CLAUDE.md
+.DS_Store

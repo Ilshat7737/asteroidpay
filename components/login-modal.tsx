@@ -27,12 +27,23 @@ export function LoginModal() {
     setServerError("Invalid email or password.");
   };
 
+  const clearForm = () => {
+    setServerError(null);
+    reset();
+  };
+
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       close();
-      setServerError(null);
-      reset();
+      clearForm();
     }
+  };
+
+  // Switching straight to the contact modal never fires Radix's onOpenChange,
+  // so clear the form here too — otherwise reopening login shows stale state.
+  const handleContactClick = () => {
+    clearForm();
+    openContact();
   };
 
   return (
@@ -40,12 +51,17 @@ export function LoginModal() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <Label htmlFor="login-email">Email</Label>
-          <Input id="login-email" type="email" {...register("email")} />
+          <Input id="login-email" type="email" autoComplete="email" {...register("email")} />
           {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
         </div>
         <div>
           <Label htmlFor="login-password">Password</Label>
-          <Input id="login-password" type="password" {...register("password")} />
+          <Input
+            id="login-password"
+            type="password"
+            autoComplete="current-password"
+            {...register("password")}
+          />
           {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>}
         </div>
         {serverError && (
@@ -60,7 +76,7 @@ export function LoginModal() {
         </Button>
         <p className="text-center text-xs text-black/60">
           Don&apos;t have an account?{" "}
-          <button type="button" onClick={openContact} className="font-medium underline">
+          <button type="button" onClick={handleContactClick} className="font-medium underline">
             Contact us
           </button>
         </p>

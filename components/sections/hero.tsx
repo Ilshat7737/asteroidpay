@@ -26,14 +26,14 @@ export function Hero() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Button
             size="lg"
-            className="rounded-full bg-accent px-8 text-black hover:bg-accent/90"
+            className="h-11 rounded-full bg-accent px-8 text-black hover:bg-accent/90"
             onClick={openContact}
           >
             Contact us
           </Button>
           <a
             href="#fees"
-            className="rounded-full border border-black/15 px-8 py-3 text-sm font-medium text-black hover:bg-black/5"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-black/15 px-8 text-sm font-medium text-black hover:bg-black/5"
           >
             See fees
           </a>

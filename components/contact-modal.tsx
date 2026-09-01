@@ -22,6 +22,7 @@ const COUNTRIES = [
 export function ContactModal() {
   const { activeModal, close } = useModal();
   const [submitted, setSubmitted] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -34,18 +35,28 @@ export function ContactModal() {
   });
 
   const onSubmit = async (values: ContactInput) => {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    if (res.ok) setSubmitted(true);
+    setServerError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setServerError("Something went wrong. Please try again.");
+      }
+    } catch {
+      setServerError("Something went wrong. Please try again.");
+    }
   };
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       close();
       setSubmitted(false);
+      setServerError(null);
       reset();
     }
   };
@@ -88,23 +99,26 @@ export function ContactModal() {
           </div>
           <div>
             <Label htmlFor="contact-company">Company</Label>
-            <Input id="contact-company" {...register("company")} />
+            <Input id="contact-company" autoComplete="organization" {...register("company")} />
             {errors.company && <p className="mt-1 text-xs text-red-600">{errors.company.message}</p>}
           </div>
           <div>
             <Label htmlFor="contact-email">Email</Label>
-            <Input id="contact-email" type="email" {...register("email")} />
+            <Input id="contact-email" type="email" autoComplete="email" {...register("email")} />
             {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
           </div>
           <div>
             <Label htmlFor="contact-phone">Phone (optional)</Label>
-            <Input id="contact-phone" type="tel" {...register("phone")} />
+            <Input id="contact-phone" type="tel" autoComplete="tel" {...register("phone")} />
           </div>
           <div>
             <Label htmlFor="contact-comment">Comment</Label>
             <Textarea id="contact-comment" rows={4} {...register("comment")} />
             {errors.comment && <p className="mt-1 text-xs text-red-600">{errors.comment.message}</p>}
           </div>
+          {serverError && (
+            <p className="rounded-xl bg-red-500/10 px-3 py-2 text-sm text-red-700">{serverError}</p>
+          )}
           <Button
             type="submit"
             disabled={isSubmitting}

@@ -15,7 +15,7 @@ export default function TermsPage() {
       <Navbar />
       <main className="bg-cream pb-24 pt-32">
         <article className="mx-auto max-w-3xl px-4">
-          <p className="text-sm font-medium text-accent">Legal</p>
+          <p className="text-sm font-medium text-accent-ink">Legal</p>
           <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
             Terms of Use
           </h1>

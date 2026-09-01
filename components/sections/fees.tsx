@@ -11,7 +11,7 @@ export function Fees() {
   return (
     <section id="fees" className="bg-cream py-24">
       <div className="mx-auto max-w-4xl px-4 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-accent">Pricing</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-accent-ink">Pricing</p>
         <h2 className="mt-3 font-heading text-5xl font-bold text-black sm:text-6xl">From 0.3%</h2>
         <p className="mt-4 text-black/60">
           per successful transaction — the rate drops further as your volume grows.

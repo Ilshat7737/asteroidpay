@@ -8,10 +8,10 @@ import { useModal } from "@/components/modal-provider";
 import { Button } from "@/components/ui/button";
 
 const NAV_LINKS = [
-  { href: "#services", label: "Solutions" },
-  { href: "#networks", label: "Networks" },
-  { href: "#fees", label: "Fees" },
-  { href: "#reviews", label: "Reviews" },
+  { href: "/#services", label: "Solutions" },
+  { href: "/#networks", label: "Networks" },
+  { href: "/#fees", label: "Fees" },
+  { href: "/#reviews", label: "Reviews" },
 ];
 
 export function Navbar() {

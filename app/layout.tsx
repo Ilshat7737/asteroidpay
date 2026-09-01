@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { ModalProvider } from "@/components/modal-provider";
+import { LoginModal } from "@/components/login-modal";
+import { ContactModal } from "@/components/contact-modal";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -46,7 +48,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body>
-        <ModalProvider>{children}</ModalProvider>
+        <ModalProvider>
+          {children}
+          <LoginModal />
+          <ContactModal />
+        </ModalProvider>
       </body>
     </html>
   );
