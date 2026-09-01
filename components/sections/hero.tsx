@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useModal } from "@/components/modal-provider";
 import { Button } from "@/components/ui/button";
+import heroIllustration from "@/components/images/hero-illustration.png";
 
 export function Hero() {
   const { openContact } = useModal();
@@ -43,7 +44,7 @@ export function Hero() {
         </div>
 
         <motion.img
-          src="/hero-illustration.png"
+          src={heroIllustration.src}
           alt="An HQclouds wallet accepting a contactless crypto card payment, with a rising Bitcoin balance"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

@@ -2,6 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import autoConvertIllustration from "@/components/images/auto-convert-illustration.png";
 
 export function AutoConvert() {
   return (
@@ -28,7 +29,7 @@ export function AutoConvert() {
           </ul>
         </motion.div>
         <motion.img
-          src="/auto-convert-illustration.png"
+          src={autoConvertIllustration.src}
           alt="Bitcoin, Ethereum, Solana, and other crypto flowing into a device and converting to USDT, USDC, and fiat"
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}

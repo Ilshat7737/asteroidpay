@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/components/images/logo.png";
 
 export function Logo({ className, invert }: { className?: string; invert?: boolean }) {
   return (
@@ -7,9 +9,8 @@ export function Logo({ className, invert }: { className?: string; invert?: boole
       className={`flex items-center gap-2 ${className ?? ""}`}
       aria-label="HQclouds home"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size static brand mark, next/image adds no benefit here */}
-      <img
-        src="/logo.png"
+      <Image
+        src={logo}
         alt=""
         aria-hidden="true"
         width={28}

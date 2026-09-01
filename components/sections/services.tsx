@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import Image from "next/image";
 import { networks } from "@/lib/data/networks";
 import { NetworkIcon } from "@/components/network-icon";
+import servicesIllustration from "@/components/images/services-illustration.png";
 
 const introVariants: Variants = {
   hidden: { opacity: 0, y: 32 },
@@ -40,8 +42,7 @@ export function Services() {
             </p>
           </div>
           <div className="mx-auto w-full max-w-sm rounded-[32px] border border-black/10 bg-white p-6 lg:max-w-none">
-            {/* eslint-disable-next-line @next/next/no-img-element -- fixed static illustration asset, next/image adds no benefit here */}
-            <img src="/services-illustration.png" alt="" aria-hidden="true" className="w-full" />
+            <Image src={servicesIllustration} alt="" aria-hidden="true" className="h-auto w-full" />
           </div>
         </motion.div>
         <motion.div
