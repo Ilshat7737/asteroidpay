@@ -76,7 +76,7 @@ export function ContactModal() {
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="contact-country">Country</Label>
+            <Label htmlFor="contact-country" className="mb-1.5">Country</Label>
             <Controller
               control={control}
               name="country"
@@ -98,21 +98,21 @@ export function ContactModal() {
             {errors.country && <p className="mt-1 text-xs text-red-600">{errors.country.message}</p>}
           </div>
           <div>
-            <Label htmlFor="contact-company">Company</Label>
+            <Label htmlFor="contact-company" className="mb-1.5">Company</Label>
             <Input id="contact-company" autoComplete="organization" {...register("company")} />
             {errors.company && <p className="mt-1 text-xs text-red-600">{errors.company.message}</p>}
           </div>
           <div>
-            <Label htmlFor="contact-email">Email</Label>
+            <Label htmlFor="contact-email" className="mb-1.5">Email</Label>
             <Input id="contact-email" type="email" autoComplete="email" {...register("email")} />
             {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
           </div>
           <div>
-            <Label htmlFor="contact-phone">Phone (optional)</Label>
+            <Label htmlFor="contact-phone" className="mb-1.5">Phone (optional)</Label>
             <Input id="contact-phone" type="tel" autoComplete="tel" {...register("phone")} />
           </div>
           <div>
-            <Label htmlFor="contact-comment">Comment</Label>
+            <Label htmlFor="contact-comment" className="mb-1.5">Comment</Label>
             <Textarea id="contact-comment" rows={4} {...register("comment")} />
             {errors.comment && <p className="mt-1 text-xs text-red-600">{errors.comment.message}</p>}
           </div>

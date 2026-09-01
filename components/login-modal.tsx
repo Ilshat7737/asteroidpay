@@ -50,12 +50,12 @@ export function LoginModal() {
     <GlassModal open={activeModal === "login"} onOpenChange={handleOpenChange} title="Log in to HQclouds">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <Label htmlFor="login-email">Email</Label>
+          <Label htmlFor="login-email" className="mb-1.5">Email</Label>
           <Input id="login-email" type="email" autoComplete="email" {...register("email")} />
           {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
         </div>
         <div>
-          <Label htmlFor="login-password">Password</Label>
+          <Label htmlFor="login-password" className="mb-1.5">Password</Label>
           <Input
             id="login-password"
             type="password"
