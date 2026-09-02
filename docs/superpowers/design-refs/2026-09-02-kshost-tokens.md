@@ -1,7 +1,7 @@
 # KShost Design Tokens
 
 Date: 2026-09-02
-Status: Awaiting approval (Task 1 style tile)
+Status: Approved — 2026-09-02 (Task 1 style tile)
 Source spec: `docs/superpowers/specs/2026-09-02-kshost-redesign-design.md`
 
 This file is the **single source of truth** for every color, font and radius value in the
@@ -25,7 +25,7 @@ conversion of the same color (sRGB → Oklab, 4 decimals) and is what should be 
 | `muted` | `#1B1E19` | `oklch(0.2300 0.0104 132.71)` | Elevation 2: inset panels, input fill, badges/chips, table header bands, hover fill on ghost buttons and nav links. |
 | `muted-foreground` | `#9BA595` | `oklch(0.7093 0.0255 133.54)` | Secondary/supporting text: subheads, captions, table labels, footer links, form helper text, placeholder text. |
 | `border` | `#2A2F27` | `oklch(0.2975 0.0158 133.66)` | Default hairline: card outlines, dividers, table rules, footer separators. Decorative separation only. |
-| `border-strong` | `#5C6359` | `oklch(0.4904 0.0179 136.16)` | **Interactive** boundaries that must meet WCAG 1.4.11 non-text contrast: input/select/textarea outlines, secondary (outline) button borders, checkbox/radio edges. Use this — not `border` — wherever the outline *is* the control. |
+| `border-strong` | `#666E63` | `oklch(0.5279 0.0195 137.08)` | **Interactive** boundaries that must meet WCAG 1.4.11 non-text contrast: input/select/textarea outlines, secondary (outline) button borders, checkbox/radio edges. Use this — not `border` — wherever the outline *is* the control. Chosen to clear 3:1 against **all three** surfaces it can sit on (`background`, `card`, `muted`), not just the page ground — inputs are `muted`-filled, which is the hardest case at 3.19:1. |
 | `accent` | `#CDE833` | `oklch(0.8815 0.1922 118.25)` | **Fixed by spec.** Primary buttons, links, focus rings, active nav state, icon accents, glow, gradient highlights, globe wireframe/cube edges. Replaces `--color-accent: #ff5e7e`. |
 | `accent-foreground` | `#0B0C0A` | `oklch(0.1523 0.0045 128.82)` | Text/iconography placed **on** lime (primary button label, lime badge text). Same value as `background`. |
 | `accent-hover` | `#DCF25C` | `oklch(0.9171 0.1733 117.03)` | Hover/active state of any lime-filled surface (primary button, lime chip). Lifts lightness, keeps hue. |
@@ -33,6 +33,43 @@ conversion of the same color (sRGB → Oklab, 4 decimals) and is what should be 
 | `ring` | `#CDE833` | `oklch(0.8815 0.1922 118.25)` | `:focus-visible` ring, same value as `accent`. Render as a 2px ring with a 2px `background`-colored offset. Never remove the ring. |
 | `destructive` | `#FF6B6B` | `oklch(0.7116 0.1812 22.84)` | Form validation errors, error toasts, destructive actions. Lightened from the shadcn default (`oklch(0.577 0.245 27.325)`) so it clears 4.5:1 on the near-black field. |
 | `destructive-foreground` | `#0B0C0A` | `oklch(0.1523 0.0045 128.82)` | Text on a filled `destructive` surface. (Error *text* on `background` uses `destructive` directly.) |
+
+### Legacy and shadcn tokens — successor values
+
+These variables are **live in the codebase today** and reachable from component classes, so
+Task 3 must give each one a new value or the old light-theme color survives the redesign.
+None of them get a new color family — each reuses a token from the table above.
+
+| Existing variable | Current value | New value | Reasoning + live call sites |
+|---|---|---|---|
+| `--color-accent-ink` | `#c2185b` | **`#CDE833`** — same as `accent`<br>`oklch(0.8815 0.1922 118.25)` | This token only ever existed because the old pink `accent` (`#ff5e7e`) was too light to use as *text* on the cream ground, so it needed a darkened twin. On the dark theme that problem inverts and disappears: `accent` is already 14.18:1 as text on `background`. So `accent-ink` collapses into `accent`. **Call sites (5):** `components/sections/fees.tsx:114` ("Pricing" eyebrow), `:127` (feature icon), `app/aml/page.tsx:20`, `app/privacy/page.tsx:20`, `app/terms/page.tsx:20` (all "Legal" eyebrows). Task 3 may either repoint the variable or delete it and rewrite the 5 sites to `text-accent`; deleting is preferred. |
+| `--primary` | `oklch(0.205 0 0)` | **`#CDE833`** / `oklch(0.8815 0.1922 118.25)` | The shadcn Button `default` variant is `bg-primary text-primary-foreground` (`components/ui/button.tsx:12`) — that is our lime primary CTA. |
+| `--primary-foreground` | `oklch(0.985 0 0)` | **`#0B0C0A`** / `oklch(0.1523 0.0045 128.82)` | Label on the lime button. 14.18:1. |
+| `--secondary` | `oklch(0.97 0 0)` | **`#1B1E19`** — same as `muted`<br>`oklch(0.2300 0.0104 132.71)` | Button `secondary` variant fill (`components/ui/button.tsx:16`). Matches the ghost-hover fill in the style tile, so the two read as one system. |
+| `--secondary-foreground` | `oklch(0.205 0 0)` | **`#F2F5EE`** / `oklch(0.9659 0.0098 125.68)` | Text on that fill. 15.30:1. |
+| `--popover` | `oklch(1 0 0)` | **`#131512`** — same as `card`<br>`oklch(0.1923 0.0067 135.00)` | Select dropdown surface (`components/ui/select.tsx:72,151,170`). A popover is a floating card; same elevation, same value. |
+| `--popover-foreground` | `oklch(0.145 0 0)` | **`#F2F5EE`** / `oklch(0.9659 0.0098 125.68)` | Text in the dropdown. 16.67:1. |
+| `--input` | `oklch(0.922 0 0)` | **`#666E63`** — same as `border-strong`<br>`oklch(0.5279 0.0195 137.08)` | Not in the original brief list but load-bearing: `border-input` is the outline on `input.tsx:11`, `textarea.tsx:10` and `select.tsx:47`. This is exactly the case `border-strong` exists for — see the note below. |
+| `--ring` | `oklch(0.708 0 0)` | **`#CDE833`** / `oklch(0.8815 0.1922 118.25)` | Same as `ring` above. Used via `focus-visible:border-ring` / `focus-visible:ring-ring/50` throughout `components/ui/*`. |
+| `--border` | `oklch(0.922 0 0)` | **`#2A2F27`** / `oklch(0.2975 0.0158 133.66)` | Same as `border` above; `globals.css` applies it globally via `@apply border-border`. |
+
+Two traps in the shadcn primitives that Task 3 or Task 7 must handle — flagged here because
+they are invisible until something renders wrong:
+
+1. **`--input` is used as both a border and a fill.** `input.tsx`/`textarea.tsx`/`select.tsx`
+   carry `border-input` *and* `dark:bg-input/30`, `dark:disabled:bg-input/80`. Those `dark:`
+   variants are gated on a `.dark` ancestor (`@custom-variant dark (&:is(.dark *))` in
+   `globals.css:5`). This site has no light mode, so if the dark values are written straight
+   into `:root` and no `.dark` class is applied, those fills never activate and the inputs
+   stay `bg-transparent` — which is the intended look anyway (the field reads against
+   `card`/`muted`). Decide deliberately; don't let it happen by accident.
+2. **`bg-primary/80` is the wrong hover.** `button.tsx:12` hovers with `hover:bg-primary/80`,
+   which renders lime at 80% opacity — a *duller* lime. This design specifies the opposite: a
+   *brighter* `accent-hover` (`#DCF25C`). Task 7 must change that class, not just the token.
+
+`--chart-1..5`, `--sidebar*` and the `.dark` block have **no call sites** outside
+`globals.css` (verified by grep across `components/` and `app/`). They can be deleted rather
+than re-themed; if kept, they must not be treated as part of this design system.
 
 ### Glass surfaces (dark glass, replaces the current white iOS glass)
 
@@ -66,8 +103,27 @@ All ratios computed against the exact hex values above (WCAG 2.1 relative lumina
 | `accent-dim` on `background` | 9.04:1 | 4.5:1 | Pass (AAA) |
 | `destructive` on `background` | 7.06:1 | 4.5:1 (error text) | Pass (AAA) |
 | `destructive` on `card` | 6.62:1 | 4.5:1 | Pass (AAA) |
-| `border-strong` on `background` | 3.16:1 | 3:1 (WCAG 1.4.11) | Pass |
+| `border-strong` on `background` | 3.71:1 | 3:1 (WCAG 1.4.11) | Pass |
+| `border-strong` on `card` | 3.48:1 | 3:1 (WCAG 1.4.11) | Pass |
+| `border-strong` on `muted` | 3.19:1 | 3:1 (WCAG 1.4.11) | Pass — worst case; `muted` is the input fill |
 | `border` on `background` | 1.43:1 | n/a — decorative divider only | Not for interactive outlines; use `border-strong` |
+
+An interactive outline must clear 3:1 against **whatever surface it actually sits on**, not
+just the page ground. Inputs are `muted`-filled and outline-buttons sit inside `card`, so all
+three rows above are required. The originally-specified `#5C6359` passed only against
+`background` (3.16:1) and failed the two that matter more — 2.96:1 on `card`, 2.72:1 on
+`muted` — which is why `border-strong` is `#666E63`.
+
+Mapped-token pairs from §1's successor table, verified on the same run:
+
+| Pair | Ratio | Result |
+|---|---|---|
+| `primary-foreground` on `primary` (lime button) | 14.18:1 | Pass (AAA) |
+| `secondary-foreground` on `secondary` | 15.30:1 | Pass (AAA) |
+| `popover-foreground` on `popover` | 16.67:1 | Pass (AAA) |
+| `muted-foreground` on `popover` (dropdown placeholder) | 7.18:1 | Pass (AAA) |
+| `accent-ink` successor (`accent`) on `background` | 14.18:1 | Pass (AAA) |
+| `accent-ink` successor (`accent`) on `card` | 13.28:1 | Pass (AAA) |
 
 ---
 
