@@ -6,7 +6,7 @@
 // reduced-motion support), dropped the icon-based logos, @remixicon/react
 // dependency, and its own inline @keyframes in favor of the `marquee`
 // keyframes already defined in app/globals.css (Task 1), and restyled to
-// HQclouds's dark-section tokens as a coin icon + ticker row.
+// KShost's dark-section tokens as a coin icon + ticker row.
 import { coins } from "@/lib/data/coins";
 import { CoinIcon } from "@/components/coin-icon";
 

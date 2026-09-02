@@ -24,7 +24,7 @@ export const testimonials: Testimonial[] = [
     company: "VeilPoint VPN",
     location: "Beirut, Lebanon",
     quote:
-      "Card processors kept flagging our subscriptions as high-risk. HQclouds just works, no explanations needed, and settlement is fast enough that we stopped worrying about cash flow week to week.",
+      "Card processors kept flagging our subscriptions as high-risk. KShost just works, no explanations needed, and settlement is fast enough that we stopped worrying about cash flow week to week.",
   },
   {
     id: "tobias-lindqvist",
@@ -69,7 +69,7 @@ export const testimonials: Testimonial[] = [
     company: "ProxyHaven",
     location: "Dublin, Ireland",
     quote:
-      "I run this alone, so I needed something I could set up in an afternoon. HQclouds is the first crypto payment tool that didn't make me read documentation for a day first.",
+      "I run this alone, so I needed something I could set up in an afternoon. KShost is the first crypto payment tool that didn't make me read documentation for a day first.",
   },
   {
     id: "isabela-rocha",

@@ -15,11 +15,11 @@ export function Footer() {
           <a href="/privacy">Privacy Policy</a>
           <a href="/aml">AML Policy</a>
         </nav>
-        <p className="text-xs">© {new Date().getFullYear()} HQclouds. All rights reserved.</p>
+        <p className="text-xs">© {new Date().getFullYear()} KShost. All rights reserved.</p>
       </div>
       <div className="mt-10 select-none px-4 text-center" aria-hidden="true">
         <span className="font-heading text-[16vw] leading-none font-bold tracking-tight text-white/90 sm:text-[13vw] lg:text-[10vw]">
-          HQclouds
+          KShost
         </span>
       </div>
     </footer>

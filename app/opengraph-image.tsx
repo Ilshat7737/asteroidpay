@@ -37,7 +37,7 @@ export default function OpengraphImage() {
           >
             <img src={LOGO_DATA_URI} width={40} height={40} alt="" />
           </div>
-          <div style={{ fontSize: 40, fontWeight: 700 }}>HQclouds</div>
+          <div style={{ fontSize: 40, fontWeight: 700 }}>KShost</div>
         </div>
         <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.1, maxWidth: 900 }}>
           Fast, low-fee crypto payments.

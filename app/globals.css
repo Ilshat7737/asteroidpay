@@ -9,6 +9,8 @@
   --color-accent-ink: #CDE833;
   --font-heading: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
+    monospace;
 }
 
 @layer base {

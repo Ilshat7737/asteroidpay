@@ -47,7 +47,7 @@ export function LoginModal() {
   };
 
   return (
-    <GlassModal open={activeModal === "login"} onOpenChange={handleOpenChange} title="Log in to HQclouds">
+    <GlassModal open={activeModal === "login"} onOpenChange={handleOpenChange} title="Log in to KShost">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <Label htmlFor="login-email" className="mb-1.5">Email</Label>

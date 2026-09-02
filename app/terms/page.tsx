@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 export const metadata: Metadata = {
   title: "Terms of Use",
   description:
-    "The terms and conditions governing use of HQclouds' crypto payment gateway services.",
+    "The terms and conditions governing use of KShost's crypto payment gateway services.",
   alternates: { canonical: "/terms" },
   openGraph: { url: "/terms" },
 };
@@ -29,7 +29,7 @@ export default function TermsPage() {
                 1. Acceptance of Terms
               </h2>
               <p className="mt-3 leading-relaxed">
-                By accessing or using the HQclouds website, dashboard, or payment infrastructure
+                By accessing or using the KShost website, dashboard, or payment infrastructure
                 (collectively, the &ldquo;Service&rdquo;), you agree to be bound by these Terms of
                 Use. If you are entering into these Terms on behalf of a company or other legal
                 entity, you represent that you have the authority to bind that entity, in which
@@ -43,14 +43,14 @@ export default function TermsPage() {
                 2. Description of Service
               </h2>
               <p className="mt-3 leading-relaxed">
-                HQclouds provides merchants with infrastructure to accept cryptocurrency payments
+                KShost provides merchants with infrastructure to accept cryptocurrency payments
                 across multiple blockchain networks, including automatic conversion of received
                 funds into stablecoins or fiat currency at prevailing market rates. The Service is
                 made available to businesses onboarded through our sales process; it is not
                 currently offered as a self-service, instant-signup product.
               </p>
               <p className="mt-3 leading-relaxed">
-                HQclouds acts solely as a payment facilitator and technology gateway between you
+                KShost acts solely as a payment facilitator and technology gateway between you
                 and your customers. We are not a custodian: received funds are held only for the
                 brief period required to detect, convert, and settle each transaction through our
                 auto-convert process, and are not retained as a standing balance on your behalf.
@@ -82,7 +82,7 @@ export default function TermsPage() {
               <p className="mt-3 leading-relaxed">
                 You are solely responsible for the accuracy of any wallet address you provide or
                 configure for receiving settlement. Blockchain transactions are irreversible once
-                broadcast to the network: HQclouds cannot recover, reverse, or refund a transaction
+                broadcast to the network: KShost cannot recover, reverse, or refund a transaction
                 sent to an incorrect or unsupported address, and has no obligation to do so.
               </p>
             </section>
@@ -100,7 +100,7 @@ export default function TermsPage() {
                 Separately from our service fees, each blockchain network charges its own network
                 (miner or validator) fee to process a transaction. Network fees are set by the
                 network itself, fluctuate with real-time network conditions, and are outside
-                HQclouds&apos; control.
+                KShost&apos;s control.
               </p>
             </section>
 
@@ -123,7 +123,7 @@ export default function TermsPage() {
               </h2>
               <p className="mt-3 leading-relaxed">
                 The Service, including its software, design, branding, and documentation, is
-                owned by HQclouds and protected by intellectual property laws. We grant you a
+                owned by KShost and protected by intellectual property laws. We grant you a
                 limited, non-exclusive, non-transferable license to use the Service in accordance
                 with these Terms. You may not copy, modify, reverse-engineer, or create derivative
                 works from the Service.
@@ -135,7 +135,7 @@ export default function TermsPage() {
                 8. Limitation of Liability
               </h2>
               <p className="mt-3 leading-relaxed">
-                To the fullest extent permitted by law, HQclouds shall not be liable for any
+                To the fullest extent permitted by law, KShost shall not be liable for any
                 indirect, incidental, special, or consequential damages arising out of or in
                 connection with your use of the Service, including losses resulting from
                 blockchain network congestion, third-party wallet errors, or market volatility
@@ -148,7 +148,7 @@ export default function TermsPage() {
                 9. Indemnification
               </h2>
               <p className="mt-3 leading-relaxed">
-                You agree to indemnify and hold HQclouds harmless from any claims, damages, or
+                You agree to indemnify and hold KShost harmless from any claims, damages, or
                 expenses, including reasonable legal fees, arising from your use of the Service,
                 your violation of these Terms, or your violation of any rights of a third party.
               </p>

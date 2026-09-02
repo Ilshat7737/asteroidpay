@@ -18,7 +18,7 @@ export function AutoConvert() {
             Every payment lands the way you want it.
           </h2>
           <p className="mt-6 text-lg text-white/70">
-            The moment a payment arrives, HQclouds converts it automatically into a stablecoin like
+            The moment a payment arrives, KShost converts it automatically into a stablecoin like
             USDT or USDC — or straight to fiat — at the live market rate. You never hold volatile
             crypto you didn&apos;t choose to hold.
           </p>

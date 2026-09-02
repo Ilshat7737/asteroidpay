@@ -7,7 +7,7 @@ export function Logo({ className, invert }: { className?: string; invert?: boole
     <Link
       href="/"
       className={`flex items-center gap-2 ${className ?? ""}`}
-      aria-label="HQclouds home"
+      aria-label="KShost home"
     >
       <Image
         src={logo}
@@ -17,7 +17,7 @@ export function Logo({ className, invert }: { className?: string; invert?: boole
         height={28}
         className={`h-7 w-7 shrink-0 ${invert ? "invert" : ""}`}
       />
-      <span className="font-heading text-lg font-bold tracking-tight text-black">HQclouds</span>
+      <span className="font-heading text-lg font-bold tracking-tight text-black">KShost</span>
     </Link>
   );
 }
