@@ -17,28 +17,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hqclouds.com"),
+  metadataBase: new URL("https://kshost.com"),
   title: {
-    default: "HQclouds — Fast, Low-Fee Crypto Payments",
-    template: "%s · HQclouds",
+    default: "KShost — Fast, Low-Fee Crypto Payments",
+    template: "%s · KShost",
   },
   description:
-    "HQclouds is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "KShost is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "HQclouds — Fast, Low-Fee Crypto Payments",
+    title: "KShost — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
     url: "/",
-    siteName: "HQclouds",
+    siteName: "KShost",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "HQclouds — Fast, Low-Fee Crypto Payments",
+    title: "KShost — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
   },
@@ -52,15 +52,15 @@ export const metadata: Metadata = {
 const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "HQclouds",
-  url: "https://hqclouds.com",
-  logo: "https://hqclouds.com/icon.png",
+  name: "KShost",
+  url: "https://kshost.com",
+  logo: "https://kshost.com/icon.png",
   description:
-    "HQclouds is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "KShost is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0A",
+  themeColor: "#0B0C0A",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

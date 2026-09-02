@@ -1,6 +1,6 @@
-# HQclouds Landing Site
+# KShost Landing Site
 
-Marketing site for **HQclouds**, a crypto payment gateway for merchants accepting Bitcoin,
+Marketing site for **KShost**, a crypto payment gateway for merchants accepting Bitcoin,
 Ethereum, and stablecoins across six networks. Single-page landing site with a hero, services,
 supported networks, auto-convert explainer, fees, testimonials, and a final CTA, plus three legal
 routes (`/terms`, `/privacy`, `/aml`) and two glass modals (log in, contact) that any page can open
