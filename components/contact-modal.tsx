@@ -93,7 +93,7 @@ export function ContactModal() {
               name="country"
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger id="contact-country">
+                  <SelectTrigger id="contact-country" className="w-full">
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                   <SelectContent>

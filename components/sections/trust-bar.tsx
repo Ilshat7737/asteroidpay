@@ -40,7 +40,7 @@ export function TrustBar() {
                     different, deliberate treatment — see that file). */}
                 <CoinIcon
                   ticker={coin.ticker}
-                  className="h-6 w-6 transition-[transform,box-shadow] duration-200 group-hover/coin:scale-110 group-hover/coin:shadow-[0_0_12px_rgba(205,232,51,0.5)]"
+                  className="h-6 w-6 transition-[scale,box-shadow] duration-200 group-hover/coin:scale-110 group-hover/coin:shadow-[0_0_12px_rgba(205,232,51,0.5)]"
                 />
                 {coin.ticker}
               </span>
