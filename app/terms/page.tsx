@@ -15,17 +15,17 @@ export default function TermsPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-cream pb-24 pt-32">
+      <main className="bg-background pb-24 pt-32">
         <article className="mx-auto max-w-3xl px-4">
-          <p className="text-sm font-medium text-accent-ink">Legal</p>
-          <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
+          <p className="text-sm font-medium text-accent">Legal</p>
+          <h1 className="mt-2 font-heading text-4xl font-bold text-foreground sm:text-5xl">
             Terms of Use
           </h1>
-          <p className="mt-4 text-sm text-black/50">Last updated: August 31, 2026</p>
+          <p className="mt-4 text-sm text-muted-foreground">Last updated: August 31, 2026</p>
 
-          <div className="mt-12 space-y-10 text-black/80">
+          <div className="mt-12 space-y-10 text-muted-foreground">
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 1. Acceptance of Terms
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -39,7 +39,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 2. Description of Service
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -58,7 +58,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">3. Eligibility</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">3. Eligibility</h2>
               <p className="mt-3 leading-relaxed">
                 You must be at least 18 years old and have the legal capacity to enter into
                 binding contracts to use the Service. Businesses must be validly formed and in
@@ -69,7 +69,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 4. Account and User Obligations
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -88,7 +88,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">5. Fees</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">5. Fees</h2>
               <p className="mt-3 leading-relaxed">
                 Use of the Service is subject to transaction fees starting from 0.3% per
                 successfully settled payment, as described on our website and confirmed in your
@@ -105,7 +105,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 6. Prohibited Uses
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -118,7 +118,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 7. Intellectual Property
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -131,7 +131,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 8. Limitation of Liability
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -144,7 +144,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 9. Indemnification
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -155,7 +155,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">10. Termination</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">10. Termination</h2>
               <p className="mt-3 leading-relaxed">
                 We may suspend or terminate your access to the Service at any time, with or
                 without cause, including where we reasonably suspect a violation of these Terms or
@@ -166,7 +166,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">11. Governing Law</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">11. Governing Law</h2>
               <p className="mt-3 leading-relaxed">
                 These Terms are governed by the laws of the applicable jurisdiction specified in
                 your merchant agreement, without regard to conflict-of-law principles. Any
@@ -176,7 +176,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 12. Changes to These Terms
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -188,7 +188,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">13. Contact</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">13. Contact</h2>
               <p className="mt-3 leading-relaxed">
                 Questions about these Terms can be directed to our team through the contact form
                 on this website.

@@ -15,17 +15,17 @@ export default function AmlPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-cream pb-24 pt-32">
+      <main className="bg-background pb-24 pt-32">
         <article className="mx-auto max-w-3xl px-4">
-          <p className="text-sm font-medium text-accent-ink">Legal</p>
-          <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
+          <p className="text-sm font-medium text-accent">Legal</p>
+          <h1 className="mt-2 font-heading text-4xl font-bold text-foreground sm:text-5xl">
             AML Policy
           </h1>
-          <p className="mt-4 text-sm text-black/50">Last updated: August 31, 2026</p>
+          <p className="mt-4 text-sm text-muted-foreground">Last updated: August 31, 2026</p>
 
-          <div className="mt-12 space-y-10 text-black/80">
+          <div className="mt-12 space-y-10 text-muted-foreground">
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 1. Our Commitment
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -37,7 +37,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 2. Regulatory Framework
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -49,7 +49,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 3. Customer Due Diligence (CDD) and KYC
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -68,7 +68,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 4. Risk-Based Approach
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -83,7 +83,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 5. Transaction Monitoring
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -100,7 +100,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 6. Reporting Suspicious Activity
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -115,7 +115,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 7. Sanctions and Watchlist Screening
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -130,7 +130,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 8. Record Keeping
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -141,7 +141,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 9. Employee Training
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -152,7 +152,7 @@ export default function AmlPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 10. Compliance Contact
               </h2>
               <p className="mt-3 leading-relaxed">

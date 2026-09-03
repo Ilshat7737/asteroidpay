@@ -15,17 +15,17 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-cream pb-24 pt-32">
+      <main className="bg-background pb-24 pt-32">
         <article className="mx-auto max-w-3xl px-4">
-          <p className="text-sm font-medium text-accent-ink">Legal</p>
-          <h1 className="mt-2 font-heading text-4xl font-bold text-black sm:text-5xl">
+          <p className="text-sm font-medium text-accent">Legal</p>
+          <h1 className="mt-2 font-heading text-4xl font-bold text-foreground sm:text-5xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 text-sm text-black/50">Last updated: August 31, 2026</p>
+          <p className="mt-4 text-sm text-muted-foreground">Last updated: August 31, 2026</p>
 
-          <div className="mt-12 space-y-10 text-black/80">
+          <div className="mt-12 space-y-10 text-muted-foreground">
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 1. Information We Collect
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 2. How We Use Your Information
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 3. Cookies and Tracking
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 4. Data Sharing and Third Parties
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 5. Data Retention
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">6. Data Security</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">6. Data Security</h2>
               <p className="mt-3 leading-relaxed">
                 We use administrative, technical, and organizational safeguards designed to
                 protect personal data against unauthorized access, alteration, disclosure, or
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">7. Your Rights</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">7. Your Rights</h2>
               <p className="mt-3 leading-relaxed">
                 Subject to applicable law, you may have the right to access, correct, delete, or
                 port your personal data, and to object to or restrict certain processing. To
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 8. International Data Transfers
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -115,7 +115,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 9. Children&apos;s Privacy
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -126,7 +126,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">
+              <h2 className="font-heading text-xl font-semibold text-foreground">
                 10. Changes to This Policy
               </h2>
               <p className="mt-3 leading-relaxed">
@@ -138,7 +138,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-semibold text-black">11. Contact</h2>
+              <h2 className="font-heading text-xl font-semibold text-foreground">11. Contact</h2>
               <p className="mt-3 leading-relaxed">
                 Questions about this Privacy Policy or requests concerning your personal data can
                 be directed to our team through the contact form on this website.
