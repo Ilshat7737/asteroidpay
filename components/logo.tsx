@@ -6,10 +6,10 @@ export function Logo({ className }: { className?: string }) {
     <Link
       href="/"
       className={`flex items-center gap-2 ${className ?? ""}`}
-      aria-label="KShost home"
+      aria-label="AsteroidPay home"
     >
       <LogoMark size={28} className="h-7 w-7 shrink-0" />
-      <span className="font-heading text-lg font-bold tracking-tight text-foreground">KShost</span>
+      <span className="font-heading text-lg font-bold tracking-tight text-foreground">AsteroidPay</span>
     </Link>
   );
 }

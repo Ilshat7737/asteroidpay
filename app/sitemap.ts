@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://kshost.com";
+const BASE_URL = "https://asteroidpay.io";
 
 // Content-modification dates, not build/deploy timestamps. The three legal
 // pages show this same date as "Last updated" in their visible copy — keep

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://kshost.com/sitemap.xml",
+    sitemap: "https://asteroidpay.io/sitemap.xml",
   };
 }

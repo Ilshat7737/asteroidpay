@@ -21,7 +21,7 @@ export default function OpengraphImage() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
           <LogoMark size={56} />
-          <div style={{ fontSize: 40, fontWeight: 700 }}>KShost</div>
+          <div style={{ fontSize: 40, fontWeight: 700 }}>AsteroidPay</div>
         </div>
         <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.1, maxWidth: 900 }}>
           Fast, low-fee crypto payments.

@@ -1,8 +1,9 @@
-// The KShost "K-flow" mark: the lower leg of the K is drawn as an outgoing
-// arrow (a payment leaving the gateway). Geometry extracted verbatim from the
-// approved Task 1 style tile (Claude Design canvas, "The K-flow mark" section,
-// "Primary lockup" / "App icon / favicon" swatches) — do not redraw or
-// approximate; edit the source tile first if the mark needs to change.
+// Temporary placeholder for the AsteroidPay "A" mark, pending the final
+// asset from the user. logo.tsx, app/icon.tsx, app/apple-icon.tsx, and
+// app/opengraph-image.tsx all consume this one file, so replacing the asset
+// later only requires editing here (or swapping this component's internals
+// for an <img>/next/image if the final asset is a raster/vector file rather
+// than inline paths).
 //
 // Uses only <svg>/<rect>/<path> with solid fills and strokes (no gradients or
 // filters), so it renders identically via Tailwind in the browser and via
@@ -39,15 +40,9 @@ export function LogoMark({
       ) : (
         <rect width="44" height="44" rx="13" fill={ACCENT} />
       )}
-      <path d="M15 12V32" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" />
-      <path
-        d="M29.5 12L17.5 22L29.5 32"
-        stroke={INK}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M22.5 22H33" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" />
+      <path d="M22 10 12 34" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 10 32 34" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M16.2 24H27.8" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" />
     </svg>
   );
 }

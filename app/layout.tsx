@@ -23,28 +23,28 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kshost.com"),
+  metadataBase: new URL("https://asteroidpay.io"),
   title: {
-    default: "KShost — Fast, Low-Fee Crypto Payments",
-    template: "%s · KShost",
+    default: "AsteroidPay — Fast, Low-Fee Crypto Payments",
+    template: "%s · AsteroidPay",
   },
   description:
-    "KShost is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "AsteroidPay is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "KShost — Fast, Low-Fee Crypto Payments",
+    title: "AsteroidPay — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
     url: "/",
-    siteName: "KShost",
+    siteName: "AsteroidPay",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KShost — Fast, Low-Fee Crypto Payments",
+    title: "AsteroidPay — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
   },
@@ -58,11 +58,11 @@ export const metadata: Metadata = {
 const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "KShost",
-  url: "https://kshost.com",
-  logo: "https://kshost.com/icon.png",
+  name: "AsteroidPay",
+  url: "https://asteroidpay.io",
+  logo: "https://asteroidpay.io/icon.png",
   description:
-    "KShost is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "AsteroidPay is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
 };
 
 export const viewport: Viewport = {

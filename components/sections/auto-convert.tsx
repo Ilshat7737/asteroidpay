@@ -170,7 +170,7 @@ export function AutoConvert() {
             Every payment lands the way you want it.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            The moment a payment arrives, KShost converts it automatically into a stablecoin like
+            The moment a payment arrives, AsteroidPay converts it automatically into a stablecoin like
             USDT or USDC — or straight to fiat — at the live market rate. You never hold volatile
             crypto you didn&apos;t choose to hold.
           </p>
