@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import { animate, motion, useMotionValue, useTransform, type MotionValue } from "framer-motion";
+import { animate, motion, useMotionValue, useTime, useTransform, type MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
@@ -78,12 +78,12 @@ function ringOpacity(phi: number) {
 }
 
 function meridianOpacity(angle: number) {
-  // Latitude rings are rotationally symmetric about the spin axis, so they
-  // never change depth as the sphere spins — but meridians sweep through
-  // every facing. Since the ramp is a fixed 3-step approximation rather than
-  // a live per-frame recompute, it's assigned by each meridian's angle at
-  // rest: 0° faces the camera most directly, 72°/108° are nearest edge-on
-  // (closest to a 90° turn away), and 36°/144° sit in between.
+  // Every meridian passes through the sphere's center, so none is actually
+  // "further away" than another — this isn't a depth cue. It's a fixed,
+  // intentional line-weight decoration keyed to each meridian's angle at
+  // rest, so the wireframe reads as less uniform/flat: 0° (most face-on at
+  // rest) gets the boldest line, 72°/108° (nearest edge-on, closest to a 90°
+  // turn) the faintest, and 36°/144° in between.
   if (angle === 0) return DEPTH.near;
   if (angle === 36 || angle === 144) return DEPTH.mid;
   return DEPTH.far;
@@ -123,8 +123,9 @@ const LANDING_POINTS = [
   { name: "zeta", lambda: 324, phi: 34 },
 ] as const;
 
-// Staggered fall-start times across the 32s spin loop so the six cubes don't
-// all drop in unison.
+// Staggered fall-start times (seconds after mount) spread across one spin
+// period so the six cubes don't all drop in unison. Each cube falls once and
+// stays landed/orbiting thereafter — see FallingCube's `progress`.
 const FALL_DELAY_SECONDS = LANDING_POINTS.map((_, i) => (i * SPIN_SECONDS) / LANDING_POINTS.length);
 
 function easeInOutCubic(t: number) {
@@ -187,7 +188,7 @@ function GlobeWireframe({ spin }: { spin: MotionValue<number> }) {
     >
       <div
         className="relative h-full w-full"
-        style={{ transformStyle: "preserve-3d", transform: `rotateX(${TILT_DEG}deg)` }}
+        style={{ transformStyle: "preserve-3d", transform: `rotateX(${-TILT_DEG}deg)` }}
       >
         <motion.div className="relative h-full w-full" style={{ transformStyle: "preserve-3d", rotateY: spin }}>
           {MERIDIAN_ANGLES.map((angle) => (
@@ -250,23 +251,29 @@ function FallingCube({
   point,
   delay,
   spin,
+  time,
   reducedMotion,
 }: {
   point: (typeof LANDING_POINTS)[number];
   delay: number;
   spin: MotionValue<number>;
+  time: MotionValue<number>;
   reducedMotion: boolean;
 }) {
-  const cycleTime = useTransform(spin, (s) => (s / 360) * SPIN_SECONDS);
   const liveLambda = useTransform(spin, (s) => point.lambda + s);
   const liveX = useTransform(liveLambda, (l) => projectLatLong(l, point.phi).x);
   const liveY = useTransform(liveLambda, (l) => projectLatLong(l, point.phi).y);
 
-  // 0 = still waiting at the spawn band, 1 = landed. Reduced motion pins this
-  // at 1 so every cube renders at its landed position, statically.
-  const progress = useTransform(cycleTime, (t) => {
+  // 0 = still waiting at the spawn band, 1 = landed — driven by `time`, a
+  // monotonic elapsed-ms-since-mount clock that never resets, NOT by `spin`
+  // (which sawtooths 360 -> 0 every 32s to keep looping). Deriving this from
+  // spin used to make every cube's progress snap back to 0 in the same frame
+  // the spin loop wrapped, blacking out all six cubes at once every 32s.
+  // Once a cube lands it stays landed forever; `spin` still drives its
+  // continued orbit separately via `liveLambda` above.
+  const progress = useTransform(time, (ms) => {
     if (reducedMotion) return 1;
-    const local = t - delay;
+    const local = ms / 1000 - delay;
     if (local <= 0) return 0;
     if (local >= FALL_SECONDS) return 1;
     return easeInOutCubic(local / FALL_SECONDS);
@@ -304,6 +311,7 @@ function FallingCube({
 export function HeroGlobe({ className }: { className?: string }) {
   const reducedMotion = useReducedMotion();
   const spin = useMotionValue(0);
+  const time = useTime(); // independent, monotonic clock for cube fall/landing
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -329,6 +337,7 @@ export function HeroGlobe({ className }: { className?: string }) {
           point={point}
           delay={FALL_DELAY_SECONDS[i]}
           spin={spin}
+          time={time}
           reducedMotion={reducedMotion}
         />
       ))}
