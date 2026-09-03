@@ -3,7 +3,6 @@ import { Hero } from "@/components/sections/hero";
 import { TrustBar } from "@/components/sections/trust-bar";
 import { Services } from "@/components/sections/services";
 import { AutoConvert } from "@/components/sections/auto-convert";
-import { Fees } from "@/components/sections/fees";
 import { Testimonials } from "@/components/sections/testimonials";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Footer } from "@/components/footer";
@@ -17,7 +16,6 @@ export default function Home() {
         <TrustBar />
         <Services />
         <AutoConvert />
-        <Fees />
         <Testimonials />
         <FinalCta />
       </main>
