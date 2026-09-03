@@ -275,7 +275,7 @@ export function Services() {
             <motion.div
               key={network.id}
               variants={cardVariants}
-              className="min-w-[80%] shrink-0 snap-start rounded-2xl border border-border bg-card p-7 transition-transform duration-200 hover:-translate-y-1 hover:border-accent/40 sm:min-w-0 sm:shrink"
+              className="min-w-[80%] shrink-0 snap-start rounded-2xl border border-border bg-card p-7 transition-[transform,border-color,box-shadow] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:scale-[1.02] hover:border-accent hover:shadow-[0_0_48px_rgba(205,232,51,0.28)] sm:min-w-0 sm:shrink"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
