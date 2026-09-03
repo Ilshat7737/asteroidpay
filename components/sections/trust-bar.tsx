@@ -9,30 +9,49 @@
 // KShost's dark-section tokens as a coin icon + ticker row.
 import { coins } from "@/lib/data/coins";
 import { CoinIcon } from "@/components/coin-icon";
+import { Reveal } from "@/components/ui/reveal";
 
 export function TrustBar() {
   const items = [...coins, ...coins];
 
   return (
-    <section className="border-y border-white/10 bg-black py-10">
-      <p className="text-center text-xs font-medium uppercase tracking-widest text-white/40">
-        50+ popular coins supported
-      </p>
-      <div className="group relative mt-6 overflow-hidden motion-reduce:overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] motion-reduce:[mask-image:none]">
-        <div className="flex w-max animate-[marquee_220s_linear_infinite] items-center gap-10 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
-          {items.map((coin, i) => (
-            <span
-              key={`${coin.ticker}-${i}`}
-              aria-hidden={i >= coins.length ? "true" : undefined}
-              title={coin.name}
-              className="flex shrink-0 items-center gap-2 whitespace-nowrap text-base font-semibold text-white/70 transition-colors duration-200 hover:text-white"
-            >
-              <CoinIcon ticker={coin.ticker} className="h-6 w-6" />
-              {coin.ticker}
-            </span>
-          ))}
+    <section className="border-y border-border bg-background py-10">
+      <Reveal>
+        <p className="text-center text-xs font-medium uppercase tracking-widest text-muted-foreground">
+          50+ popular coins supported
+        </p>
+      </Reveal>
+      <Reveal>
+        <div className="group relative mt-6 overflow-hidden motion-reduce:overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] motion-reduce:[mask-image:none]">
+          <div className="flex w-max animate-[marquee_220s_linear_infinite] items-center gap-10 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+            {items.map((coin, i) => (
+              <span
+                key={`${coin.ticker}-${i}`}
+                aria-hidden={i >= coins.length ? "true" : undefined}
+                title={coin.name}
+                className="group/coin flex shrink-0 items-center gap-2 whitespace-nowrap text-base font-semibold text-muted-foreground transition-colors duration-200 hover:text-foreground"
+              >
+                {/* Coin marks render via CoinIcon's next/image, which can't be
+                    recoloured with currentColor. Per the approved TrustBar
+                    artboard's decision, this marquee goes monochrome by
+                    default with a lime tint on hover — achieved without
+                    touching coin-icon.tsx via a mix-blend-mode overlay that
+                    tints the icon toward a solid hue regardless of its
+                    source colors. Network icons on Services stay full lime
+                    (a different, deliberate treatment — see that file). */}
+                <span className="relative inline-flex h-6 w-6 shrink-0">
+                  <CoinIcon ticker={coin.ticker} className="h-6 w-6" />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 rounded-full bg-muted-foreground mix-blend-color transition-colors duration-200 group-hover/coin:bg-accent"
+                  />
+                </span>
+                {coin.ticker}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
