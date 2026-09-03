@@ -35,10 +35,10 @@ export function Hero() {
               Contact us
             </Button>
             <Link
-              href="/#fees"
+              href="/#services"
               className="inline-flex h-12 items-center justify-center rounded-full border border-input px-8 text-sm font-medium text-foreground hover:bg-muted"
             >
-              See fees
+              See pricing
             </Link>
           </div>
         </div>
