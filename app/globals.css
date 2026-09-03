@@ -95,5 +95,5 @@
   --ring: oklch(0.8815 0.1922 118.25);
   --accent-hover: oklch(0.9171 0.1733 117.03);
   --accent-dim: oklch(0.7483 0.1665 118.87);
-  --radius: 0.625rem;
+  --radius: 1rem;
 }
