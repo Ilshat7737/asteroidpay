@@ -1,10 +1,10 @@
-# KShost Content & Layout Redesign — Design Spec
+# AsteroidPay Content & Layout Redesign — Design Spec
 
 **Status:** Approved (design). Copy deck pending separate approval before implementation.
 
 ## Context
 
-The KShost homepage (rebranded from HQclouds in the prior redesign, see
+The AsteroidPay homepage (rebranded from HQclouds in the prior redesign, see
 `2026-09-02-kshost-redesign-design.md`) currently ships 7 sections: Hero,
 TrustBar (coins), Services (payment gateway), Auto-convert, Fees,
 Testimonials, Final CTA. Visual identity (dark + lime, tokens, motion) is
@@ -18,15 +18,17 @@ consumer-facing crypto wallet.
 
 ## Business Scope
 
-KShost's product surface expands from "payment gateway only" to two
+AsteroidPay's product surface expands from "payment gateway only" to two
 product lines, marketed on the same homepage:
 
 1. **Payment gateway** (existing) — merchants accept crypto payments,
    auto-convert to stablecoin/fiat, white-label the checkout, integrate
    via API.
-2. **Wallet** (new) — a standalone, self-custody, multi-chain crypto
-   wallet for end users, with Receive / Send / Convert as its three core
-   actions. This is explicitly a different audience and different mental
+2. **Wallet** (new) — a standalone, centralized **hot wallet** (always
+   online, not cold/self-custody storage), multi-chain, for end users to
+   hold funds in one place regardless of the coin/network they arrived
+   on, with Receive / Send / Convert as its three core actions. This is
+   explicitly a different audience and different mental
    model than the gateway's Auto-convert (which is a merchant settlement
    mechanism, not a user-facing swap) — copy must keep these distinct.
 
@@ -39,10 +41,11 @@ existing convention (`#fees`, `#networks`).
 Tone, structure, and value-prop framing draw from: **NOWPayments,
 CoinGate, Plisio, BitPay, Coinbase Commerce** (gateway-side blocks:
 Payment gateway, API, White-label, Auto-convert) and, for the
-wallet-specific blocks (Wallet, Receive, Send, Convert), the
-self-custody-wallet framing used by products like Coinbase Wallet —
-multi-chain support, non-custodial security messaging, plain-language
-send/receive/swap copy. Not a visual reference — visual identity is
+wallet-specific blocks (Wallet, Receive, Send, Convert), a **hot-wallet**
+framing (always-online, centralized custody, convenience-first) — funds
+land in one balance regardless of the coin/network they arrived on,
+ready to spend, send, or convert immediately, with no cold-storage or
+key-management messaging. Not a visual reference — visual identity is
 already locked to the existing dark+lime token system; only copy
 structure and value-prop angles are borrowed.
 
@@ -104,9 +107,9 @@ Developer-facing block:
   request/response for creating a payment.
 - Bullet list: webhooks, sandbox environment, official SDKs, idempotent
   requests (or similar developer-relevant points).
-- CTA: link to docs (can point to `#` or an existing docs route if one
-  exists — verify at implementation time; do not invent a fake working
-  link if none exists).
+- CTA: "Contact us" opening the existing contact modal — no docs route
+  exists or is being added; access goes through contacting the team,
+  same as every other CTA on the page.
 
 ### Auto-convert
 Copy refresh (same underlying mechanism: instant conversion to
@@ -117,7 +120,7 @@ be reused or adapted, not necessarily rebuilt from scratch.
 ### White-label (new)
 B2B branding block:
 - Headline: the merchant's checkout and dashboard carry their own brand,
-  not KShost's.
+  not AsteroidPay's.
 - Bullets: custom domain, custom logo/colors, no third-party branding
   shown to the merchant's own customers, dedicated support tier.
 - Visual: can reuse the existing card/mockup visual vocabulary (e.g. a
@@ -132,24 +135,37 @@ out of scope unless explicitly requested later.
 
 ### Wallet (new)
 Introduces the second product line:
-- Headline: a personal, multi-chain, self-custody wallet.
-- Bullets: multi-chain support, self-custody (user holds the keys),
-  security framing (no custodial risk).
+- Headline: a hot wallet — always online, always ready, centralized
+  custody (explicitly NOT self-custody/cold-storage messaging).
+- Bullets: always-online/no hardware, one centralized balance across
+  networks, built for everyday use rather than long-term storage.
 - Visual: app-mockup style, consistent with the existing isometric-cube
   illustration vocabulary already used in Services/Auto-convert/Hero.
+- CTA: "Get the wallet" opens a new lightweight registration/early-access
+  modal (name + email), following the existing `login-modal.tsx` /
+  `contact-modal.tsx` pattern, submitted through the existing working
+  `/api/contact` endpoint (tagged as a wallet signup) with a real success
+  confirmation. No new password-based account backend — out of scope.
+  This is a small addition to `modal-provider.tsx`'s modal-type union
+  and one new modal component; the implementation plan owns the exact
+  file/field list.
 
 ### Receive (new)
-Feature block: generate a receive address / QR code, supported networks
-list, balance updates instantly on confirmation.
+Feature block: topping up the wallet's centralized balance from any coin
+on any network — value is consolidation ("hold funds in one safe place
+without being tied to a network"), not a merchant "get paid" framing.
 
 ### Send (new)
-Feature block: send to any address or exchange, network fee transparency,
-optional saved-recipients framing.
+Feature block: sending/spending funds across networks — paying for goods
+and services, transferring to others — without the user needing to match
+networks themselves.
 
 ### Convert (new)
-Feature block: swap between assets inside the wallet at a live rate, no
-separate exchange needed. Copy must explicitly read as a *user-initiated
-swap inside their own wallet*, distinct from the gateway's Auto-convert
+Feature block: converting funds inside the wallet regardless of which
+network/coin they originally arrived on — value is network-agnostic
+conversion of an already-consolidated balance, at a live rate, no
+external exchange needed. Copy must still read as a *user-initiated
+action inside their own wallet*, distinct from the gateway's Auto-convert
 (a merchant's inbound-payment settlement mechanism) — these are two
 different features for two different audiences and must not blur
 together in either section's copy.
@@ -183,6 +199,43 @@ they're discoverable from anywhere on the page.
   content genuinely doesn't fit any existing primitive (e.g. the API
   code-mockup card is new because nothing like it exists yet).
 
+## Brand Rename: KShost → AsteroidPay
+
+Mid-task addition: the brand name changes again, from KShost to
+**AsteroidPay**. This is a full-codebase rename sweep, not limited to the
+13 homepage blocks above:
+
+- **Text sweep** — every "KShost" occurrence across `.tsx`/`.ts`/legal
+  content becomes "AsteroidPay": `app/terms/page.tsx`, `app/privacy/page.tsx`,
+  `app/aml/page.tsx`, `components/footer.tsx` (incl. the large footer
+  wordmark), `components/login-modal.tsx`, `lib/data/testimonials.ts`
+  (brand-name mentions inside quotes only — renaming the entity a
+  customer is quoted praising is not the same as rewriting their
+  message, so this does NOT conflict with "testimonial quotes kept
+  verbatim" above), and both new spec docs (already done in this pass).
+- **Domain placeholder** — `kshost.com` → `asteroidpay.io` everywhere it
+  appears: `app/layout.tsx` (`metadataBase`, Organization JSON-LD `url`
+  and `logo`), `app/robots.ts` (sitemap URL), `app/sitemap.ts`
+  (`BASE_URL`).
+- **Logo mark** — the current mark (`components/logo-mark.tsx`) is a
+  stylized "K" (K-flow), which doesn't fit a brand starting with "A".
+  The user will supply a new logo asset later. Until then, implementation
+  uses a **plain, minimal placeholder** (e.g. wordmark-only, or a simple
+  neutral geometric mark) rather than investing design effort in a new
+  custom "A" mark that will just be discarded — the placeholder should be
+  trivial to swap out for the final asset in one file
+  (`components/logo-mark.tsx`, consumed by `logo.tsx`, `app/icon.tsx`,
+  `app/apple-icon.tsx`, `app/opengraph-image.tsx`).
+- **File/dir names** — files and folders literally named `kshost*` (e.g.
+  `docs/superpowers/design-refs/2026-09-02-kshost-tokens.md`, the plan
+  and spec files from the prior redesign) are **left as-is** — they're
+  dated historical records of the prior HQclouds→KShost redesign, not
+  live brand surface. Only user-facing text and code identifiers/URLs
+  that render or resolve as the brand name change.
+
+This rename is folded into the same implementation plan and execution
+pass as the content/layout work below, not a separate cycle.
+
 ## Process
 
 1. **This spec** — written and committed (this document).
@@ -202,7 +255,11 @@ they're discoverable from anywhere on the page.
 ## Out of Scope
 
 - Any change to the already-completed visual identity (colors, fonts,
-  radii, motion tokens, hero globe).
+  radii, motion tokens, hero globe) — the brand-name text/domain sweep
+  above is the one exception, since it's required by the rename, not a
+  visual-identity redesign.
+- Designing a new custom logo mark — a plain placeholder is used until
+  the user supplies their own asset (see Brand Rename above).
 - New routes/pages — everything is a same-page anchor section.
 - Rewriting testimonial quotes/attributions.
 - Backend/API implementation — the API section is marketing copy about
