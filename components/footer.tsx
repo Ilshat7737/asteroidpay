@@ -14,11 +14,14 @@ export function Footer() {
           <Link href="/#services" className={FOOTER_LINK_CLASS}>
             Solutions
           </Link>
-          <Link href="/#networks" className={FOOTER_LINK_CLASS}>
-            Networks
+          <Link href="/#api" className={FOOTER_LINK_CLASS}>
+            API
           </Link>
-          <Link href="/#fees" className={FOOTER_LINK_CLASS}>
-            Fees
+          <Link href="/#white-label" className={FOOTER_LINK_CLASS}>
+            White-label
+          </Link>
+          <Link href="/#wallet" className={FOOTER_LINK_CLASS}>
+            Wallet
           </Link>
           <Link href="/#reviews" className={FOOTER_LINK_CLASS}>
             Reviews
