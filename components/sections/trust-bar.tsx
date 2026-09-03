@@ -17,7 +17,7 @@ export function TrustBar() {
   return (
     <section className="border-y border-border bg-background py-10">
       <Reveal>
-        <p className="text-center text-xs font-medium uppercase tracking-widest text-muted-foreground">
+        <p className="text-center font-mono text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase">
           50+ popular coins supported
         </p>
       </Reveal>
@@ -31,21 +31,20 @@ export function TrustBar() {
                 title={coin.name}
                 className="group/coin flex shrink-0 items-center gap-2 whitespace-nowrap text-base font-semibold text-muted-foreground transition-colors duration-200 hover:text-foreground"
               >
-                {/* Coin marks render via CoinIcon's next/image, which can't be
-                    recoloured with currentColor. Per the approved TrustBar
-                    artboard's decision, this marquee goes monochrome by
-                    default with a lime tint on hover — achieved without
-                    touching coin-icon.tsx via a mix-blend-mode overlay that
-                    tints the icon toward a solid hue regardless of its
-                    source colors. Network icons on Services stay full lime
-                    (a different, deliberate treatment — see that file). */}
-                <span className="relative inline-flex h-6 w-6 shrink-0">
-                  <CoinIcon ticker={coin.ticker} className="h-6 w-6" />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 rounded-full bg-muted-foreground mix-blend-color transition-colors duration-200 group-hover/coin:bg-accent"
-                  />
-                </span>
+                {/* Per the approved TrustBar artboard's decision, this
+                    marquee goes monochrome by default with a lime tint on
+                    hover. CoinIcon renders each mark as a mask-image (alpha
+                    only, ignores the source SVG's RGB) filled with
+                    currentColor, so these text-color classes tint it
+                    uniformly regardless of the icon's original palette —
+                    unlike mix-blend-mode, this also works on the several
+                    coin marks that are pure black/near-black at rest.
+                    Network icons on Services stay full lime (a different,
+                    deliberate treatment — see that file). */}
+                <CoinIcon
+                  ticker={coin.ticker}
+                  className="h-6 w-6 text-muted-foreground transition-colors duration-200 group-hover/coin:text-accent"
+                />
                 {coin.ticker}
               </span>
             ))}
