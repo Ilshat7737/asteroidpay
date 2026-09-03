@@ -1,15 +1,17 @@
 # AsteroidPay Landing Site
 
 Marketing site for **AsteroidPay**, a crypto payment gateway for merchants accepting Bitcoin,
-Ethereum, and stablecoins across six networks. Single-page landing site with a hero, services,
-supported networks, auto-convert explainer, fees, testimonials, and a final CTA, plus three legal
-routes (`/terms`, `/privacy`, `/aml`) and two glass modals (log in, contact) that any page can open
-from the header.
+Ethereum, and stablecoins across six networks. Single-page landing site with a hero, trust bar,
+services (payment gateway + supported networks), API, auto-convert explainer, white-label,
+testimonials, wallet, receive, send, convert, and a final CTA, plus three legal routes (`/terms`,
+`/privacy`, `/aml`) and three glass modals (log in, contact, register) that any page can open from
+the header.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4, shadcn/ui on Radix, framer-motion for
 motion, and react-hook-form + zod for form validation. Typography is Space Grotesk (headings) and
-Inter (body), loaded via `next/font`. The contact form posts to the `/api/contact` route handler,
-which validates with the shared zod schema and currently logs the submission server-side.
+Inter (body), loaded via `next/font`. The contact and register forms post to the `/api/contact` and
+`/api/register` route handlers, which validate with the shared zod schemas and currently log the
+submission server-side.
 
 ## Local development
 

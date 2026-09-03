@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import { ModalProvider } from "@/components/modal-provider";
 import { LoginModal } from "@/components/login-modal";
 import { ContactModal } from "@/components/contact-modal";
@@ -83,12 +84,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <ModalProvider>
-          {children}
-          <LoginModal />
-          <ContactModal />
-          <RegisterModal />
-        </ModalProvider>
+        <MotionConfig reducedMotion="user">
+          <ModalProvider>
+            {children}
+            <LoginModal />
+            <ContactModal />
+            <RegisterModal />
+          </ModalProvider>
+        </MotionConfig>
       </body>
     </html>
   );

@@ -3,8 +3,8 @@
 // Adapted from 21st.dev's "Reveal" component (asanshay/reveal,
 // https://21st.dev/@asanshay/components/reveal): a wrapper that fades its
 // children into view on scroll (replaying on every entry, not just the
-// first), with an index-based stagger delay. Used by fees.tsx, trust-bar.tsx,
-// and testimonials.tsx.
+// first), with an index-based stagger delay. Used by trust-bar.tsx,
+// testimonials.tsx, white-label.tsx, and footer.tsx.
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 // Not framer-motion's own `useReducedMotion` — see lib/use-reduced-motion.ts

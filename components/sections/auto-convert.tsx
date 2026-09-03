@@ -31,9 +31,9 @@ function ArrowIcon() {
 // Inline SVG extracted from the approved AutoConvert artboard, replacing the
 // old autoConvertIllustration PNG (a saturated pink 3D render). Reproduces
 // the same information architecture beat for beat — four inbound coins with
-// a descending opacity ramp, one gateway carrying the K-flow mark, three
-// labelled settlement outputs (USDT / USDC / FIAT) — token-driven via
-// var(--color-*) instead of hardcoded hex.
+// a descending opacity ramp, one gateway carrying the AsteroidPay placeholder
+// mark, three labelled settlement outputs (USDT / USDC / FIAT) — token-driven
+// via var(--color-*) instead of hardcoded hex.
 function AutoConvertIllustration({ className }: { className?: string }) {
   return (
     <svg width="552" height="368" viewBox="0 0 552 368" aria-hidden="true" className={className}>
@@ -103,15 +103,15 @@ function AutoConvertIllustration({ className }: { className?: string }) {
       <circle cx="132" cy="240" r="5" fill="var(--color-accent)" fillOpacity="0.3" />
       <circle cx="176" cy="186" r="3" fill="var(--color-accent)" fillOpacity="0.5" />
 
-      {/* the gateway, carrying the K-flow mark */}
+      {/* the gateway, carrying the AsteroidPay placeholder mark */}
       <rect x="236" y="112" width="128" height="144" rx="30" fill="var(--color-background)" stroke="var(--color-accent)" strokeOpacity="0.55" strokeWidth="1.4" />
       <rect x="236" y="112" width="128" height="144" rx="30" fill="none" stroke="var(--color-accent)" strokeOpacity="0.14" strokeWidth="9" />
       <circle cx="300" cy="184" r="34" fill="none" stroke="var(--color-accent)" strokeOpacity="0.65" strokeWidth="1.3" />
       <circle cx="300" cy="184" r="22" fill="none" stroke="var(--color-accent)" strokeOpacity="0.30" strokeWidth="1" />
       <g transform="translate(300,184) scale(0.62) translate(-22,-22)">
-        <path d="M15 12V32" stroke="var(--color-accent)" strokeWidth="3.4" strokeLinecap="round" />
-        <path d="M29.5 12L17.5 22L29.5 32" stroke="var(--color-accent)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M22.5 22H33" stroke="var(--color-accent)" strokeWidth="3.4" strokeLinecap="round" />
+        <path d="M22 12 12 33" stroke="var(--color-accent)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M22 12 33 33" stroke="var(--color-accent)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16.5 24.5H28.5" stroke="var(--color-accent)" strokeWidth="3.4" strokeLinecap="round" />
       </g>
       <rect x="278" y="236" width="44" height="4" rx="2" fill="var(--color-accent)" fillOpacity="0.5" />
       <text x="300" y="98" textAnchor="middle" fill="var(--color-muted-foreground)" fontFamily="'JetBrains Mono', monospace" fontSize="10" letterSpacing="0.14em">
@@ -167,7 +167,7 @@ export function AutoConvert() {
           transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <p className="font-mono text-xs font-medium tracking-[0.12em] text-accent uppercase">Auto-convert</p>
-          <h2 className="font-heading text-4xl font-bold sm:text-5xl">
+          <h2 className="mt-3 font-heading text-4xl font-bold sm:text-5xl">
             Every payment lands the way you want it.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
