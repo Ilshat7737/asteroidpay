@@ -1,10 +1,10 @@
 "use client";
 
 // Adapted from 21st.dev's "Reveal" component (asanshay/reveal,
-// https://21st.dev/@asanshay/components/reveal): a wrapper that fades and
-// un-blurs its children into view on scroll, with an index-based stagger
-// delay. Used only in components/sections/fees.tsx — kept local rather than
-// reused across sections so each section's scroll effect stays distinct.
+// https://21st.dev/@asanshay/components/reveal): a wrapper that fades its
+// children into view on scroll (replaying on every entry, not just the
+// first), with an index-based stagger delay. Used by fees.tsx, trust-bar.tsx,
+// and testimonials.tsx.
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 // Not framer-motion's own `useReducedMotion` — see lib/use-reduced-motion.ts
@@ -29,10 +29,17 @@ const VARIANTS: Variants = {
 // prefers-reduced-motion: a 12px opacity fade is a small enough motion delta
 // (per the token table's own framing) to keep even under reduced motion, so
 // only the y-offset is dropped — the fade itself still plays.
+// `y: 0` is explicit (not omitted) in both states: the SSR render always
+// starts from `reducedMotion === false` (see lib/use-reduced-motion.ts), so
+// `initial="hidden"` first applies VARIANTS.hidden (y: 12) before hydration
+// can flip these variants in — an omitted `y` here would leave that 12px
+// offset stuck forever, since framer-motion never animates a key the target
+// variant doesn't mention.
 const REDUCED_VARIANTS: Variants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 0 },
   show: (i: number = 0) => ({
     opacity: 1,
+    y: 0,
     transition: { delay: i * 0.1, duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
   }),
 };

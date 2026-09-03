@@ -25,9 +25,8 @@ const cardVariants: Variants = {
 // network cards — deliberately full lime (var(--color-accent)) on a
 // bg-muted disc, unlike TrustBar's monochrome coin marquee (a different,
 // disjoint component/treatment; see trust-bar.tsx). Drawn inline rather
-// than routed through network-icon.tsx's next/image-based brand SVGs,
-// which can't be recolored with currentColor and don't match the
-// artboard's simplified geometry.
+// than as next/image-based brand SVGs, which can't be recolored with
+// currentColor and don't match the artboard's simplified geometry.
 const NETWORK_GLYPHS: Record<string, ReactNode> = {
   bitcoin: (
     <path
