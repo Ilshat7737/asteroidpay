@@ -108,27 +108,29 @@ const FEE_POINTS = [
 
 export function Fees() {
   return (
-    <section id="fees" className="bg-cream py-28">
+    <section id="fees" className="bg-background py-28">
       <div className="mx-auto max-w-5xl px-4">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-accent-ink">Pricing</p>
-          <h2 className="mt-3 font-heading text-5xl font-bold text-black sm:text-6xl">From 0.3%</h2>
-          <p className="mt-4 text-black/60">
+          <p className="font-mono text-xs font-medium tracking-[0.12em] text-accent uppercase">Pricing</p>
+          <h2 className="mt-3 font-heading text-5xl font-bold text-foreground sm:text-6xl">
+            From <span className="text-accent">0.3%</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground">
             per successful transaction — the rate drops further as your volume grows.
           </p>
         </Reveal>
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEE_POINTS.map(({ Icon, title, description }, i) => (
             <Reveal key={title} index={i}>
-              <div className="h-full rounded-3xl border border-black/10 bg-white p-6 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.15)] transition-transform duration-200 hover:-translate-y-1">
+              <div className="h-full rounded-3xl border border-border bg-card p-6 transition-[transform,border-color,box-shadow] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:scale-[1.02] hover:border-accent hover:shadow-[0_0_48px_rgba(205,232,51,0.28)]">
                 <div className="relative h-14 w-14">
-                  <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rotate-6 rounded-2xl bg-accent/15" />
-                  <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-[0_8px_20px_-6px_rgba(0,0,0,0.15)] ring-1 ring-black/5">
-                    <Icon className="h-6 w-6 text-accent-ink" />
+                  <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rotate-6 rounded-xl bg-accent/15" />
+                  <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-muted">
+                    <Icon className="h-6 w-6 text-accent" />
                   </div>
                 </div>
-                <h3 className="mt-5 font-heading text-lg font-semibold text-black">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/60">{description}</p>
+                <h3 className="mt-5 font-heading text-lg font-semibold text-foreground">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
               </div>
             </Reveal>
           ))}
