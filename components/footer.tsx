@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="overflow-hidden bg-black py-12 text-white/60">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 sm:flex-row sm:justify-between">
-        <Logo className="[&_span]:text-white" invert />
+        <Logo className="[&_span]:text-foreground" />
         <nav className="flex flex-wrap justify-center gap-6 text-sm">
           <Link href="/#services">Solutions</Link>
           <Link href="/#networks">Networks</Link>
