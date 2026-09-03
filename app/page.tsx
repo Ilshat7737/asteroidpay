@@ -6,6 +6,7 @@ import { Api } from "@/components/sections/api";
 import { AutoConvert } from "@/components/sections/auto-convert";
 import { WhiteLabel } from "@/components/sections/white-label";
 import { Testimonials } from "@/components/sections/testimonials";
+import { Wallet } from "@/components/sections/wallet";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Footer } from "@/components/footer";
 
@@ -21,6 +22,7 @@ export default function Home() {
         <AutoConvert />
         <WhiteLabel />
         <Testimonials />
+        <Wallet />
         <FinalCta />
       </main>
       <Footer />

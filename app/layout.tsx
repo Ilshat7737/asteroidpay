@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { ModalProvider } from "@/components/modal-provider";
 import { LoginModal } from "@/components/login-modal";
 import { ContactModal } from "@/components/contact-modal";
+import { RegisterModal } from "@/components/register-modal";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <LoginModal />
           <ContactModal />
+          <RegisterModal />
         </ModalProvider>
       </body>
     </html>

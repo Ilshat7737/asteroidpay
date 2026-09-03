@@ -2,12 +2,13 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-type ModalType = "login" | "contact" | null;
+type ModalType = "login" | "contact" | "register" | null;
 
 interface ModalContextValue {
   activeModal: ModalType;
   openLogin: () => void;
   openContact: () => void;
+  openRegister: () => void;
   close: () => void;
 }
 
@@ -22,6 +23,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         activeModal,
         openLogin: () => setActiveModal("login"),
         openContact: () => setActiveModal("contact"),
+        openRegister: () => setActiveModal("register"),
         close: () => setActiveModal(null),
       }}
     >
