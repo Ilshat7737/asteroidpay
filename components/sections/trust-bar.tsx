@@ -29,21 +29,18 @@ export function TrustBar() {
                 key={`${coin.ticker}-${i}`}
                 aria-hidden={i >= coins.length ? "true" : undefined}
                 title={coin.name}
-                className="group/coin flex shrink-0 items-center gap-2 whitespace-nowrap text-base font-semibold text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                className="group/coin flex shrink-0 items-center gap-2 whitespace-nowrap text-base font-semibold text-muted-foreground transition-colors duration-200 hover:text-accent"
               >
-                {/* Per the approved TrustBar artboard's decision, this
-                    marquee goes monochrome by default with a lime tint on
-                    hover. CoinIcon renders each mark as a mask-image (alpha
-                    only, ignores the source SVG's RGB) filled with
-                    currentColor, so these text-color classes tint it
-                    uniformly regardless of the icon's original palette —
-                    unlike mix-blend-mode, this also works on the several
-                    coin marks that are pure black/near-black at rest.
-                    Network icons on Services stay full lime (a different,
-                    deliberate treatment — see that file). */}
+                {/* Icons render in their native brand colors (see the note
+                    in coin-icon.tsx on why a monochrome/lime-tint treatment
+                    isn't viable across this icon set). The hover affordance
+                    is a lime glow + slight scale on the icon and a color
+                    shift on the ticker text, not a recolor of the mark
+                    itself. Network icons on Services stay full lime (a
+                    different, deliberate treatment — see that file). */}
                 <CoinIcon
                   ticker={coin.ticker}
-                  className="h-6 w-6 text-muted-foreground transition-colors duration-200 group-hover/coin:text-accent"
+                  className="h-6 w-6 transition-[transform,box-shadow] duration-200 group-hover/coin:scale-110 group-hover/coin:shadow-[0_0_12px_rgba(205,232,51,0.5)]"
                 />
                 {coin.ticker}
               </span>

@@ -122,7 +122,7 @@ export function Fees() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEE_POINTS.map(({ Icon, title, description }, i) => (
             <Reveal key={title} index={i}>
-              <div className="h-full rounded-3xl border border-border bg-card p-6 transition-[transform,border-color,box-shadow] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:scale-[1.02] hover:border-accent hover:shadow-[0_0_48px_rgba(205,232,51,0.28)]">
+              <div className="h-full rounded-3xl border border-border bg-card p-6 transition-[translate,scale,border-color,box-shadow] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:scale-[1.02] hover:border-accent hover:shadow-[0_0_48px_rgba(205,232,51,0.28)]">
                 <div className="relative h-14 w-14">
                   <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rotate-6 rounded-xl bg-accent/15" />
                   <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-muted">

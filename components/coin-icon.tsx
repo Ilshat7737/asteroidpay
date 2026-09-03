@@ -1,7 +1,7 @@
 // Icons sourced from spothq/cryptocurrency-icons (CC0-1.0, public domain):
 // https://github.com/spothq/cryptocurrency-icons — stored locally at
 // components/images/coins/*.svg.
-import type { StaticImageData } from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import aave from "@/components/images/coins/aave.svg";
 import ada from "@/components/images/coins/ada.svg";
 import algo from "@/components/images/coins/algo.svg";
@@ -110,32 +110,28 @@ export function CoinIcon({ ticker, className }: { ticker: string; className?: st
   const src = COIN_ICONS[ticker.toUpperCase()];
   if (!src) return null;
 
-  // Rendered as a masked, currentColor-filled shape rather than a raw
-  // <Image> of the brand SVG. TrustBar's marquee tints these icons
-  // (monochrome by default, lime on hover — see trust-bar.tsx) via the
-  // surrounding text-color classes on `className`; mix-blend-mode was
-  // tried first but takes its luminosity from the source pixels, so it
-  // can never lighten an already-dark/black source icon (several coin
-  // marks are pure black or near-black). mask-image is alpha-only — it
-  // ignores the source SVG's RGB entirely — so a flat background-color
-  // painted through the mask tints identically regardless of the
-  // original icon's palette.
-  const maskImage = `url(${src.src})`;
-
+  // Rendered in each coin's native brand color, not tinted/masked. Two
+  // recolor techniques were tried and both failed across the full 50-icon
+  // set: mix-blend-mode can't lighten already-dark/black source icons
+  // (it takes luminosity from the source), and mask-image flattens every
+  // icon into a featureless disc because every source SVG here is a
+  // full-bleed opaque circle (alpha is 100% across the whole mark, so an
+  // alpha-only mask carries no shape information). TrustBar's hover
+  // affordance lives on the ticker text and a non-recoloring glow/scale
+  // on the icon instead — see trust-bar.tsx.
   return (
-    <span
+    <Image
+      src={src}
+      alt=""
       aria-hidden="true"
-      className={`inline-block shrink-0 rounded-full bg-current ${className ?? ""}`}
-      style={{
-        maskImage,
-        maskSize: "contain",
-        maskRepeat: "no-repeat",
-        maskPosition: "center",
-        WebkitMaskImage: maskImage,
-        WebkitMaskSize: "contain",
-        WebkitMaskRepeat: "no-repeat",
-        WebkitMaskPosition: "center",
-      }}
+      width={24}
+      height={24}
+      // Used inside an infinitely-scrolling marquee whose track is far wider
+      // than the viewport — next/image's default lazy IntersectionObserver
+      // never reliably fires for items sitting outside the viewport bounds,
+      // so most icons would never load.
+      loading="eager"
+      className={`inline-block shrink-0 rounded-full ${className ?? ""}`}
     />
   );
 }
