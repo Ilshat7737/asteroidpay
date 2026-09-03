@@ -1,31 +1,10 @@
 // components/hero-globe.tsx
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect } from "react";
 import { animate, motion, useMotionValue, useTime, useTransform, type MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
-function subscribeReducedMotion(onChange: () => void) {
-  const mql = window.matchMedia(REDUCED_MOTION_QUERY);
-  mql.addEventListener("change", onChange);
-  return () => mql.removeEventListener("change", onChange);
-}
-
-function getReducedMotionSnapshot() {
-  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
-}
-
-function getReducedMotionServerSnapshot() {
-  return false; // SSR can't read a media query — matches the client's first
-  // render too, via useSyncExternalStore, so there's no hydration mismatch.
-}
-
-/** SSR-safe `prefers-reduced-motion: reduce` read (no hydration mismatch). */
-function useReducedMotion() {
-  return useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, getReducedMotionServerSnapshot);
-}
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * Hero globe — a CSS-3D wireframe sphere with a two-stage lime glow and six
@@ -55,14 +34,23 @@ const SPIN_SECONDS = 32; // one full rotateY(0 -> 360) loop
 const FALL_SECONDS = 2.75; // within the spec's 2.5-3s range
 const BAND_OFFSET_Y = -1.55 * R; // cube spawn band, relative to sphere center
 
-// This component's own local composition box. Task 7 is responsible for
-// placing the whole thing within the hero's right column (spec: sphere
-// center at (1080, 360) at the 1440px reference, bleeding ~44px past the
-// 1152px content edge) via the `className` prop — these two numbers are
-// just internal layout, not page coordinates.
+// This component's own local composition box. The caller (hero.tsx) places
+// the whole thing within the hero's right column (spec: sphere center
+// vertically level with the hero content column, biased right so it bleeds
+// past the content edge) using HERO_GLOBE_CENTER below, since this stage box
+// is much taller (940px) than the sphere's own visual footprint and must not
+// be mounted in normal flow — these two numbers are just internal layout,
+// not page coordinates.
 const STAGE_W = 760;
 const STAGE_H = 940;
 const CENTER = { x: STAGE_W / 2, y: 500 };
+
+// Exported so callers (hero.tsx) can align the sphere's real visual center
+// against page layout without re-deriving or guessing these numbers. Note
+// CENTER.x === STAGE_W / 2 exactly (the stage box is horizontally symmetric
+// around the sphere), which is what lets hero.tsx center it with a simple
+// `left: 50%` plus a translateX bias, rather than an asymmetric offset.
+export const HERO_GLOBE_CENTER = CENTER;
 
 const CUBE_SIZE = 13;
 

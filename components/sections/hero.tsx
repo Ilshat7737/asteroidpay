@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useModal } from "@/components/modal-provider";
 import { Button } from "@/components/ui/button";
-import { HeroGlobe } from "@/components/hero-globe";
+import { HeroGlobe, HERO_GLOBE_CENTER } from "@/components/hero-globe";
 
 export function Hero() {
   const { openContact } = useModal();
@@ -29,7 +29,7 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Button
               size="lg"
-              className="h-12 rounded-full bg-accent px-8 text-accent-foreground hover:bg-accent/90"
+              className="h-12 rounded-full px-8"
               onClick={openContact}
             >
               Contact us
@@ -45,13 +45,34 @@ export function Hero() {
 
         {/* Right column: hero globe (Task 6), replacing the retired hero-illustration.png
             per the approved canvas ("Illustration decision" note) — the globe is the
-            hero's visual now. Mounted in normal grid flow (not absolutely positioned)
-            so it naturally bleeds past the column's right edge without needing
-            viewport-relative math, and stays clipped by this section's own
-            overflow-hidden rather than a tighter wrapper that would crop its glow.
+            hero's visual now.
+
+            HeroGlobe's own internal stage box (760x940) is much taller than its
+            actual visual footprint (it pads for the ambient bloom/cube spawn band),
+            so mounting it in normal grid flow makes that oversized box drive the
+            grid row's height, inflating the whole section past min-h-screen. This
+            wrapper has no intrinsic height (only an absolutely-positioned child), so
+            it collapses to 0 height and the row height is driven by the text column
+            instead — the section goes back to being exactly min-h-screen tall.
+
+            The inner div is positioned so HERO_GLOBE_CENTER (the sphere's real
+            visual center in the stage box's own coordinates) lands at this wrapper's
+            origin, which — thanks to 0 height + the grid's items-center — is exactly
+            the vertical center of the (taller) text column. `+56px` biases the
+            sphere right of the column's horizontal center so it bleeds past the
+            column's right edge (clipped by the section's own overflow-hidden)
+            rather than crowding the text column on the left.
+
             Hidden below `lg` since hero-globe.tsx's geometry is fixed-pixel and not
             responsive — no sensible smaller rendering to fall back to. */}
-        <HeroGlobe className="hidden lg:block" />
+        <div className="relative hidden lg:block">
+          <div
+            className="absolute left-1/2 top-0"
+            style={{ transform: `translate(calc(-50% + 56px), -${HERO_GLOBE_CENTER.y}px)` }}
+          >
+            <HeroGlobe />
+          </div>
+        </div>
       </div>
 
       <div

@@ -4,9 +4,11 @@ import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import { networks } from "@/lib/data/networks";
 
+// Token table §5: 350ms, ease [0.25, 0.46, 0.45, 0.94], y: 12px -> 0 — same
+// spec already used by auto-convert.tsx and final-cta.tsx.
 const introVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } },
 };
 
 const gridVariants: Variants = {
@@ -15,8 +17,8 @@ const gridVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } },
 };
 
 // Simplified line-art glyphs matching the approved Services artboard's
