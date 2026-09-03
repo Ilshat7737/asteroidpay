@@ -28,7 +28,7 @@ export function Services() {
         <motion.div
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
           variants={introVariants}
           className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"
         >
@@ -49,7 +49,7 @@ export function Services() {
           id="networks"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.15 }}
           variants={gridVariants}
           className="mt-16 flex snap-x snap-mandatory gap-7 overflow-x-auto pb-4 sm:grid sm:snap-none sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3"
         >

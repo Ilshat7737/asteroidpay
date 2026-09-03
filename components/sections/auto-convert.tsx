@@ -11,7 +11,7 @@ export function AutoConvert() {
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <h2 className="font-heading text-4xl font-bold sm:text-5xl">
@@ -33,7 +33,7 @@ export function AutoConvert() {
           alt="Bitcoin, Ethereum, Solana, and other crypto flowing into a device and converting to USDT, USDC, and fiat"
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto w-full max-w-lg md:max-w-none"
         />

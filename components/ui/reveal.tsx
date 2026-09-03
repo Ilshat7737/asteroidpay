@@ -32,7 +32,7 @@ export function Reveal({
       variants={VARIANTS}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: false, amount: 0.2 }}
       custom={index}
       className={className}
     >
