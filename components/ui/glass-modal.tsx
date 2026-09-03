@@ -20,7 +20,8 @@ export function GlassModal({ open, onOpenChange, title, children }: GlassModalPr
           <DialogPrimitive.Portal forceMount>
             <DialogPrimitive.Overlay asChild forceMount>
               <motion.div
-                className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+                className="fixed inset-0 z-50 backdrop-blur-sm"
+                style={{ backgroundColor: "rgba(11,12,10,0.55)" }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -29,10 +30,12 @@ export function GlassModal({ open, onOpenChange, title, children }: GlassModalPr
             </DialogPrimitive.Overlay>
             <DialogPrimitive.Content asChild forceMount aria-describedby={undefined}>
               <motion.div
-                className="fixed left-1/2 top-1/2 z-50 w-[92vw] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-[28px] border border-white/30 bg-white/20 p-6 shadow-2xl backdrop-blur-2xl"
+                className="fixed left-1/2 top-1/2 z-50 w-[92vw] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl p-6 backdrop-blur-xl backdrop-saturate-[1.4]"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.05) 100%)",
+                  backgroundColor: "rgba(19,21,18,0.72)",
+                  border: "1px solid rgba(242,245,238,0.10)",
+                  boxShadow:
+                    "inset 0 1px 0 0 rgba(205,232,51,0.14), 0 24px 60px -20px rgba(0,0,0,0.8)",
                 }}
                 initial={{ opacity: 0, scale: 0.92, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -40,10 +43,10 @@ export function GlassModal({ open, onOpenChange, title, children }: GlassModalPr
                 transition={{ type: "spring", stiffness: 320, damping: 28 }}
               >
                 <div className="mb-4 flex items-center justify-between">
-                  <DialogPrimitive.Title className="font-heading text-xl font-semibold text-black">
+                  <DialogPrimitive.Title className="font-heading text-xl font-semibold text-foreground">
                     {title}
                   </DialogPrimitive.Title>
-                  <DialogPrimitive.Close className="rounded-full p-1.5 text-black/60 hover:bg-black/10">
+                  <DialogPrimitive.Close className="flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
                     <X className="h-4 w-4" />
                   </DialogPrimitive.Close>
                 </div>

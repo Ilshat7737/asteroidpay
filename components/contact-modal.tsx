@@ -64,12 +64,23 @@ export function ContactModal() {
   return (
     <GlassModal open={activeModal === "contact"} onOpenChange={handleOpenChange} title="Contact us">
       {submitted ? (
-        <div className="py-4 text-center">
-          <p className="text-black">Thanks — our team will reach out within 1 business day.</p>
-          <Button
-            className="mt-6 rounded-full bg-black text-white hover:bg-black/80"
-            onClick={() => handleOpenChange(false)}
+        <div className="flex flex-col items-center gap-5 py-4 text-center">
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--color-accent)"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
           >
+            <circle cx="12" cy="12" r="9.2" />
+            <path d="m8.2 12.2 2.6 2.6 5-5.4" />
+          </svg>
+          <p className="text-foreground">Thanks — our team will reach out within 1 business day.</p>
+          <Button className="w-full rounded-full" onClick={() => handleOpenChange(false)}>
             Close
           </Button>
         </div>
@@ -95,17 +106,17 @@ export function ContactModal() {
                 </Select>
               )}
             />
-            {errors.country && <p className="mt-1 text-xs text-red-600">{errors.country.message}</p>}
+            {errors.country && <p className="mt-1 text-xs text-destructive">{errors.country.message}</p>}
           </div>
           <div>
             <Label htmlFor="contact-company" className="mb-1.5">Company</Label>
             <Input id="contact-company" autoComplete="organization" {...register("company")} />
-            {errors.company && <p className="mt-1 text-xs text-red-600">{errors.company.message}</p>}
+            {errors.company && <p className="mt-1 text-xs text-destructive">{errors.company.message}</p>}
           </div>
           <div>
             <Label htmlFor="contact-email" className="mb-1.5">Email</Label>
             <Input id="contact-email" type="email" autoComplete="email" {...register("email")} />
-            {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
+            {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>}
           </div>
           <div>
             <Label htmlFor="contact-phone" className="mb-1.5">Phone (optional)</Label>
@@ -114,16 +125,14 @@ export function ContactModal() {
           <div>
             <Label htmlFor="contact-comment" className="mb-1.5">Comment</Label>
             <Textarea id="contact-comment" rows={4} {...register("comment")} />
-            {errors.comment && <p className="mt-1 text-xs text-red-600">{errors.comment.message}</p>}
+            {errors.comment && <p className="mt-1 text-xs text-destructive">{errors.comment.message}</p>}
           </div>
           {serverError && (
-            <p className="rounded-xl bg-red-500/10 px-3 py-2 text-sm text-red-700">{serverError}</p>
+            <p className="rounded-xl border border-destructive/28 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {serverError}
+            </p>
           )}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-full bg-black text-white hover:bg-black/80"
-          >
+          <Button type="submit" disabled={isSubmitting} className="w-full rounded-full">
             {isSubmitting ? "Sending…" : "Send"}
           </Button>
         </form>

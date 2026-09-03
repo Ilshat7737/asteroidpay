@@ -52,7 +52,7 @@ export function LoginModal() {
         <div>
           <Label htmlFor="login-email" className="mb-1.5">Email</Label>
           <Input id="login-email" type="email" autoComplete="email" {...register("email")} />
-          {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>}
         </div>
         <div>
           <Label htmlFor="login-password" className="mb-1.5">Password</Label>
@@ -62,21 +62,19 @@ export function LoginModal() {
             autoComplete="current-password"
             {...register("password")}
           />
-          {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>}
+          {errors.password && <p className="mt-1 text-xs text-destructive">{errors.password.message}</p>}
         </div>
         {serverError && (
-          <p className="rounded-xl bg-red-500/10 px-3 py-2 text-sm text-red-700">{serverError}</p>
+          <p className="rounded-xl border border-destructive/28 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {serverError}
+          </p>
         )}
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full rounded-full bg-black text-white hover:bg-black/80"
-        >
+        <Button type="submit" disabled={isSubmitting} className="w-full rounded-full">
           {isSubmitting ? "Logging in…" : "Log in"}
         </Button>
-        <p className="text-center text-xs text-black/60">
+        <p className="text-center text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <button type="button" onClick={handleContactClick} className="font-medium underline">
+          <button type="button" onClick={handleContactClick} className="font-medium text-accent underline underline-offset-4">
             Contact us
           </button>
         </p>
