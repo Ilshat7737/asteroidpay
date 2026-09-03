@@ -166,6 +166,7 @@ export function AutoConvert() {
           viewport={{ once: false, amount: 0.4 }}
           transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
+          <p className="font-mono text-xs font-medium tracking-[0.12em] text-accent uppercase">Auto-convert</p>
           <h2 className="font-heading text-4xl font-bold sm:text-5xl">
             Every payment lands the way you want it.
           </h2>
