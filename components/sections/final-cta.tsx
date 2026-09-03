@@ -26,7 +26,7 @@ export function FinalCta() {
             dark ring with a lime offset. */}
         <Button
           size="lg"
-          className="mt-8 rounded-full bg-background px-8 text-accent hover:bg-card focus-visible:border-background focus-visible:ring-background/50 focus-visible:ring-offset-2 focus-visible:ring-offset-accent"
+          className="mt-8 h-11 rounded-full bg-background px-8 text-accent hover:bg-card active:bg-muted focus-visible:border-background focus-visible:ring-background/50 focus-visible:ring-offset-2 focus-visible:ring-offset-accent"
           onClick={openContact}
         >
           Contact us

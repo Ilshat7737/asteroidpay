@@ -69,7 +69,7 @@ export function LoginModal() {
             {serverError}
           </p>
         )}
-        <Button type="submit" disabled={isSubmitting} className="w-full rounded-full">
+        <Button type="submit" disabled={isSubmitting} className="h-11 w-full rounded-full">
           {isSubmitting ? "Logging in…" : "Log in"}
         </Button>
         <p className="text-center text-xs text-muted-foreground">

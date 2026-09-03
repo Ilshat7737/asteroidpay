@@ -80,7 +80,7 @@ export function ContactModal() {
             <path d="m8.2 12.2 2.6 2.6 5-5.4" />
           </svg>
           <p className="text-foreground">Thanks — our team will reach out within 1 business day.</p>
-          <Button className="w-full rounded-full" onClick={() => handleOpenChange(false)}>
+          <Button className="h-11 w-full rounded-full" onClick={() => handleOpenChange(false)}>
             Close
           </Button>
         </div>
@@ -132,7 +132,7 @@ export function ContactModal() {
               {serverError}
             </p>
           )}
-          <Button type="submit" disabled={isSubmitting} className="w-full rounded-full">
+          <Button type="submit" disabled={isSubmitting} className="h-11 w-full rounded-full">
             {isSubmitting ? "Sending…" : "Send"}
           </Button>
         </form>

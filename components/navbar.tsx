@@ -47,10 +47,10 @@ export function Navbar() {
           ))}
         </nav>
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" className="rounded-full" onClick={openLogin}>
+          <Button variant="ghost" className="h-11 rounded-full" onClick={openLogin}>
             Log in
           </Button>
-          <Button className="rounded-full" onClick={openContact}>
+          <Button className="h-11 rounded-full" onClick={openContact}>
             Contact us
           </Button>
         </div>
@@ -90,7 +90,7 @@ export function Navbar() {
           <div className="mt-auto flex flex-col gap-3">
             <Button
               variant="ghost"
-              className="rounded-full"
+              className="h-11 rounded-full"
               onClick={() => {
                 setMobileOpen(false);
                 openLogin();
@@ -99,7 +99,7 @@ export function Navbar() {
               Log in
             </Button>
             <Button
-              className="rounded-full"
+              className="h-11 rounded-full"
               onClick={() => {
                 setMobileOpen(false);
                 openContact();
