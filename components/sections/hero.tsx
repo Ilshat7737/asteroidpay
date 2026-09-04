@@ -19,8 +19,11 @@ export function Hero() {
           it reads as ambient texture behind the content rather than a
           distinct foreground graphic (it read better this way than the
           previous bleeds-past-the-edge foreground treatment). */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-30" aria-hidden="true">
-        <div className="scale-125">
+      <div className="absolute inset-0 flex items-center justify-center opacity-30 lg:opacity-20" aria-hidden="true">
+        {/* On large screens the globe goes huge and gets pushed down so only
+            its upper cap (down to roughly the equator) is on screen — reads
+            as "standing on a planet" rather than a small floating sphere. */}
+        <div className="scale-125 lg:translate-y-[42%] lg:scale-[4]">
           <HeroGlobe />
         </div>
         <div
