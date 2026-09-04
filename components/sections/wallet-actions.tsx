@@ -23,14 +23,25 @@ import Image from "next/image";
 import convertImage from "@/components/images/icons/convert.png";
 
 // Receive/Send have no final art yet (the user's own asset is pending) —
-// this placeholder matches the actual coin-icon style used inside the
-// supplied PNGs (convert.png, invoice.png, wallet.png all show the same
-// dark disc + thick lime edge ring + embossed chrome icon language), not
-// a generic chrome sphere: a dark face, a thick directionally-lit lime
-// bezel standing in for the edge, and a metallic-gradient glyph with a
-// drop shadow so it lifts off the face. Swap GlossyGlyph's callers below
-// for <Image> once real art exists.
-function GlossyGlyph({ path, rotate = 0 }: { path: string; rotate?: number }) {
+// this placeholder is built directly off the reference coin (the actual
+// Bitcoin coin cropped from wallet.png): dark disc face, a thick lime
+// edge ring with a subtle directional sheen (not a dramatic gradient —
+// the reference reads as mostly-solid lime with just a touch of shine,
+// not a rainbow sweep), and an embossed chrome glyph with a drop shadow
+// standing in for the coin's raised "B". Same coin for both actions —
+// Send is the base build with a withdrawal-arrow glyph; Receive reuses
+// it mirrored (scaleX(-1)) plus its own distinct rotation, rather than a
+// second icon designed from scratch, per the reference's own request.
+// Swap this for <Image> once real art exists.
+function GlossyGlyph({
+  path,
+  rotate = 0,
+  flip = false,
+}: {
+  path: string;
+  rotate?: number;
+  flip?: boolean;
+}) {
   // Every instance needs its own unique def IDs — this renders more than
   // once at a time (once inline per mobile row, once in the desktop swap
   // panel), and duplicate SVG element IDs on the same page make
@@ -48,23 +59,23 @@ function GlossyGlyph({ path, rotate = 0 }: { path: string; rotate?: number }) {
       className="h-full w-full"
       viewBox="0 0 240 240"
       aria-hidden="true"
-      style={{ transform: `rotate(${rotate}deg)` }}
+      style={{ transform: `${flip ? "scaleX(-1) " : ""}rotate(${rotate}deg)` }}
     >
       <defs>
         <radialGradient id={faceId} cx="40%" cy="32%" r="75%">
-          <stop offset="0%" stopColor="#2b2f24" />
-          <stop offset="55%" stopColor="#15170f" />
-          <stop offset="100%" stopColor="#080905" />
+          <stop offset="0%" stopColor="#2c2f26" />
+          <stop offset="55%" stopColor="#17190f" />
+          <stop offset="100%" stopColor="#0a0b06" />
         </radialGradient>
-        {/* Straight-line gradient laid across the whole ring's bounding box
-            (not a true conic gradient — SVG has none) so the edge still
-            reads bright where it crosses the upper-left and dark toward
-            the lower-right, matching the face's own light source. */}
-        <linearGradient id={edgeId} x1="15%" y1="8%" x2="85%" y2="92%">
-          <stop offset="0%" stopColor="#f5f7f0" />
-          <stop offset="30%" stopColor="var(--color-accent)" />
-          <stop offset="65%" stopColor="#8a9a24" />
-          <stop offset="100%" stopColor="#3d4712" />
+        {/* Straight-line gradient laid across the ring's bounding box (not
+            a true conic gradient — SVG has none) — kept close to solid
+            lime with only a gentle sheen toward the upper-left, matching
+            the reference's mostly-flat-color edge rather than a strong
+            light-to-dark sweep. */}
+        <linearGradient id={edgeId} x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stopColor="#e4ee8a" />
+          <stop offset="35%" stopColor="var(--color-accent)" />
+          <stop offset="100%" stopColor="var(--color-accent)" />
         </linearGradient>
         <linearGradient id={iconId} x1="20%" y1="8%" x2="80%" y2="96%">
           <stop offset="0%" stopColor="#f6f7f3" />
@@ -75,12 +86,12 @@ function GlossyGlyph({ path, rotate = 0 }: { path: string; rotate?: number }) {
           <feDropShadow dx="1.5" dy="3" stdDeviation="2" floodColor="#000000" floodOpacity="0.6" />
         </filter>
       </defs>
-      {/* Coin edge: thin dark outer line, thick directionally-lit lime
-          bezel, thin dark inner shade — reads as a raised metal rim. */}
+      {/* Coin edge: thin dark outer line, thick lime bezel, thin dark
+          inner shade — reads as a raised metal rim. */}
       <circle cx="120" cy="120" r="94" fill="none" stroke="#050604" strokeOpacity="0.7" strokeWidth="2" />
-      <circle cx="120" cy="120" r="86" fill="none" stroke={`url(#${edgeId})`} strokeWidth="14" />
-      <circle cx="120" cy="120" r="79" fill="none" stroke="#050604" strokeOpacity="0.5" strokeWidth="2" />
-      <circle cx="120" cy="120" r="77" fill={`url(#${faceId})`} />
+      <circle cx="120" cy="120" r="86" fill="none" stroke={`url(#${edgeId})`} strokeWidth="16" />
+      <circle cx="120" cy="120" r="77" fill="none" stroke="#050604" strokeOpacity="0.5" strokeWidth="2" />
+      <circle cx="120" cy="120" r="75" fill={`url(#${faceId})`} />
       <g filter={`url(#${liftId})`}>
         <path
           d={path}
@@ -94,6 +105,10 @@ function GlossyGlyph({ path, rotate = 0 }: { path: string; rotate?: number }) {
     </svg>
   );
 }
+
+// The one glyph both coins share: a withdrawal arrow (funds exiting,
+// up and out) — Receive is this same coin mirrored, not a second design.
+const WITHDRAWAL_ARROW = "M88 152 152 88M152 88 124 94M152 88 146 116";
 
 interface ActionItem {
   id: string;
@@ -110,7 +125,7 @@ const ITEMS: ActionItem[] = [
     subtitle: "Top up your wallet, in any coin, on any network.",
     description:
       "Fund your wallet from any supported coin, on any network — everything consolidates into one balance, ready the moment it lands.",
-    visual: <GlossyGlyph path="M120 78v56M96 112l24 24 24-24M84 150h72" rotate={-10} />,
+    visual: <GlossyGlyph path={WITHDRAWAL_ARROW} flip rotate={16} />,
   },
   {
     id: "send",
@@ -118,7 +133,7 @@ const ITEMS: ActionItem[] = [
     subtitle: "Send and spend, across any network.",
     description:
       "Send funds across networks, pay for goods and services, or transfer to anyone — without worrying about which network they need.",
-    visual: <GlossyGlyph path="M84 156 156 84M156 84 130 90M156 84 150 110" rotate={10} />,
+    visual: <GlossyGlyph path={WITHDRAWAL_ARROW} rotate={8} />,
   },
   {
     id: "convert",
