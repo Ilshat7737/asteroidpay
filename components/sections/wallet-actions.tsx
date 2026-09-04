@@ -37,7 +37,7 @@ import convertImage from "@/components/images/icons/convert.png";
 // sphere's surface instead of sitting flush on it.
 function GlossyGlyph({ path }: { path: string }) {
   return (
-    <svg width="336" height="336" viewBox="0 0 240 240" aria-hidden="true">
+    <svg className="h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
       <defs>
         <radialGradient id="sphereBody" cx="36%" cy="28%" r="80%">
           <stop offset="0%" stopColor="#ffffff" />
@@ -123,7 +123,12 @@ export function WalletActions() {
             {ITEMS.map((item, i) => {
               const isActive = active === i;
               return (
-                <div key={item.id} onMouseEnter={() => setActive(i)} className="py-5">
+                <div
+                  key={item.id}
+                  onMouseEnter={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  className="py-5"
+                >
                   <div className="flex cursor-default items-center justify-between">
                     <h3 className="font-heading text-lg font-semibold text-foreground">{item.title}</h3>
                     {isActive ? (
@@ -133,18 +138,28 @@ export function WalletActions() {
                     )}
                   </div>
                   <div
-                    className="overflow-hidden transition-[height] duration-300 ease-out"
-                    style={{ height: isActive ? 96 : 0 }}
+                    className={`overflow-hidden transition-[height] duration-300 ease-out ${
+                      isActive ? "h-[188px] md:h-24" : "h-0"
+                    }`}
                   >
-                    <p className="pt-2 text-sm font-semibold text-foreground">{item.subtitle}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                    {/* Mobile only: each row carries its own small preview
+                        image right inside its own cell, instead of one
+                        shared image panel far below the whole list (which
+                        read as disconnected from whichever row was open). */}
+                    <div className="flex items-start gap-4 pt-2">
+                      <div className="h-16 w-16 shrink-0 md:hidden">{item.visual}</div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{item.subtitle}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
-        <div className="flex h-[22rem] items-center justify-center">
+        <div className="hidden h-[22rem] items-center justify-center md:flex">
           <AnimatePresence mode="wait">
             <motion.div
               key={ITEMS[active].id}
@@ -152,6 +167,7 @@ export function WalletActions() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
+              className="h-[336px] w-[336px]"
             >
               {ITEMS[active].visual}
             </motion.div>
