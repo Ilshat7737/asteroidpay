@@ -4,12 +4,17 @@ import { useMemo, useState } from "react";
 import { Popover as PopoverPrimitive } from "radix-ui";
 import { ChevronDownIcon, SearchIcon, CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { COUNTRIES } from "@/lib/data/countries";
+import { COUNTRIES, flagEmoji } from "@/lib/data/countries";
 
 // A searchable country picker. Radix's own Select has no text-search
 // affordance beyond single-character type-ahead, which doesn't scale to a
 // ~190-country list — this swaps it for a Popover + filtered list instead,
 // styled to match SelectTrigger's look so the rest of the form is unaffected.
+//
+// Countries display as flag + native (own-language) name per explicit
+// request. The form value stored/passed to `onChange` stays the English
+// name (simpler for whatever system reads contact submissions), and search
+// matches against both English and native names so typing either finds it.
 export function CountrySelect({
   id,
   value,
@@ -27,8 +32,13 @@ export function CountrySelect({
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return COUNTRIES;
-    return COUNTRIES.filter((country) => country.toLowerCase().includes(q));
+    return COUNTRIES.filter(
+      (country) =>
+        country.name.toLowerCase().includes(q) || country.native.toLowerCase().includes(q)
+    );
   }, [query]);
+
+  const selected = COUNTRIES.find((country) => country.name === value);
 
   return (
     <PopoverPrimitive.Root
@@ -44,8 +54,9 @@ export function CountrySelect({
           type="button"
           className="flex h-9 w-full items-center justify-between gap-1.5 rounded-lg border border-input bg-transparent px-3 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 dark:hover:bg-input/50"
         >
-          <span className={cn("truncate", !value && "text-muted-foreground")}>
-            {value || placeholder}
+          <span className={cn("flex items-center gap-2 truncate", !selected && "text-muted-foreground")}>
+            {selected && <span aria-hidden="true">{flagEmoji(selected.code)}</span>}
+            {selected ? selected.native : placeholder}
           </span>
           <ChevronDownIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
         </button>
@@ -82,16 +93,17 @@ export function CountrySelect({
             ) : (
               filtered.map((country) => (
                 <button
-                  key={country}
+                  key={country.code}
                   type="button"
                   onClick={() => {
-                    onChange(country);
+                    onChange(country.name);
                     setOpen(false);
                   }}
-                  className="flex w-full items-center justify-between gap-1.5 rounded-md px-2 py-1.5 text-left text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+                  className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm outline-none hover:bg-accent hover:text-accent-foreground"
                 >
-                  {country}
-                  {value === country && <CheckIcon className="h-4 w-4 shrink-0" />}
+                  <span aria-hidden="true">{flagEmoji(country.code)}</span>
+                  <span className="flex-1 truncate">{country.native}</span>
+                  {value === country.name && <CheckIcon className="h-4 w-4 shrink-0" />}
                 </button>
               ))
             )}

@@ -76,7 +76,7 @@ export function Hero() {
           <Image
             src={walletImage}
             alt="An AsteroidPay wallet, ready to receive, send, and convert crypto"
-            className="h-auto w-full max-w-[380px]"
+            className="h-auto w-full max-w-[520px]"
             priority
           />
         </div>

@@ -16,7 +16,7 @@
 // content) would vary with description length and defeat this.
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import Image from "next/image";
@@ -36,32 +36,44 @@ import convertImage from "@/components/images/icons/convert.png";
 // real drop-shadow filter under the glyph so it visually lifts off the
 // sphere's surface instead of sitting flush on it.
 function GlossyGlyph({ path }: { path: string }) {
+  // Every instance needs its own unique def IDs — this renders more than
+  // once at a time (once inline per mobile row, once in the desktop swap
+  // panel), and duplicate SVG element IDs on the same page make
+  // `url(#id)` paint-server/filter references resolve unpredictably
+  // (often to nothing), which silently drops the fill/filter entirely —
+  // the sphere and glyph both rendered blank, leaving only the plain rim
+  // stroke visible.
+  const uid = useId();
+  const bodyId = `${uid}-body`;
+  const specularId = `${uid}-specular`;
+  const glowId = `${uid}-glow`;
+  const liftId = `${uid}-lift`;
   return (
     <svg className="h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
       <defs>
-        <radialGradient id="sphereBody" cx="36%" cy="28%" r="80%">
+        <radialGradient id={bodyId} cx="36%" cy="28%" r="80%">
           <stop offset="0%" stopColor="#ffffff" />
           <stop offset="16%" stopColor="#e9ecec" />
           <stop offset="45%" stopColor="#a3adad" />
           <stop offset="78%" stopColor="#5b6363" />
           <stop offset="100%" stopColor="#262b2b" />
         </radialGradient>
-        <radialGradient id="specular" cx="50%" cy="50%" r="50%">
+        <radialGradient id={specularId} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
-        <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="12" />
         </filter>
-        <filter id="glyphLift" x="-60%" y="-60%" width="220%" height="220%">
+        <filter id={liftId} x="-60%" y="-60%" width="220%" height="220%">
           <feDropShadow dx="2" dy="4" stdDeviation="2.5" floodColor="#000000" floodOpacity="0.5" />
         </filter>
       </defs>
-      <circle cx="120" cy="120" r="102" fill="var(--color-accent)" opacity="0.24" filter="url(#softGlow)" />
-      <circle cx="120" cy="120" r="82" fill="url(#sphereBody)" />
+      <circle cx="120" cy="120" r="102" fill="var(--color-accent)" opacity="0.24" filter={`url(#${glowId})`} />
+      <circle cx="120" cy="120" r="82" fill={`url(#${bodyId})`} />
       <circle cx="120" cy="120" r="82" fill="none" stroke="var(--color-accent)" strokeWidth="3" strokeOpacity="0.9" />
-      <ellipse cx="92" cy="82" rx="34" ry="22" fill="url(#specular)" />
-      <g filter="url(#glyphLift)">
+      <ellipse cx="92" cy="82" rx="34" ry="22" fill={`url(#${specularId})`} />
+      <g filter={`url(#${liftId})`}>
         <path d={path} fill="none" stroke="#16181a" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
       </g>
     </svg>
