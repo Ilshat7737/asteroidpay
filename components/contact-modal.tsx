@@ -10,14 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CountrySelect } from "@/components/ui/country-select";
 import { contactSchema, type ContactInput } from "@/lib/validation/contact";
-
-const COUNTRIES = [
-  "United States", "United Kingdom", "Germany", "France", "Italy", "Spain", "Portugal",
-  "Ireland", "Sweden", "Netherlands", "Brazil", "Mexico", "Nigeria", "Morocco",
-  "United Arab Emirates", "India", "Malaysia", "Singapore", "Japan", "South Korea", "Australia",
-];
 
 export function ContactModal() {
   const { activeModal, close } = useModal();
@@ -92,18 +86,7 @@ export function ContactModal() {
               control={control}
               name="country"
               render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger id="contact-country" className="w-full">
-                    <SelectValue placeholder="Select your country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {COUNTRIES.map((country) => (
-                      <SelectItem key={country} value={country}>
-                        {country}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <CountrySelect id="contact-country" value={field.value} onChange={field.onChange} />
               )}
             />
             {errors.country && <p className="mt-1 text-xs text-destructive">{errors.country.message}</p>}
