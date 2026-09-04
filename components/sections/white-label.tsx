@@ -59,8 +59,7 @@ export function WhiteLabel() {
     <section id="white-label" className="border-b border-border bg-background py-28">
       <div className="mx-auto max-w-5xl px-4">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="font-mono text-xs font-medium tracking-[0.12em] text-accent uppercase">White-label</p>
-          <h2 className="mt-3 font-heading text-4xl font-bold text-foreground sm:text-5xl">
+          <h2 className="font-heading text-4xl font-bold text-foreground sm:text-5xl">
             Your brand at checkout, not ours.
           </h2>
           <p className="mt-4 text-muted-foreground">

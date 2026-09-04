@@ -355,8 +355,7 @@ export function Services() {
           className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"
         >
           <div>
-            <p className="font-mono text-xs font-medium tracking-[0.12em] text-accent uppercase">Payment gateway</p>
-            <h2 className="mt-3 font-heading text-4xl font-bold text-foreground sm:text-5xl">
+            <h2 className="font-heading text-4xl font-bold text-foreground sm:text-5xl">
               Accept crypto payments across the networks your customers already use.
             </h2>
             <p className="mt-4 max-w-lg text-lg text-muted-foreground">

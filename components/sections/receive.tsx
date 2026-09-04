@@ -31,8 +31,7 @@ export function Receive() {
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-muted">
           <ReceiveIcon className="h-7 w-7" />
         </div>
-        <p className="mt-6 font-mono text-xs font-medium tracking-[0.12em] text-accent uppercase">Receive</p>
-        <h2 className="mt-3 font-heading text-4xl font-bold sm:text-5xl">
+        <h2 className="mt-6 font-heading text-4xl font-bold sm:text-5xl">
           Top up your wallet, in any coin, on any network.
         </h2>
         <p className="mt-4 text-muted-foreground">
