@@ -46,7 +46,6 @@ function GlossyGlyph({ path }: { path: string }) {
   const uid = useId();
   const bodyId = `${uid}-body`;
   const specularId = `${uid}-specular`;
-  const glowId = `${uid}-glow`;
   const liftId = `${uid}-lift`;
   return (
     <svg className="h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
@@ -62,14 +61,10 @@ function GlossyGlyph({ path }: { path: string }) {
           <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
-        <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="12" />
-        </filter>
         <filter id={liftId} x="-60%" y="-60%" width="220%" height="220%">
           <feDropShadow dx="2" dy="4" stdDeviation="2.5" floodColor="#000000" floodOpacity="0.5" />
         </filter>
       </defs>
-      <circle cx="120" cy="120" r="102" fill="var(--color-accent)" opacity="0.24" filter={`url(#${glowId})`} />
       <circle cx="120" cy="120" r="82" fill={`url(#${bodyId})`} />
       <circle cx="120" cy="120" r="82" fill="none" stroke="var(--color-accent)" strokeWidth="3" strokeOpacity="0.9" />
       <ellipse cx="92" cy="82" rx="34" ry="22" fill={`url(#${specularId})`} />
