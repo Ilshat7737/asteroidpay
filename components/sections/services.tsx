@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { networks } from "@/lib/data/networks";
+import invoiceImage from "@/components/images/icons/invoice.png";
 
 function BoltIcon({ className }: { className?: string }) {
   return (
@@ -207,142 +209,6 @@ function NetworkGlyph({ networkId, className }: { networkId: string; className?:
   );
 }
 
-// Inline SVG extracted from the approved Services artboard, replacing the
-// old servicesIllustration PNG (a saturated pink isometric phone with no
-// relation to routing/networks/settlement). This one depicts the actual
-// mechanism: four inbound network cubes converge on a gateway slab, one
-// outbound arrow settles back to "YOU" — inherits the token palette
-// exactly and shares the hero globe's isometric-cube vocabulary.
-function ServicesIllustration({ className }: { className?: string }) {
-  return (
-    <svg width="460" height="320" viewBox="0 0 460 320" aria-hidden="true" className={className}>
-      <defs>
-        <radialGradient id="svcbloom" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
-        </radialGradient>
-        <g id="svccube">
-          <polygon
-            points="0,-13 13,-6.5 0,0 -13,-6.5"
-            fill="var(--color-accent)"
-            fillOpacity="0.22"
-            stroke="var(--color-accent)"
-            strokeOpacity="0.7"
-            strokeWidth="1"
-          />
-          <polygon
-            points="-13,-6.5 0,0 0,13 -13,6.5"
-            fill="var(--color-accent)"
-            fillOpacity="0.10"
-            stroke="var(--color-accent)"
-            strokeOpacity="0.7"
-            strokeWidth="1"
-          />
-          <polygon
-            points="13,-6.5 0,0 0,13 13,6.5"
-            fill="var(--color-accent)"
-            fillOpacity="0.045"
-            stroke="var(--color-accent)"
-            strokeOpacity="0.7"
-            strokeWidth="1"
-          />
-        </g>
-      </defs>
-
-      <ellipse cx="230" cy="168" rx="180" ry="120" fill="url(#svcbloom)" />
-
-      {/* iso ground plates */}
-      <polygon
-        points="230,95 420,190 230,285 40,190"
-        fill="none"
-        stroke="var(--color-accent)"
-        strokeOpacity="0.12"
-        strokeWidth="1"
-      />
-      <polygon
-        points="230,125 360,190 230,255 100,190"
-        fill="none"
-        stroke="var(--color-accent)"
-        strokeOpacity="0.10"
-        strokeWidth="1"
-      />
-
-      {/* inbound paths */}
-      <path d="M96 84 L186 137" stroke="var(--color-accent)" strokeOpacity="0.28" strokeWidth="1" strokeDasharray="3 4" />
-      <path d="M168 54 L216 122" stroke="var(--color-accent)" strokeOpacity="0.28" strokeWidth="1" strokeDasharray="3 4" />
-      <path d="M264 60 L252 122" stroke="var(--color-accent)" strokeOpacity="0.28" strokeWidth="1" strokeDasharray="3 4" />
-      <path d="M348 92 L282 138" stroke="var(--color-accent)" strokeOpacity="0.28" strokeWidth="1" strokeDasharray="3 4" />
-
-      {/* the gateway slab */}
-      <polygon
-        points="144,150 230,193 230,219 144,176"
-        fill="var(--color-accent)"
-        fillOpacity="0.05"
-        stroke="var(--color-accent)"
-        strokeOpacity="0.5"
-        strokeWidth="1"
-      />
-      <polygon
-        points="316,150 230,193 230,219 316,176"
-        fill="var(--color-accent)"
-        fillOpacity="0.03"
-        stroke="var(--color-accent)"
-        strokeOpacity="0.5"
-        strokeWidth="1"
-      />
-      <polygon
-        points="230,107 316,150 230,193 144,150"
-        fill="var(--color-accent)"
-        fillOpacity="0.10"
-        stroke="var(--color-accent)"
-        strokeOpacity="0.6"
-        strokeWidth="1"
-      />
-      <ellipse cx="230" cy="150" rx="48" ry="24" fill="none" stroke="var(--color-accent)" strokeOpacity="0.55" strokeWidth="1" />
-      <ellipse cx="230" cy="150" rx="26" ry="13" fill="none" stroke="var(--color-accent)" strokeOpacity="0.35" strokeWidth="1" />
-      <circle cx="230" cy="150" r="3" fill="var(--color-accent)" />
-
-      {/* inbound network cubes */}
-      <g transform="translate(96,84)">
-        <use href="#svccube" />
-      </g>
-      <g transform="translate(168,54)">
-        <use href="#svccube" />
-      </g>
-      <g transform="translate(264,60)">
-        <use href="#svccube" />
-      </g>
-      <g transform="translate(348,92)">
-        <use href="#svccube" />
-      </g>
-
-      {/* outbound: settlement back to the merchant */}
-      <path d="M300 205 L364 240" stroke="var(--color-accent)" strokeOpacity="0.55" strokeWidth="1.3" />
-      <path
-        d="M356 231 L366 241 L353 245"
-        fill="none"
-        stroke="var(--color-accent)"
-        strokeOpacity="0.55"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <rect x="372" y="228" width="58" height="26" rx="9" fill="var(--color-muted)" stroke="var(--color-border)" strokeWidth="1" />
-      <text
-        x="401"
-        y="245"
-        textAnchor="middle"
-        fill="var(--color-accent)"
-        fontFamily="'JetBrains Mono', monospace"
-        fontSize="10"
-        letterSpacing="0.06em"
-      >
-        YOU
-      </text>
-    </svg>
-  );
-}
-
 export function Services() {
   return (
     <section id="services" className="bg-background py-32">
@@ -363,8 +229,13 @@ export function Services() {
               juggling separate wallets, dashboards, or providers.
             </p>
           </div>
-          <div className="mx-auto w-full max-w-sm rounded-3xl border border-border bg-card p-6 lg:max-w-none">
-            <ServicesIllustration className="h-auto w-full" />
+          <div className="mx-auto flex w-full max-w-sm items-center justify-center lg:max-w-none">
+            <Image
+              src={invoiceImage}
+              alt="An AsteroidPay invoice, confirmed and ready to settle"
+              className="h-auto w-full max-w-[320px]"
+              priority={false}
+            />
           </div>
         </motion.div>
         <motion.div
