@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s · AsteroidPay",
   },
   description:
-    "AsteroidPay is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "AsteroidPay is a crypto payment gateway with fees from 0.3%, automatic stablecoin conversion, and fast settlement across Bitcoin, Ethereum, Tron, and more.",
   alternates: {
     canonical: "/",
   },
@@ -64,7 +64,7 @@ const ORGANIZATION_JSON_LD = {
   url: "https://asteroidpay.io",
   logo: "https://asteroidpay.io/icon.png",
   description:
-    "AsteroidPay is a crypto payment gateway built for speed, low fees from 0.3%, and reliable settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "AsteroidPay is a crypto payment gateway with fees from 0.3%, automatic stablecoin conversion, and fast settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
 };
 
 export const viewport: Viewport = {
