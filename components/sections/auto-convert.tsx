@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const BULLETS = [
   "Converted at the market rate the instant funds are received",
-  "Settle in USDT, USDC, or fiat — your choice",
+  "Settle in USDT or USDC — your choice",
   "No manual swaps, no exposure to price swings",
 ];
 
