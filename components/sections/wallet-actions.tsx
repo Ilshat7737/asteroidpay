@@ -16,99 +16,13 @@
 // content) would vary with description length and defeat this.
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import Image from "next/image";
 import convertImage from "@/components/images/icons/convert.png";
-
-// Receive/Send have no final art yet (the user's own asset is pending) —
-// this placeholder is built directly off the reference coin (the actual
-// Bitcoin coin cropped from wallet.png): dark disc face, a thick lime
-// edge ring with a subtle directional sheen (not a dramatic gradient —
-// the reference reads as mostly-solid lime with just a touch of shine,
-// not a rainbow sweep), and an embossed chrome glyph with a drop shadow
-// standing in for the coin's raised "B". Same coin for both actions —
-// Send is the base build with a withdrawal-arrow glyph; Receive reuses
-// it mirrored (scaleX(-1)) plus its own distinct rotation, rather than a
-// second icon designed from scratch, per the reference's own request.
-// Swap this for <Image> once real art exists.
-function GlossyGlyph({
-  path,
-  rotate = 0,
-  flip = false,
-}: {
-  path: string;
-  rotate?: number;
-  flip?: boolean;
-}) {
-  // Every instance needs its own unique def IDs — this renders more than
-  // once at a time (once inline per mobile row, once in the desktop swap
-  // panel), and duplicate SVG element IDs on the same page make
-  // `url(#id)` paint-server/filter references resolve unpredictably
-  // (often to nothing), which silently drops the fill/filter entirely —
-  // the sphere and glyph both rendered blank, leaving only the plain rim
-  // stroke visible.
-  const uid = useId();
-  const faceId = `${uid}-face`;
-  const edgeId = `${uid}-edge`;
-  const iconId = `${uid}-icon`;
-  const liftId = `${uid}-lift`;
-  return (
-    <svg
-      className="h-full w-full"
-      viewBox="0 0 240 240"
-      aria-hidden="true"
-      style={{ transform: `${flip ? "scaleX(-1) " : ""}rotate(${rotate}deg)` }}
-    >
-      <defs>
-        <radialGradient id={faceId} cx="40%" cy="32%" r="75%">
-          <stop offset="0%" stopColor="#2c2f26" />
-          <stop offset="55%" stopColor="#17190f" />
-          <stop offset="100%" stopColor="#0a0b06" />
-        </radialGradient>
-        {/* Straight-line gradient laid across the ring's bounding box (not
-            a true conic gradient — SVG has none) — kept close to solid
-            lime with only a gentle sheen toward the upper-left, matching
-            the reference's mostly-flat-color edge rather than a strong
-            light-to-dark sweep. */}
-        <linearGradient id={edgeId} x1="20%" y1="10%" x2="80%" y2="90%">
-          <stop offset="0%" stopColor="#e4ee8a" />
-          <stop offset="35%" stopColor="var(--color-accent)" />
-          <stop offset="100%" stopColor="var(--color-accent)" />
-        </linearGradient>
-        <linearGradient id={iconId} x1="20%" y1="8%" x2="80%" y2="96%">
-          <stop offset="0%" stopColor="#f6f7f3" />
-          <stop offset="45%" stopColor="#c7cbc1" />
-          <stop offset="100%" stopColor="#666b62" />
-        </linearGradient>
-        <filter id={liftId} x="-60%" y="-60%" width="220%" height="220%">
-          <feDropShadow dx="1.5" dy="3" stdDeviation="2" floodColor="#000000" floodOpacity="0.6" />
-        </filter>
-      </defs>
-      {/* Coin edge: thin dark outer line, thick lime bezel, thin dark
-          inner shade — reads as a raised metal rim. */}
-      <circle cx="120" cy="120" r="94" fill="none" stroke="#050604" strokeOpacity="0.7" strokeWidth="2" />
-      <circle cx="120" cy="120" r="86" fill="none" stroke={`url(#${edgeId})`} strokeWidth="16" />
-      <circle cx="120" cy="120" r="77" fill="none" stroke="#050604" strokeOpacity="0.5" strokeWidth="2" />
-      <circle cx="120" cy="120" r="75" fill={`url(#${faceId})`} />
-      <g filter={`url(#${liftId})`}>
-        <path
-          d={path}
-          fill="none"
-          stroke={`url(#${iconId})`}
-          strokeWidth="9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-    </svg>
-  );
-}
-
-// The one glyph both coins share: a withdrawal arrow (funds exiting,
-// up and out) — Receive is this same coin mirrored, not a second design.
-const WITHDRAWAL_ARROW = "M88 152 152 88M152 88 124 94M152 88 146 116";
+import receiveImage from "@/components/images/icons/receive.png";
+import sendImage from "@/components/images/icons/send.png";
 
 interface ActionItem {
   id: string;
@@ -125,7 +39,13 @@ const ITEMS: ActionItem[] = [
     subtitle: "Top up your wallet, in any coin, on any network.",
     description:
       "Fund your wallet from any supported coin, on any network — everything consolidates into one balance, ready the moment it lands.",
-    visual: <GlossyGlyph path={WITHDRAWAL_ARROW} flip rotate={16} />,
+    visual: (
+      <Image
+        src={receiveImage}
+        alt="Receiving Bitcoin into an AsteroidPay wallet"
+        className="h-auto w-full max-w-[336px]"
+      />
+    ),
   },
   {
     id: "send",
@@ -133,7 +53,13 @@ const ITEMS: ActionItem[] = [
     subtitle: "Send and spend, across any network.",
     description:
       "Send funds across networks, pay for goods and services, or transfer to anyone — without worrying about which network they need.",
-    visual: <GlossyGlyph path={WITHDRAWAL_ARROW} rotate={8} />,
+    visual: (
+      <Image
+        src={sendImage}
+        alt="Sending Bitcoin from an AsteroidPay wallet"
+        className="h-auto w-full max-w-[336px]"
+      />
+    ),
   },
   {
     id: "convert",
