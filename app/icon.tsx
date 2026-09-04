@@ -8,9 +8,8 @@ export const contentType = "image/png";
 export default function Icon() {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex" }}>
-        {/* Full-bleed "App icon / favicon" swatch, thicker stroke for legibility at tiny sizes. */}
-        <LogoMark size={32} variant="full" strokeWidth={4} />
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <LogoMark size={32} />
       </div>
     ),
     { ...size }

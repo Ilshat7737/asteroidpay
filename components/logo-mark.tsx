@@ -1,48 +1,44 @@
-// Temporary placeholder for the AsteroidPay "A" mark, pending the final
-// asset from the user. logo.tsx, app/icon.tsx, app/apple-icon.tsx, and
-// app/opengraph-image.tsx all consume this one file, so replacing the asset
-// later only requires editing here (or swapping this component's internals
-// for an <img>/next/image if the final asset is a raster/vector file rather
-// than inline paths).
+// The final AsteroidPay emblem, supplied by the user as two flat SVGs, kept
+// as source references at components/images/originals/:
+// AsteroidPay-Emblem-W-V1.svg (white — used here, since every context this
+// renders in on this site has a dark background: navbar, footer, modals,
+// and the opengraph/icon routes' own dark canvases) and
+// AsteroidPay-Emblem-B-V1.svg (black — kept for any future light-background
+// context; nothing currently consumes it). Geometry copied verbatim from
+// the white variant's single <path>.
 //
-// Uses only <svg>/<rect>/<path> with solid fills and strokes (no gradients or
-// filters), so it renders identically via Tailwind in the browser and via
-// next/og's ImageResponse (satori) in app/icon.tsx, app/apple-icon.tsx and
+// Renders as a bare glyph with no background badge/frame — the previous
+// accent-colored rounded-square backdrop has been removed per explicit
+// instruction. logo.tsx, app/icon.tsx, app/apple-icon.tsx, and
+// app/opengraph-image.tsx all consume this one file.
+//
+// Uses only a single <path> with a solid fill (no gradients/filters), so it
+// renders identically via Tailwind in the browser and via next/og's
+// ImageResponse (satori) in app/icon.tsx, app/apple-icon.tsx, and
 // app/opengraph-image.tsx.
 
-const ACCENT = "#CDE833";
-const INK = "#0B0C0A";
+const WHITE = "#fff";
 
 export function LogoMark({
   size = 28,
-  variant = "inset",
-  strokeWidth = 3.4,
   className,
 }: {
   size?: number;
-  /** "inset" = primary lockup, paired with the wordmark on a dark ground. */
-  /** "full" = edge-to-edge square, used for the app icon / favicon routes. */
-  variant?: "inset" | "full";
-  strokeWidth?: number;
   className?: string;
 }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 44 44"
+      viewBox="0 0 364.5 364.5"
       fill="none"
       aria-hidden="true"
       className={className}
     >
-      {variant === "inset" ? (
-        <rect x="0.5" y="0.5" width="43" height="43" rx="13" fill={ACCENT} />
-      ) : (
-        <rect width="44" height="44" rx="13" fill={ACCENT} />
-      )}
-      <path d="M22 10 12 34" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M22 10 32 34" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M16.2 24H27.8" stroke={INK} strokeWidth={strokeWidth} strokeLinecap="round" />
+      <path
+        fill={WHITE}
+        d="M311.12,53.38C278.14,20.4,232.58,0,182.25,0,81.6,0,0,81.6,0,182.25v182.25l53.38-53.38c32.98,32.98,78.54,53.38,128.87,53.38,100.65,0,182.25-81.6,182.25-182.25V0l-53.38,53.38ZM182.25,296.62c-63.17,0-114.38-51.21-114.38-114.38s51.21-114.38,114.38-114.38,114.38,51.21,114.38,114.38-51.21,114.38-114.38,114.38Z"
+      />
     </svg>
   );
 }
