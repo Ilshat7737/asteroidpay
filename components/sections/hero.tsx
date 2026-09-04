@@ -12,7 +12,25 @@ export function Hero() {
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-background pt-24 pb-12">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
+      {/* Below `lg` the globe doesn't fit as a distinct foreground graphic
+          (see the "Hidden below `lg`" note further down), so instead of
+          disappearing it becomes a tinted background wash behind the text —
+          centered, dimmed, and faded out toward the edges so it reads as
+          ambient texture rather than competing with the copy. */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-30 lg:hidden" aria-hidden="true">
+        <div className="scale-125">
+          <HeroGlobe />
+        </div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at center, transparent 15%, var(--color-background) 72%)",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
         <div className="text-center lg:text-left">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}

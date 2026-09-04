@@ -113,6 +113,45 @@ const CONTINENTS: { pts: LngLat[] }[] = [
       [114, -22], [113, -22],
     ],
   },
+  // Islands — same low-poly, decorative fidelity as the six continents above
+  // (hand-traced from real coastline extents/landmarks, not sourced from a
+  // verified geographic dataset — no network access in this environment to
+  // pull one), added because a globe without them reads as incomplete.
+  { pts: [[-73, 60], [-55, 60], [-42, 60], [-22, 70], [-20, 77], [-30, 82], [-50, 83], [-65, 80], [-73, 75], [-73, 60]] }, // Greenland
+  { pts: [[-24, 65], [-21, 66.5], [-15, 66.2], [-14, 64.3], [-18, 63.3], [-22, 63.4], [-24, 65]] }, // Iceland
+  { pts: [[-5, 50], [-3, 51], [1, 51], [1, 53], [-2, 55], [-3, 58], [-5, 58], [-6, 56], [-5, 53], [-5, 50]] }, // Great Britain
+  { pts: [[-10, 51.5], [-8, 51.5], [-6, 52], [-6, 54], [-8, 55.3], [-10, 54], [-10, 51.5]] }, // Ireland
+  {
+    pts: [
+      [130, 31], [131, 33], [133, 34], [136, 35], [139, 35.5], [140, 36.5], [141, 39],
+      [141, 41], [145, 43], [144, 45], [142, 45], [140, 41], [139, 38], [136, 37],
+      [133, 35], [130, 33], [129, 32], [130, 31],
+    ],
+  }, // Japan
+  { pts: [[80, 6], [81.5, 6.5], [81.9, 8], [80.5, 9.8], [79.7, 8.5], [79.9, 6.5], [80, 6]] }, // Sri Lanka
+  { pts: [[43.3, -12], [47, -12.3], [49.5, -15], [50, -17], [47.5, -25], [45, -25.5], [43.5, -21], [43, -16], [43.3, -12]] }, // Madagascar
+  { pts: [[-84.9, 21.9], [-82, 23.1], [-79, 22.4], [-77, 21.2], [-74.1, 20.2], [-75, 19.9], [-79, 20.7], [-82.8, 21.5], [-84.9, 21.9]] }, // Cuba
+  {
+    pts: [
+      [120, 18.5], [122, 18.3], [122, 15], [124, 13], [126, 9], [125, 6], [123, 7],
+      [122, 10], [120, 14], [120, 18.5],
+    ],
+  }, // Philippines
+  { pts: [[95.3, 5.5], [97, 4], [99, 1], [102, -1], [104, -3], [106, -5.8], [103, -4], [100, -2], [97, 1], [95.3, 5.5]] }, // Sumatra
+  { pts: [[105.3, -6.8], [108, -6.5], [112, -7], [114.5, -8.3], [112, -8.5], [108, -7], [105.3, -6.8]] }, // Java
+  { pts: [[109, 2], [113, 4], [117, 4], [119, 1], [118, -3], [114, -4], [110, -3], [109, 0], [109, 2]] }, // Borneo
+  { pts: [[131, -1], [141, -2.5], [147, -6], [150, -9], [147, -10], [143, -8.5], [138, -8], [132, -4], [131, -1]] }, // New Guinea
+  {
+    pts: [
+      [173.8, -34.4], [178.5, -37.7], [177, -39.1], [175, -41.3], [173.9, -39], [173.8, -34.4],
+    ],
+  }, // New Zealand — North Island
+  {
+    pts: [
+      [172.6, -40.5], [174.3, -41.2], [173.9, -43.5], [171, -44.4], [168, -44.9],
+      [166.5, -45.8], [168, -43.8], [172.6, -40.5],
+    ],
+  }, // New Zealand — South Island
 ];
 
 function seededRand(seed: number) {
@@ -134,18 +173,28 @@ function pointInPoly([x, y]: LngLat, poly: LngLat[]) {
   return inside;
 }
 
-// Deterministic point scatter inside each continent, computed once at
-// module load (46 points each, same seed every time) — used both to render
-// the "night-lights" and as the pool of candidate impact targets.
+// Deterministic point scatter inside each landmass, computed once at module
+// load (same seed every time) — used both to render the "night-lights" and
+// as the pool of candidate impact targets. Sample count scales with each
+// landmass's bounding-box size (sqrt of area, so it tracks linear extent
+// rather than raw area) so a small island doesn't render as densely
+// speckled as a continent — Asia gets the full 46, Iceland gets the 6-point
+// floor.
 const rnd = seededRand(42);
-const CONTINENT_SAMPLES: LngLat[][] = CONTINENTS.map(({ pts }) => {
+const CONTINENT_BOUNDS = CONTINENTS.map(({ pts }) => {
   const lons = pts.map((p) => p[0]);
   const lats = pts.map((p) => p[1]);
   const minLon = Math.min(...lons), maxLon = Math.max(...lons);
   const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+  return { minLon, maxLon, minLat, maxLat, area: (maxLon - minLon) * (maxLat - minLat) };
+});
+const MAX_AREA = Math.max(...CONTINENT_BOUNDS.map((b) => b.area));
+const CONTINENT_SAMPLES: LngLat[][] = CONTINENTS.map(({ pts }, i) => {
+  const { minLon, maxLon, minLat, maxLat, area } = CONTINENT_BOUNDS[i];
+  const target = Math.max(6, Math.min(46, Math.round(46 * Math.sqrt(area / MAX_AREA))));
   const samples: LngLat[] = [];
   let tries = 0;
-  while (samples.length < 46 && tries < 2000) {
+  while (samples.length < target && tries < 2000) {
     tries++;
     const lon = minLon + rnd() * (maxLon - minLon);
     const lat = minLat + rnd() * (maxLat - minLat);
@@ -279,13 +328,17 @@ export function HeroGlobe({ className }: { className?: string }) {
       // no glow bleeds past its own edge.
       ctx!.beginPath();
       ctx!.arc(CENTER.x, CENTER.y, R, 0, Math.PI * 2);
-      ctx!.strokeStyle = accent(0.6);
+      ctx!.strokeStyle = accent(0.22);
       ctx!.lineWidth = 1.4;
       ctx!.stroke();
 
       CONTINENT_SAMPLES.forEach((samples) => {
         samples.forEach(([lon, lat], i) => {
-          if (i % 2 === 0) return; // sparse — reads as scattered city lights
+          // Halve density on landmasses large enough to spare it — reads as
+          // scattered city lights rather than a solid blob. Small islands
+          // already sample far fewer points (see CONTINENT_SAMPLES above),
+          // so halving those too would leave too few dots to read as a shape.
+          if (samples.length > 16 && i % 2 === 0) return;
           const p = project(lon, lat, theta);
           const a = Math.min(1, depthAlpha(p.z) * 1.1 + 0.15);
           ctx!.fillStyle = accent(a);
