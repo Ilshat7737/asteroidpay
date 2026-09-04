@@ -30,15 +30,16 @@ import { useReducedMotion } from "@/lib/use-reduced-motion";
  */
 
 // ---------------------------------------------------------------------------
-// Stage box — unchanged from the previous build, so hero.tsx's positioning
-// math (which centers HERO_GLOBE_CENTER against the hero's text column)
-// needs no changes.
+// Stage box. hero.tsx now mounts this as a centered, dimmed full-bleed
+// background wash at every breakpoint rather than a positioned foreground
+// graphic, so nothing outside this file depends on these exact numbers —
+// they just need to comfortably contain the sphere plus the asteroids'
+// spawn headroom above it.
 // ---------------------------------------------------------------------------
 
 const STAGE_W = 760;
 const STAGE_H = 940;
 const CENTER = { x: STAGE_W / 2, y: 500 };
-export const HERO_GLOBE_CENTER = CENTER;
 
 const R = 260; // sphere radius, px — matches the previous build's scale
 const TILT = (17 * Math.PI) / 180;

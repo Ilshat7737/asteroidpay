@@ -2,22 +2,24 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useModal } from "@/components/modal-provider";
 import { Button } from "@/components/ui/button";
-import { HeroGlobe, HERO_GLOBE_CENTER } from "@/components/hero-globe";
+import { HeroGlobe } from "@/components/hero-globe";
+import walletImage from "@/components/images/icons/wallet.png";
 
 export function Hero() {
   const { openContact } = useModal();
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-background pt-24 pb-12">
-      {/* Below `lg` the globe doesn't fit as a distinct foreground graphic
-          (see the "Hidden below `lg`" note further down), so instead of
-          disappearing it becomes a tinted background wash behind the text —
-          centered, dimmed, and faded out toward the edges so it reads as
-          ambient texture rather than competing with the copy. */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-30 lg:hidden" aria-hidden="true">
+      {/* The globe now always renders as a background wash, at every
+          breakpoint — centered, dimmed, and faded out toward the edges so
+          it reads as ambient texture behind the content rather than a
+          distinct foreground graphic (it read better this way than the
+          previous bleeds-past-the-edge foreground treatment). */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-30" aria-hidden="true">
         <div className="scale-125">
           <HeroGlobe />
         </div>
@@ -61,35 +63,19 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right column: hero globe (Task 6), replacing the retired hero-illustration.png
-            per the approved canvas ("Illustration decision" note) — the globe is the
-            hero's visual now.
-
-            HeroGlobe's own internal stage box (760x940) is much taller than its
-            actual visual footprint (it pads for the ambient bloom/cube spawn band),
-            so mounting it in normal grid flow makes that oversized box drive the
-            grid row's height, inflating the whole section past min-h-screen. This
-            wrapper has no intrinsic height (only an absolutely-positioned child), so
-            it collapses to 0 height and the row height is driven by the text column
-            instead — the section goes back to being exactly min-h-screen tall.
-
-            The inner div is positioned so HERO_GLOBE_CENTER (the sphere's real
-            visual center in the stage box's own coordinates) lands at this wrapper's
-            origin, which — thanks to 0 height + the grid's items-center — is exactly
-            the vertical center of the (taller) text column. `+56px` biases the
-            sphere right of the column's horizontal center so it bleeds past the
-            column's right edge (clipped by the section's own overflow-hidden)
-            rather than crowding the text column on the left.
-
-            Hidden below `lg` since hero-globe.tsx's geometry is fixed-pixel and not
-            responsive — no sensible smaller rendering to fall back to. */}
-        <div className="relative hidden lg:block">
-          <div
-            className="absolute left-1/2 top-0"
-            style={{ transform: `translate(calc(-50% + 56px), -${HERO_GLOBE_CENTER.y}px)` }}
-          >
-            <HeroGlobe />
-          </div>
+        {/* Right column: with the globe now a full-bleed background wash
+            (above) rather than a foreground graphic, this column carries
+            its own image instead — frameless, same treatment as the
+            invoice/convert art elsewhere on the page. Hidden below `lg`,
+            same as the illustration it replaces was, to keep the mobile
+            layout to a single centered column. */}
+        <div className="hidden items-center justify-center lg:flex">
+          <Image
+            src={walletImage}
+            alt="An AsteroidPay wallet, ready to receive, send, and convert crypto"
+            className="h-auto w-full max-w-[380px]"
+            priority
+          />
         </div>
       </div>
 
