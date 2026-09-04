@@ -28,22 +28,42 @@ import convertImage from "@/components/images/icons/convert.png";
 // glossy metallic gradient + a lime rim/glow), sized to match convert.png's
 // footprint so switching tabs doesn't jump in apparent image size. Swap
 // GlossyGlyph's callers below for <Image> once real art exists.
+//
+// Volume/depth comes from three layered tricks rather than a flat fill:
+// (1) an off-center radial gradient on the sphere (light upper-left, dark
+// lower-right — the standard "lit ball" shading trick), (2) a small
+// elliptical specular-highlight blob for a glossy reflection, and (3) a
+// real drop-shadow filter under the glyph so it visually lifts off the
+// sphere's surface instead of sitting flush on it.
 function GlossyGlyph({ path }: { path: string }) {
   return (
-    <svg width="240" height="240" viewBox="0 0 240 240" aria-hidden="true">
+    <svg width="336" height="336" viewBox="0 0 240 240" aria-hidden="true">
       <defs>
-        <radialGradient id="chromeGlow" cx="50%" cy="35%" r="65%">
-          <stop offset="0%" stopColor="#eef1f1" />
-          <stop offset="55%" stopColor="#9aa3a3" />
-          <stop offset="100%" stopColor="#484e4e" />
+        <radialGradient id="sphereBody" cx="36%" cy="28%" r="80%">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="16%" stopColor="#e9ecec" />
+          <stop offset="45%" stopColor="#a3adad" />
+          <stop offset="78%" stopColor="#5b6363" />
+          <stop offset="100%" stopColor="#262b2b" />
+        </radialGradient>
+        <radialGradient id="specular" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
         <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="10" />
+          <feGaussianBlur stdDeviation="12" />
+        </filter>
+        <filter id="glyphLift" x="-60%" y="-60%" width="220%" height="220%">
+          <feDropShadow dx="2" dy="4" stdDeviation="2.5" floodColor="#000000" floodOpacity="0.5" />
         </filter>
       </defs>
-      <circle cx="120" cy="120" r="96" fill="var(--color-accent)" opacity="0.22" filter="url(#softGlow)" />
-      <circle cx="120" cy="120" r="78" fill="url(#chromeGlow)" stroke="var(--color-accent)" strokeWidth="3" strokeOpacity="0.85" />
-      <path d={path} fill="none" stroke="#1b1d1d" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="120" cy="120" r="102" fill="var(--color-accent)" opacity="0.24" filter="url(#softGlow)" />
+      <circle cx="120" cy="120" r="82" fill="url(#sphereBody)" />
+      <circle cx="120" cy="120" r="82" fill="none" stroke="var(--color-accent)" strokeWidth="3" strokeOpacity="0.9" />
+      <ellipse cx="92" cy="82" rx="34" ry="22" fill="url(#specular)" />
+      <g filter="url(#glyphLift)">
+        <path d={path} fill="none" stroke="#16181a" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
     </svg>
   );
 }
@@ -83,7 +103,7 @@ const ITEMS: ActionItem[] = [
       <Image
         src={convertImage}
         alt="Converting between Bitcoin and Ethereum"
-        className="h-auto w-full max-w-[240px]"
+        className="h-auto w-full max-w-[336px]"
       />
     ),
   },
