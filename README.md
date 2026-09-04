@@ -25,11 +25,80 @@ Open [http://localhost:3000](http://localhost:3000). Other scripts: `npm run lin
 ## Deployment
 
 The site is deployed as a self-hosted Docker container (Next.js `standalone` output, running as a
-non-root user). From the project root on the target VPS:
+non-root user).
+
+### Prerequisites
+
+- A VPS/server with Docker and the Docker Compose plugin installed.
+- A domain pointed at the server (for the reverse proxy in the next step).
+
+### 1. Get the code onto the server
+
+```bash
+git clone <repo-url> asteroidpay
+cd asteroidpay
+```
+
+### 2. Update the hardcoded domain (only if not deploying under `asteroidpay.io`)
+
+The canonical URL, sitemap, robots.txt, and OpenGraph/JSON-LD tags all reference
+`https://asteroidpay.io` directly (there's no env var for it). If the real domain differs, update
+`BASE_URL` / `metadataBase` in these three files before building:
+
+- `app/layout.tsx`
+- `app/sitemap.ts`
+- `app/robots.ts`
+
+### 3. Build and run
 
 ```bash
 docker compose up -d --build
 ```
 
-That builds the image from the multi-stage `Dockerfile` and serves the app on port 3000, with
-`restart: unless-stopped`. Put it behind a reverse proxy (nginx, Caddy, Traefik) to terminate TLS.
+This builds the image from the multi-stage `Dockerfile` (deps → build → slim `node:20-alpine`
+runner) and starts the container serving the app on `localhost:3000`, with `restart: unless-stopped`
+so it survives reboots/crashes.
+
+### 4. Put it behind a reverse proxy
+
+The container only serves plain HTTP on port 3000 — terminate TLS in front of it. Minimal example
+with Caddy (`Caddyfile`), which handles HTTPS certs automatically:
+
+```
+asteroidpay.io {
+    reverse_proxy localhost:3000
+}
+```
+
+Or nginx:
+
+```nginx
+server {
+    listen 80;
+    server_name asteroidpay.io;
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+(then add TLS with certbot, or swap in Traefik with its own labels).
+
+### Updating a running deployment
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+Docker Compose recreates only the `web` service since nothing else changed.
+
+### Useful commands
+
+```bash
+docker compose logs -f web   # tail app logs
+docker compose ps            # container status
+docker compose down          # stop and remove the container
+```
