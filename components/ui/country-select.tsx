@@ -66,7 +66,17 @@ export function CountrySelect({
               className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
             />
           </div>
-          <div className="max-h-56 overflow-y-auto p-1">
+          <div
+            className="max-h-56 overflow-y-auto p-1"
+            // The modal this lives inside locks body scroll (Radix Dialog's
+            // own scroll-lock), which also swallows wheel events aimed at
+            // this list since it's a separate Popover portal, not part of
+            // the Dialog's own recognized scrollable region — scrolling it
+            // directly here bypasses that instead of fighting it.
+            onWheel={(e) => {
+              e.currentTarget.scrollTop += e.deltaY;
+            }}
+          >
             {filtered.length === 0 ? (
               <p className="px-2 py-3 text-center text-sm text-muted-foreground">No matches</p>
             ) : (
