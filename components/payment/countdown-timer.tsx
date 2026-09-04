@@ -11,15 +11,7 @@ function formatDuration(ms: number): string {
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-export function CountdownTimer({
-  createdAt,
-  expiredAt,
-  onExpire,
-}: {
-  createdAt: string;
-  expiredAt: string;
-  onExpire?: () => void;
-}) {
+function useCountdown(createdAt: string, expiredAt: string, onExpire?: () => void) {
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
@@ -41,19 +33,59 @@ export function CountdownTimer({
   }, [remaining <= 0]);
 
   const state = ratio > 0.33 ? "safe" : ratio > 0.1 ? "warning" : "critical";
-  const colorClass =
-    state === "safe" ? "text-accent" : state === "warning" ? "text-amber-400" : "text-destructive";
-  const barClass = state === "safe" ? "bg-accent" : state === "warning" ? "bg-amber-400" : "bg-destructive";
+  return { text: formatDuration(remaining), ratio, state } as const;
+}
+
+const COLOR = { safe: "text-accent", warning: "text-amber-400", critical: "text-destructive" } as const;
+const BAR_COLOR = { safe: "bg-accent", warning: "bg-amber-400", critical: "bg-destructive" } as const;
+
+// Desktop: label above, value+bar below, right-aligned, narrow bar.
+export function CountdownTimer({
+  createdAt,
+  expiredAt,
+  onExpire,
+}: {
+  createdAt: string;
+  expiredAt: string;
+  onExpire?: () => void;
+}) {
+  const { text, ratio, state } = useCountdown(createdAt, expiredAt, onExpire);
 
   return (
     <div className="text-right">
       <p className="text-sm text-muted-foreground">Expiration time</p>
-      <p className={`font-mono text-lg font-semibold tabular-nums ${colorClass}`}>
-        {formatDuration(remaining)}
-      </p>
+      <p className={`font-mono text-lg font-semibold tabular-nums ${COLOR[state]}`}>{text}</p>
       <div className="mt-1.5 h-1 w-40 overflow-hidden rounded-full bg-border">
         <div
-          className={`h-full rounded-full transition-[width] duration-1000 ease-linear ${barClass}`}
+          className={`h-full rounded-full transition-[width] duration-1000 ease-linear ${BAR_COLOR[state]}`}
+          style={{ width: `${ratio * 100}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Mobile: label/value on one row, full-width bar underneath.
+export function CountdownTimerRow({
+  createdAt,
+  expiredAt,
+  onExpire,
+}: {
+  createdAt: string;
+  expiredAt: string;
+  onExpire?: () => void;
+}) {
+  const { text, ratio, state } = useCountdown(createdAt, expiredAt, onExpire);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between text-sm">
+        <span className="text-muted-foreground">Expiration time</span>
+        <span className={`font-mono font-semibold tabular-nums ${COLOR[state]}`}>{text}</span>
+      </div>
+      <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-border">
+        <div
+          className={`h-full rounded-full transition-[width] duration-1000 ease-linear ${BAR_COLOR[state]}`}
           style={{ width: `${ratio * 100}%` }}
         />
       </div>

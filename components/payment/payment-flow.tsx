@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, HelpCircle, X } from "lucide-react";
+import { Check, ChevronLeft, HelpCircle, QrCode, X } from "lucide-react";
 import {
   confirmMethod,
   fetchConfirms,
@@ -12,7 +12,7 @@ import {
 } from "@/lib/payment/api";
 import type { ConfirmsResult, CurrencyOption, MethodOption, PaymentInfo, PaymentInfoResult } from "@/lib/payment/types";
 import { AssetSelect, type AssetOption } from "./asset-select";
-import { CountdownTimer } from "./countdown-timer";
+import { CountdownTimer, CountdownTimerRow } from "./countdown-timer";
 import { CopyField } from "./copy-field";
 import { PaymentQrCode } from "./qr-code";
 
@@ -76,6 +76,11 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Set by the "Back" link so the pay screen can be left even though the
+  // backend still has payer_currency/network on file — cleared again as
+  // soon as a new selection is confirmed.
+  const [viewOverride, setViewOverride] = useState<"select" | null>(null);
+
   const loadInfo = useCallback(async (silent: boolean) => {
     try {
       const result = await fetchPaymentInfo(uuid);
@@ -118,6 +123,22 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
     return () => clearInterval(id);
   }, [uuid, loadInfo]);
 
+  // Fetch confirmations immediately on entering the pay screen, instead of
+  // waiting for the first 15s poll tick to fill in a real number.
+  useEffect(() => {
+    const payment = data?.payment;
+    if (!payment?.network || payment.is_final) return;
+    void (async () => {
+      try {
+        const result = await fetchConfirms(uuid);
+        setConfirms((prev) => (sameJson(prev, result) ? prev : result));
+      } catch {
+        // Falls back to the next 15s poll.
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uuid, data?.payment.network, data?.payment.is_final]);
+
   // Currency search (debounced, server-side).
   useEffect(() => {
     const id = setTimeout(async () => {
@@ -159,11 +180,24 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
     try {
       const result = await confirmMethod(uuid, selectedCurrency.currency, selectedMethod.network, methodsPayload);
       setData((prev) => (prev ? { ...prev, payment: result.payment } : prev));
+      setViewOverride(null);
+      setConfirms(null);
     } catch (err) {
       setSubmitError(err instanceof PaymentApiError ? err.message : "Couldn't submit your selection");
     } finally {
       setSubmitting(false);
     }
+  }
+
+  function handleBack() {
+    setViewOverride("select");
+    setSelectedCurrency(null);
+    setSelectedMethod(null);
+    setNetworkOptions([]);
+    setMethodsPayload(null);
+    setCurrencySearch("");
+    setNetworkSearch("");
+    setSubmitError(null);
   }
 
   if (loadError && !data) {
@@ -232,14 +266,26 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
     );
   }
 
-  const isPayScreen = Boolean(payment.payer_currency && payment.network);
+  const isPayScreen = Boolean(payment.payer_currency && payment.network) && viewOverride !== "select";
 
   return (
     <>
       <MerchantHeader branding={branding} uuid={uuid} />
+
+      {isPayScreen && payment.can_change_payment_method && (
+        <button
+          type="button"
+          onClick={handleBack}
+          className="mt-6 flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ChevronLeft className="h-4 w-4" /> Back
+        </button>
+      )}
+
       <div className="flex flex-wrap items-start justify-between gap-6">
         <AmountHeading payment={payment} selectedCurrency={selectedCurrency} />
-        <div className="space-y-3">
+        {/* Desktop: compact right-aligned stack beside the amount. */}
+        <div className="hidden text-right sm:block">
           {isPayScreen && <Confirmations confirms={confirms} />}
           <CountdownTimer
             createdAt={payment.created_at}
@@ -249,20 +295,43 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
         </div>
       </div>
 
+      {/* Mobile: full-width divided rows below the amount. */}
+      <div className="mt-4 border-t border-border sm:hidden">
+        {isPayScreen && (
+          <div className="flex items-center justify-between border-b border-border py-2.5 text-sm">
+            <span className="text-muted-foreground">Confirmations</span>
+            <ConfirmationsValue confirms={confirms} className="font-medium text-foreground" />
+          </div>
+        )}
+        <div className="py-2.5">
+          <CountdownTimerRow
+            createdAt={payment.created_at}
+            expiredAt={payment.expired_at}
+            onExpire={() => setExpiredLocally(true)}
+          />
+        </div>
+      </div>
+
       <PaymentCard>
         {isPayScreen ? (
-          <div className="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-start">
-            <div className="space-y-4">
-              <CopyField label="Recipient's wallet address" value={payment.address ?? ""} />
-              <CopyField label="Amount" value={`${payment.payer_amount} ${payment.payer_currency}`} />
-              {payment.contract_address && (
-                <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  Contract address {payment.contract_address.slice(0, 6)}…{payment.contract_address.slice(-4)}
-                  <HelpCircle className="h-3.5 w-3.5" />
-                </p>
-              )}
+          <div className="space-y-5">
+            <div className="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-start">
+              <div className="space-y-4">
+                <CopyField label="Recipient's wallet address" value={payment.address ?? ""} />
+                <CopyField label="Amount" value={`${payment.payer_amount} ${payment.payer_currency}`} />
+                <MobileQrButton value={payment.address ?? ""} />
+                {payment.contract_address && (
+                  <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    Contract address {payment.contract_address.slice(0, 6)}…{payment.contract_address.slice(-4)}
+                    <HelpCircle className="h-3.5 w-3.5" />
+                  </p>
+                )}
+              </div>
+              <div className="hidden sm:block">
+                <PaymentQrCode value={payment.address ?? ""} />
+              </div>
             </div>
-            <PaymentQrCode value={payment.address ?? ""} />
+            <EmailNotifyBox />
           </div>
         ) : (
           <div className="space-y-5">
@@ -370,14 +439,118 @@ function AmountHeading({
   );
 }
 
+function ConfirmationsValue({ confirms, className }: { confirms: ConfirmsResult | null; className?: string }) {
+  return (
+    <span className={className}>{confirms ? `${confirms.confirms} from ${confirms.need_confirms}` : "0 from —"}</span>
+  );
+}
+
 function Confirmations({ confirms }: { confirms: ConfirmsResult | null }) {
   return (
     <p className="text-sm text-muted-foreground">
-      Confirmations{" "}
-      <span className="font-medium text-foreground">
-        {confirms ? `${confirms.confirms} from ${confirms.need_confirms}` : "—"}
-      </span>
+      Confirmations <ConfirmationsValue confirms={confirms} className="font-medium text-foreground" />
     </p>
+  );
+}
+
+// Mobile only — the QR sits inline on desktop (see PaymentQrCode above),
+// but is tucked behind this button on mobile per the reference design.
+function MobileQrButton({ value }: { value: string }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div className="sm:hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="mx-auto flex h-11 items-center gap-2 rounded-full bg-muted px-6 text-sm font-medium text-foreground"
+      >
+        Pay with <QrCode className="h-4 w-4" />
+      </button>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-background/95 px-6">
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setOpen(false)}
+            className="absolute top-4 right-4 text-muted-foreground"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <PaymentQrCode value={value} size={220} />
+          <p className="max-w-xs text-center text-sm break-all text-muted-foreground">{value}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EmailNotifyBox() {
+  const [expanded, setExpanded] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  if (submitted) {
+    return (
+      <div className="rounded-xl border border-border px-4 py-3 text-center text-sm text-muted-foreground">
+        We&apos;ll email <span className="text-foreground">{email}</span> when your payment&apos;s status changes.
+      </div>
+    );
+  }
+
+  if (!expanded) {
+    return (
+      <button
+        type="button"
+        onClick={() => setExpanded(true)}
+        className="w-full rounded-xl border border-border px-4 py-3 text-center text-sm text-muted-foreground"
+      >
+        <span className="text-accent underline">Leave your email</span> to receive a notification when your
+        payment&apos;s status changes
+      </button>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        // No notification endpoint has been provided yet — this only
+        // acknowledges locally. Wire it up once one exists.
+        setSubmitted(true);
+      }}
+      className="flex flex-col gap-2 rounded-xl border border-border p-3 sm:flex-row"
+    >
+      <input
+        type="email"
+        required
+        autoFocus
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@example.com"
+        className="h-9 flex-1 rounded-lg border border-input bg-transparent px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+      />
+      <button
+        type="submit"
+        className="h-9 rounded-lg bg-accent px-4 text-sm font-semibold text-accent-foreground"
+      >
+        Notify me
+      </button>
+    </form>
   );
 }
 
