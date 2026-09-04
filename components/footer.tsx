@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { Reveal } from "@/components/ui/reveal";
 
@@ -11,21 +10,6 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 sm:flex-row sm:justify-between">
         <Logo className="[&_span]:text-foreground" />
         <nav className="flex flex-wrap justify-center gap-6 text-sm">
-          <Link href="/#services" className={FOOTER_LINK_CLASS}>
-            Solutions
-          </Link>
-          <Link href="/#api" className={FOOTER_LINK_CLASS}>
-            API
-          </Link>
-          <Link href="/#white-label" className={FOOTER_LINK_CLASS}>
-            White-label
-          </Link>
-          <Link href="/#wallet" className={FOOTER_LINK_CLASS}>
-            Wallet
-          </Link>
-          <Link href="/#reviews" className={FOOTER_LINK_CLASS}>
-            Reviews
-          </Link>
           <a href="/terms" className={FOOTER_LINK_CLASS}>
             Terms of Use
           </a>
