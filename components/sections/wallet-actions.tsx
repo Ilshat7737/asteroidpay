@@ -23,19 +23,14 @@ import Image from "next/image";
 import convertImage from "@/components/images/icons/convert.png";
 
 // Receive/Send have no final art yet (the user's own asset is pending) —
-// these are a placeholder in the same chrome-badge-with-lime-glow visual
-// family as the supplied PNGs (convert.png, invoice.png, wallet.png:
-// glossy metallic gradient + a lime rim/glow), sized to match convert.png's
-// footprint so switching tabs doesn't jump in apparent image size. Swap
-// GlossyGlyph's callers below for <Image> once real art exists.
-//
-// Volume/depth comes from three layered tricks rather than a flat fill:
-// (1) an off-center radial gradient on the sphere (light upper-left, dark
-// lower-right — the standard "lit ball" shading trick), (2) a small
-// elliptical specular-highlight blob for a glossy reflection, and (3) a
-// real drop-shadow filter under the glyph so it visually lifts off the
-// sphere's surface instead of sitting flush on it.
-function GlossyGlyph({ path }: { path: string }) {
+// this placeholder matches the actual coin-icon style used inside the
+// supplied PNGs (convert.png, invoice.png, wallet.png all show the same
+// dark disc + thick lime edge ring + embossed chrome icon language), not
+// a generic chrome sphere: a dark face, a thick directionally-lit lime
+// bezel standing in for the edge, and a metallic-gradient glyph with a
+// drop shadow so it lifts off the face. Swap GlossyGlyph's callers below
+// for <Image> once real art exists.
+function GlossyGlyph({ path, rotate = 0 }: { path: string; rotate?: number }) {
   // Every instance needs its own unique def IDs — this renders more than
   // once at a time (once inline per mobile row, once in the desktop swap
   // panel), and duplicate SVG element IDs on the same page make
@@ -44,32 +39,57 @@ function GlossyGlyph({ path }: { path: string }) {
   // the sphere and glyph both rendered blank, leaving only the plain rim
   // stroke visible.
   const uid = useId();
-  const bodyId = `${uid}-body`;
-  const specularId = `${uid}-specular`;
+  const faceId = `${uid}-face`;
+  const edgeId = `${uid}-edge`;
+  const iconId = `${uid}-icon`;
   const liftId = `${uid}-lift`;
   return (
-    <svg className="h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
+    <svg
+      className="h-full w-full"
+      viewBox="0 0 240 240"
+      aria-hidden="true"
+      style={{ transform: `rotate(${rotate}deg)` }}
+    >
       <defs>
-        <radialGradient id={bodyId} cx="36%" cy="28%" r="80%">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="16%" stopColor="#e9ecec" />
-          <stop offset="45%" stopColor="#a3adad" />
-          <stop offset="78%" stopColor="#5b6363" />
-          <stop offset="100%" stopColor="#262b2b" />
+        <radialGradient id={faceId} cx="40%" cy="32%" r="75%">
+          <stop offset="0%" stopColor="#2b2f24" />
+          <stop offset="55%" stopColor="#15170f" />
+          <stop offset="100%" stopColor="#080905" />
         </radialGradient>
-        <radialGradient id={specularId} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-        </radialGradient>
+        {/* Straight-line gradient laid across the whole ring's bounding box
+            (not a true conic gradient — SVG has none) so the edge still
+            reads bright where it crosses the upper-left and dark toward
+            the lower-right, matching the face's own light source. */}
+        <linearGradient id={edgeId} x1="15%" y1="8%" x2="85%" y2="92%">
+          <stop offset="0%" stopColor="#f5f7f0" />
+          <stop offset="30%" stopColor="var(--color-accent)" />
+          <stop offset="65%" stopColor="#8a9a24" />
+          <stop offset="100%" stopColor="#3d4712" />
+        </linearGradient>
+        <linearGradient id={iconId} x1="20%" y1="8%" x2="80%" y2="96%">
+          <stop offset="0%" stopColor="#f6f7f3" />
+          <stop offset="45%" stopColor="#c7cbc1" />
+          <stop offset="100%" stopColor="#666b62" />
+        </linearGradient>
         <filter id={liftId} x="-60%" y="-60%" width="220%" height="220%">
-          <feDropShadow dx="2" dy="4" stdDeviation="2.5" floodColor="#000000" floodOpacity="0.5" />
+          <feDropShadow dx="1.5" dy="3" stdDeviation="2" floodColor="#000000" floodOpacity="0.6" />
         </filter>
       </defs>
-      <circle cx="120" cy="120" r="82" fill={`url(#${bodyId})`} />
-      <circle cx="120" cy="120" r="82" fill="none" stroke="var(--color-accent)" strokeWidth="3" strokeOpacity="0.9" />
-      <ellipse cx="92" cy="82" rx="34" ry="22" fill={`url(#${specularId})`} />
+      {/* Coin edge: thin dark outer line, thick directionally-lit lime
+          bezel, thin dark inner shade — reads as a raised metal rim. */}
+      <circle cx="120" cy="120" r="94" fill="none" stroke="#050604" strokeOpacity="0.7" strokeWidth="2" />
+      <circle cx="120" cy="120" r="86" fill="none" stroke={`url(#${edgeId})`} strokeWidth="14" />
+      <circle cx="120" cy="120" r="79" fill="none" stroke="#050604" strokeOpacity="0.5" strokeWidth="2" />
+      <circle cx="120" cy="120" r="77" fill={`url(#${faceId})`} />
       <g filter={`url(#${liftId})`}>
-        <path d={path} fill="none" stroke="#16181a" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d={path}
+          fill="none"
+          stroke={`url(#${iconId})`}
+          strokeWidth="9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </g>
     </svg>
   );
@@ -90,7 +110,7 @@ const ITEMS: ActionItem[] = [
     subtitle: "Top up your wallet, in any coin, on any network.",
     description:
       "Fund your wallet from any supported coin, on any network — everything consolidates into one balance, ready the moment it lands.",
-    visual: <GlossyGlyph path="M120 78v56M96 112l24 24 24-24M84 150h72" />,
+    visual: <GlossyGlyph path="M120 78v56M96 112l24 24 24-24M84 150h72" rotate={-10} />,
   },
   {
     id: "send",
@@ -98,7 +118,7 @@ const ITEMS: ActionItem[] = [
     subtitle: "Send and spend, across any network.",
     description:
       "Send funds across networks, pay for goods and services, or transfer to anyone — without worrying about which network they need.",
-    visual: <GlossyGlyph path="M84 156 156 84M156 84 130 90M156 84 150 110" />,
+    visual: <GlossyGlyph path="M84 156 156 84M156 84 130 90M156 84 150 110" rotate={10} />,
   },
   {
     id: "convert",
