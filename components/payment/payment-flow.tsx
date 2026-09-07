@@ -242,7 +242,7 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
               iconClassName="bg-accent/15"
               title="Payment is paid"
               message="You have successfully paid the invoice"
-              action={payment.project_url ? { label: "Go back", href: payment.project_url } : undefined}
+              action={payment.url_return ? { label: "Go back", href: payment.url_return } : undefined}
             />
           </PaymentCard>
         </>

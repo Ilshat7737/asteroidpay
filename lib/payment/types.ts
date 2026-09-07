@@ -29,6 +29,7 @@ export interface PaymentInfo {
   txid: string | null;
   tx_url: string | null;
   project_url: string | null;
+  url_return: string | null;
   payment_status: string;
   expired_at: string;
   created_at: string;

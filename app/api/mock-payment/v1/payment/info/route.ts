@@ -35,6 +35,7 @@ export async function POST(request: Request) {
     txid: null,
     tx_url: null,
     project_url: "https://asteroidpay.io",
+    url_return: "https://asteroidpay.io",
     payment_status: invoice.status,
     expired_at: invoice.expired_at,
     created_at: invoice.created_at,
