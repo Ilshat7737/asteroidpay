@@ -13,7 +13,7 @@ export function Testimonials() {
 
   return (
     <section id="reviews" className="bg-background py-24 text-foreground">
-      <Reveal className="mx-auto max-w-6xl px-4">
+      <Reveal className="mx-auto max-w-6xl px-4 text-center">
         <h2 className="font-heading text-4xl font-bold sm:text-5xl">
           Built for businesses that move fast.
         </h2>
