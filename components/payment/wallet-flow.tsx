@@ -202,6 +202,7 @@ export function WalletFlow({ uuid }: { uuid: string }) {
                 label="Contract address"
                 value={payment.contract_address}
                 displayValue={`${payment.contract_address.slice(0, 6)}…${payment.contract_address.slice(-4)}`}
+                copyable={false}
               />
             )}
           </div>

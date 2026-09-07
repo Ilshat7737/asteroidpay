@@ -7,12 +7,15 @@ export function CopyField({
   label,
   value,
   displayValue,
+  copyable = true,
 }: {
   label: string;
   value: string;
   // What's shown in the box, e.g. a truncated contract address — the
   // copy button always copies the full `value` regardless.
   displayValue?: string;
+  // Same box, no copy button — for values shown for reference only.
+  copyable?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -32,14 +35,16 @@ export function CopyField({
       <p className="text-xs text-muted-foreground">{label}</p>
       <div className="mt-1 flex items-start justify-between gap-3">
         <p className="break-all font-mono text-sm text-foreground">{displayValue ?? value}</p>
-        <button
-          type="button"
-          onClick={handleCopy}
-          aria-label={`Copy ${label.toLowerCase()}`}
-          className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
-        >
-          {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
-        </button>
+        {copyable && (
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label={`Copy ${label.toLowerCase()}`}
+            className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
+          </button>
+        )}
       </div>
     </div>
   );
