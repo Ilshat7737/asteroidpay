@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, ChevronLeft, HelpCircle, QrCode, X } from "lucide-react";
+import { Check, ChevronLeft, HelpCircle, X } from "lucide-react";
 import {
   confirmMethod,
   fetchConfirms,
@@ -15,6 +15,11 @@ import { AssetSelect, type AssetOption } from "./asset-select";
 import { CountdownTimer, CountdownTimerRow } from "./countdown-timer";
 import { CopyField } from "./copy-field";
 import { PaymentQrCode } from "./qr-code";
+import { MerchantHeader } from "./merchant-header";
+import { PaymentCard } from "./payment-card";
+import { StatusScreen } from "./status-screen";
+import { Confirmations, ConfirmationsValue } from "./confirmations";
+import { MobileQrButton } from "./mobile-qr-button";
 
 const POLL_INTERVAL_MS = 15000;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -386,23 +391,6 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
   );
 }
 
-function MerchantHeader({ branding, uuid }: { branding: PaymentInfoResult["branding"]; uuid: string }) {
-  return (
-    <div className="flex items-center gap-3">
-      {branding.icon_default ? (
-        // eslint-disable-next-line @next/next/no-img-element -- remote, merchant-provided icon URL
-        <img src={branding.icon_default} alt="" className="h-10 w-10 rounded-full bg-muted object-cover" />
-      ) : (
-        <div className="h-10 w-10 rounded-full bg-muted" />
-      )}
-      <div>
-        <p className="font-heading text-base font-semibold text-foreground">{branding.name}</p>
-        <p className="text-sm text-muted-foreground">Invoice #{uuid.slice(0, 8).toUpperCase()}</p>
-      </div>
-    </div>
-  );
-}
-
 function AmountHeading({
   payment,
   selectedCurrency,
@@ -435,66 +423,6 @@ function AmountHeading({
       <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
         Network fee not included <HelpCircle className="h-3.5 w-3.5" />
       </p>
-    </div>
-  );
-}
-
-function ConfirmationsValue({ confirms, className }: { confirms: ConfirmsResult | null; className?: string }) {
-  return (
-    <span className={className}>{confirms ? `${confirms.confirms} from ${confirms.need_confirms}` : "0 from —"}</span>
-  );
-}
-
-function Confirmations({ confirms }: { confirms: ConfirmsResult | null }) {
-  return (
-    <p className="text-sm text-muted-foreground">
-      Confirmations <ConfirmationsValue confirms={confirms} className="font-medium text-foreground" />
-    </p>
-  );
-}
-
-// Mobile only — the QR sits inline on desktop (see PaymentQrCode above),
-// but is tucked behind this button on mobile per the reference design.
-function MobileQrButton({ value }: { value: string }) {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    document.body.style.overflow = "hidden";
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
-
-  return (
-    <div className="sm:hidden">
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="mx-auto flex h-11 items-center gap-2 rounded-full bg-muted px-6 text-sm font-medium text-foreground"
-      >
-        Pay with <QrCode className="h-4 w-4" />
-      </button>
-
-      {open && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-background/95 px-6">
-          <button
-            type="button"
-            aria-label="Close"
-            onClick={() => setOpen(false)}
-            className="absolute top-4 right-4 text-muted-foreground"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <PaymentQrCode value={value} size={220} />
-          <p className="max-w-xs text-center text-sm break-all text-muted-foreground">{value}</p>
-        </div>
-      )}
     </div>
   );
 }
@@ -554,37 +482,3 @@ function EmailNotifyBox() {
   );
 }
 
-function PaymentCard({ children }: { children: React.ReactNode }) {
-  return <div className="mt-6 rounded-2xl border border-border bg-card p-6 sm:p-8">{children}</div>;
-}
-
-function StatusScreen({
-  icon,
-  iconClassName,
-  title,
-  message,
-  action,
-}: {
-  icon: React.ReactNode;
-  iconClassName: string;
-  title: string;
-  message: string;
-  action?: { label: string; href?: string; onClick?: () => void };
-}) {
-  return (
-    <div className="flex flex-col items-center py-6 text-center">
-      <div className={`flex h-14 w-14 items-center justify-center rounded-full ${iconClassName}`}>{icon}</div>
-      <h1 className="mt-5 font-heading text-2xl font-bold text-foreground">{title}</h1>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">{message}</p>
-      {action && (
-        <a
-          href={action.href ?? "#"}
-          onClick={action.onClick}
-          className="mt-6 flex h-11 items-center justify-center rounded-full bg-accent px-8 text-sm font-semibold text-accent-foreground"
-        >
-          {action.label}
-        </a>
-      )}
-    </div>
-  );
-}

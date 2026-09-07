@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/invoice/"],
+      disallow: ["/api/", "/invoice/", "/wallet/"],
     },
     sitemap: "https://asteroidpay.io/sitemap.xml",
   };

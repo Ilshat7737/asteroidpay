@@ -5,6 +5,7 @@
 
 export interface MockInvoice {
   uuid: string;
+  kind: "invoice" | "wallet";
   amount: string;
   currency: string;
   equivalent_currency: string;
@@ -16,6 +17,9 @@ export interface MockInvoice {
   contract_explorer_url: string | null;
   payer_amount: string | null;
   payer_amount_equivalent: string | null;
+  txid: string | null;
+  tx_url: string | null;
+  from: string | null;
   status: string;
   is_final: boolean;
   created_at: string;
@@ -69,30 +73,66 @@ const NEED_CONFIRMS: Record<string, number> = {
   solana: 32,
 };
 
+const TX_EXPLORER: Record<string, (tx: string) => string> = {
+  bitcoin: (tx) => `https://mempool.space/tx/${tx}`,
+  eth: (tx) => `https://etherscan.io/tx/${tx}`,
+  tron: (tx) => `https://tronscan.org/#/transaction/${tx}`,
+  bsc: (tx) => `https://bscscan.com/tx/${tx}`,
+  polygon: (tx) => `https://polygonscan.com/tx/${tx}`,
+  solana: (tx) => `https://solscan.io/tx/${tx}`,
+};
+
+function fakeTxid(network: string): string {
+  const hex = Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
+  return network === "eth" || network === "bsc" || network === "polygon" ? `0x${hex}` : hex;
+}
+
+function fakeFromAddress(network: string): string {
+  const target = NETWORK_ADDRESSES[network] ?? NETWORK_ADDRESSES.eth;
+  // Not a real sender — just a plausible-looking different address, for display.
+  return target.address.slice(0, -6) + "9f2c1a";
+}
+
+// /wallet/[uuid] pages point at a "static wallet" invoice: network+address
+// are fixed at creation (no currency/network selection step), amount is
+// open — whatever the payer sends. There's no real backend to create one
+// against yet, so the mock recognizes a "wallet-" uuid prefix as a
+// convenience and seeds it pre-filled instead of blank. See ../README.md.
+const STATIC_WALLET_NETWORK = "tron";
+const STATIC_WALLET_CURRENCY = "USDT";
+
 export function getInvoice(uuid: string): MockInvoice {
   let invoice = store.get(uuid);
   if (!invoice) {
     const now = new Date();
-    const expiresAt = new Date(now.getTime() + 30 * 60 * 1000);
+    const isWallet = uuid.toLowerCase().startsWith("wallet-");
+    const farExpiry = new Date(now.getTime() + 100 * 365 * 24 * 60 * 60 * 1000);
+    const soonExpiry = new Date(now.getTime() + 30 * 60 * 1000);
+    const target = isWallet ? (NETWORK_ADDRESSES[STATIC_WALLET_NETWORK] ?? NETWORK_ADDRESSES.eth) : null;
+
     invoice = {
       uuid,
-      amount: "560",
+      kind: isWallet ? "wallet" : "invoice",
+      amount: isWallet ? "0" : "560",
       currency: "USD",
       equivalent_currency: "USD",
-      payer_currency: null,
-      network: null,
-      token_standard: null,
-      address: null,
-      contract_address: null,
-      contract_explorer_url: null,
+      payer_currency: isWallet ? STATIC_WALLET_CURRENCY : null,
+      network: isWallet ? STATIC_WALLET_NETWORK : null,
+      token_standard: isWallet ? "TRC-20" : null,
+      address: isWallet ? target!.address : null,
+      contract_address: isWallet ? target!.contract : null,
+      contract_explorer_url: isWallet ? target!.explorer : null,
       payer_amount: null,
       payer_amount_equivalent: null,
+      txid: null,
+      tx_url: null,
+      from: null,
       status: "check",
       is_final: false,
       created_at: now.toISOString(),
-      expired_at: expiresAt.toISOString(),
+      expired_at: (isWallet ? farExpiry : soonExpiry).toISOString(),
       confirms: 0,
-      need_confirms: 12,
+      need_confirms: isWallet ? (NEED_CONFIRMS[STATIC_WALLET_NETWORK] ?? 12) : 12,
       block: 48213000,
     };
     store.set(uuid, invoice);
@@ -138,6 +178,26 @@ export function tick(uuid: string): MockInvoice {
     invoice.is_final = true;
     return invoice;
   }
+
+  // Static wallet: no selection step ever happens, so once the address has
+  // been sitting around for a bit, simulate a payment landing on it instead
+  // of progressing confirmations on nothing. The delay keeps the initial
+  // "just an address, waiting" state visible for a beat rather than
+  // skipping straight past it on the very first poll.
+  const walletPaymentDelayMs = 20000;
+  if (invoice.kind === "wallet" && !invoice.txid) {
+    if (now.getTime() - new Date(invoice.created_at).getTime() < walletPaymentDelayMs) {
+      return invoice;
+    }
+    invoice.txid = fakeTxid(invoice.network);
+    invoice.from = fakeFromAddress(invoice.network);
+    invoice.tx_url = TX_EXPLORER[invoice.network]?.(invoice.txid) ?? null;
+    invoice.payer_amount = (Math.random() * 200 + 20).toFixed(2);
+    invoice.payer_amount_equivalent = invoice.payer_amount;
+    invoice.confirms = 0;
+    return invoice;
+  }
+  if (invoice.kind === "wallet" && !invoice.payer_amount) return invoice;
 
   const forceError = uuid.toLowerCase().includes("err");
 
