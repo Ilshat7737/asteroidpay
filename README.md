@@ -1,104 +1,38 @@
-# AsteroidPay Landing Site
+# AsteroidPay
 
-Marketing site for **AsteroidPay**, a crypto payment gateway for merchants accepting Bitcoin,
-Ethereum, and stablecoins across six networks. Single-page landing site with a hero, trust bar,
-services (payment gateway + supported networks), API, auto-convert explainer, white-label,
-testimonials, wallet, receive, send, convert, and a final CTA, plus three legal routes (`/terms`,
-`/privacy`, `/aml`) and three glass modals (log in, contact, register) that any page can open from
-the header.
+This repository holds **two independent Next.js apps**, deployed separately on different
+subdomains:
 
-Built with Next.js (App Router), TypeScript, Tailwind CSS v4, shadcn/ui on Radix, framer-motion for
-motion, and react-hook-form + zod for form validation. Typography is Space Grotesk (headings) and
-Inter (body), loaded via `next/font`. The contact and register forms post to the `/api/contact` and
-`/api/register` route handlers, which validate with the shared zod schemas and currently log the
-submission server-side.
+| Folder | What it is | Deployed at |
+|---|---|---|
+| [`landing/`](landing/README.md) | The marketing site — hero, pricing, docs, legal pages, sign-up/contact forms | `asteroidpay.io` |
+| [`payform/`](payform/README.md) | The payment pages — fixed-amount invoices and static-wallet payments | `payment.asteroidpay.io` |
+
+Each folder has its own `package.json`, `node_modules`, `Dockerfile`, and `docker-compose.yml` —
+building or deploying one never requires touching the other, and they can run on entirely different
+servers if that's preferred. **Read each folder's own README before working on it** — this file is
+only the map.
+
+## Why split
+
+`payform/` needs to be reachable from `payment.asteroidpay.io` and talk directly to the real
+payment backend (`api-payment.asteroidpay.io`) with no marketing-site code, dependencies, or
+routes anywhere near it. Keeping it a fully separate app means its deploy, its dependency
+footprint, and its blast radius are all independent of `landing/`.
 
 ## Local development
 
-```bash
-npm install
-npm run dev
-```
+Each app is run from inside its own folder:
 
-Open [http://localhost:3000](http://localhost:3000). Other scripts: `npm run lint`, `npm run build`.
+```bash
+cd landing && npm install && npm run dev    # marketing site, localhost:3000
+cd payform && npm install && npm run dev    # payment pages, localhost:3000 (run one at a time,
+                                              # or change one's dev port — see its README)
+```
 
 ## Deployment
 
-The site is deployed as a self-hosted Docker container (Next.js `standalone` output, running as a
-non-root user).
-
-### Prerequisites
-
-- A VPS/server with Docker and the Docker Compose plugin installed.
-- A domain pointed at the server (for the reverse proxy in the next step).
-
-### 1. Get the code onto the server
-
-```bash
-git clone <repo-url> asteroidpay
-cd asteroidpay
-```
-
-### 2. Update the hardcoded domain (only if not deploying under `asteroidpay.io`)
-
-The canonical URL, sitemap, robots.txt, and OpenGraph/JSON-LD tags all reference
-`https://asteroidpay.io` directly (there's no env var for it). If the real domain differs, update
-`BASE_URL` / `metadataBase` in these three files before building:
-
-- `app/layout.tsx`
-- `app/sitemap.ts`
-- `app/robots.ts`
-
-### 3. Build and run
-
-```bash
-docker compose up -d --build
-```
-
-This builds the image from the multi-stage `Dockerfile` (deps → build → slim `node:20-alpine`
-runner) and starts the container serving the app on `localhost:3000`, with `restart: unless-stopped`
-so it survives reboots/crashes.
-
-### 4. Put it behind a reverse proxy
-
-The container only serves plain HTTP on port 3000 — terminate TLS in front of it. Minimal example
-with Caddy (`Caddyfile`), which handles HTTPS certs automatically:
-
-```
-asteroidpay.io {
-    reverse_proxy localhost:3000
-}
-```
-
-Or nginx:
-
-```nginx
-server {
-    listen 80;
-    server_name asteroidpay.io;
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-(then add TLS with certbot, or swap in Traefik with its own labels).
-
-### Updating a running deployment
-
-```bash
-git pull
-docker compose up -d --build
-```
-
-Docker Compose recreates only the `web` service since nothing else changed.
-
-### Useful commands
-
-```bash
-docker compose logs -f web   # tail app logs
-docker compose ps            # container status
-docker compose down          # stop and remove the container
-```
+See [`landing/README.md`](landing/README.md#deployment) and
+[`payform/README.md`](payform/README.md#deployment) for the full steps (Docker build, reverse
+proxy per subdomain). Before `payform/` ever goes to production, its temporary mock backend must be
+removed — see the warning at the top of [`payform/README.md`](payform/README.md).

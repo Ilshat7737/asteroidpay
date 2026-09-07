@@ -1,0 +1,78 @@
+/* Duplicated design tokens from landing/app/globals.css, trimmed to what
+   payform actually uses — no shadcn base import (payform's components are
+   all hand-rolled, not shadcn-generated) and no marquee keyframes (a
+   landing-only animation). Keep the token values themselves in sync with
+   landing's copy if the theme changes. */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-accent: #CDE833;
+  --font-heading: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
+    monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background font-sans text-foreground;
+  }
+}
+
+@theme inline {
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-border-strong: var(--border-strong);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-dim: var(--accent-dim);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(0.1523 0.0045 128.82);
+  --foreground: oklch(0.9659 0.0098 125.68);
+  --card: oklch(0.1923 0.0067 135.0);
+  --card-foreground: oklch(0.9659 0.0098 125.68);
+  --popover: oklch(0.1923 0.0067 135.0);
+  --popover-foreground: oklch(0.9659 0.0098 125.68);
+  --primary: oklch(0.8815 0.1922 118.25);
+  --primary-foreground: oklch(0.1523 0.0045 128.82);
+  --secondary: oklch(0.23 0.0104 132.71);
+  --secondary-foreground: oklch(0.9659 0.0098 125.68);
+  --muted: oklch(0.23 0.0104 132.71);
+  --muted-foreground: oklch(0.7093 0.0255 133.54);
+  --accent-foreground: oklch(0.1523 0.0045 128.82);
+  --destructive: oklch(0.7116 0.1812 22.84);
+  --border: oklch(0.2975 0.0158 133.66);
+  --border-strong: oklch(0.5279 0.0195 137.08);
+  --input: oklch(0.5279 0.0195 137.08);
+  --ring: oklch(0.8815 0.1922 118.25);
+  --accent-hover: oklch(0.9171 0.1733 117.03);
+  --accent-dim: oklch(0.7483 0.1665 118.87);
+  --radius: 1rem;
+}
