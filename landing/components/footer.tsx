@@ -21,7 +21,7 @@ export function Footer() {
           </a>
         </nav>
         <p className="font-mono text-xs text-border-strong">
-          © {new Date().getFullYear()} AsteroidPay. All rights reserved.
+          © {new Date().getFullYear()} Asteroid Pay. All rights reserved.
         </p>
       </div>
       <Reveal>
@@ -37,7 +37,7 @@ export function Footer() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            AsteroidPay
+            Asteroid Pay
           </span>
         </div>
       </Reveal>

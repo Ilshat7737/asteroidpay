@@ -48,7 +48,7 @@ function HeadsetIcon({ className }: { className?: string }) {
 const WHITE_LABEL_POINTS = [
   { Icon: GlobeIcon, title: "Custom domain", description: "Checkout and dashboard run on your own domain, not ours." },
   { Icon: PaletteIcon, title: "Your logo and colors", description: "Every screen your customers see carries your brand, throughout." },
-  { Icon: EyeOffIcon, title: "No third-party branding", description: "Your customers never see the word AsteroidPay." },
+  { Icon: EyeOffIcon, title: "No third-party branding", description: "Your customers never see the word Asteroid Pay." },
   { Icon: HeadsetIcon, title: "Dedicated support", description: "White-label accounts get their own support line." },
 ];
 
@@ -63,7 +63,7 @@ export function WhiteLabel() {
             Your brand at checkout, not ours.
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Merchants on our white-label plan run AsteroidPay entirely under their own identity —
+            Merchants on our white-label plan run Asteroid Pay entirely under their own identity —
             checkout, dashboard, and customer emails all carry your logo, your colors, your domain.
           </p>
         </Reveal>

@@ -27,26 +27,26 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://asteroidpay.io"),
   title: {
-    default: "AsteroidPay — Fast, Low-Fee Crypto Payments",
-    template: "%s · AsteroidPay",
+    default: "Asteroid Pay — Fast, Low-Fee Crypto Payments",
+    template: "%s · Asteroid Pay",
   },
   description:
-    "AsteroidPay is a crypto payment gateway with fees from 0.3%, automatic stablecoin conversion, and fast settlement across Bitcoin, Ethereum, Tron, and more.",
+    "Asteroid Pay is a crypto payment gateway with fees from 0.3%, automatic stablecoin conversion, and fast settlement across Bitcoin, Ethereum, Tron, and more.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "AsteroidPay — Fast, Low-Fee Crypto Payments",
+    title: "Asteroid Pay — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
     url: "/",
-    siteName: "AsteroidPay",
+    siteName: "Asteroid Pay",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AsteroidPay — Fast, Low-Fee Crypto Payments",
+    title: "Asteroid Pay — Fast, Low-Fee Crypto Payments",
     description:
       "Accept crypto payments across major networks with fees from 0.3%, automatic stablecoin conversion, and fast, reliable settlement.",
   },
@@ -60,11 +60,11 @@ export const metadata: Metadata = {
 const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "AsteroidPay",
+  name: "Asteroid Pay",
   url: "https://asteroidpay.io",
   logo: "https://asteroidpay.io/icon.png",
   description:
-    "AsteroidPay is a crypto payment gateway with fees from 0.3%, automatic stablecoin conversion, and fast settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
+    "Asteroid Pay is a crypto payment gateway with fees from 0.3%, automatic stablecoin conversion, and fast settlement across Bitcoin, Ethereum, Tron, BNB Smart Chain, Polygon, and Solana.",
 };
 
 export const viewport: Viewport = {

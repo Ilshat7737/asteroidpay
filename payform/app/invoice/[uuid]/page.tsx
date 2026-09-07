@@ -6,7 +6,7 @@ const DESCRIPTION = "Pay your invoice securely with crypto — scan the QR code 
 
 // Each invoice is a private, single-use transaction page, not marketing
 // content — description stays strictly about paying the invoice (no
-// AsteroidPay sales copy), and robots gets both a per-page noindex/nofollow
+// Asteroid Pay sales copy), and robots gets both a per-page noindex/nofollow
 // here and a blanket disallow in app/robots.ts, so it never surfaces in
 // search results regardless of which domain/host serves this route.
 export async function generateMetadata({

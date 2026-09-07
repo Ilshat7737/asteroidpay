@@ -49,7 +49,7 @@ export function RegisterModal() {
   };
 
   return (
-    <GlassModal open={activeModal === "register"} onOpenChange={handleOpenChange} title="Get the AsteroidPay Wallet">
+    <GlassModal open={activeModal === "register"} onOpenChange={handleOpenChange} title="Get the Asteroid Pay Wallet">
       {submitted ? (
         <div className="flex flex-col items-center gap-5 py-4 text-center">
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

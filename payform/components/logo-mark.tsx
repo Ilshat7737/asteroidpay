@@ -2,7 +2,7 @@
 // two independently-deployed apps still show the same brand mark. If the
 // mark ever changes, update both copies.
 //
-// The AsteroidPay emblem. Renders as a bare glyph with no background
+// The Asteroid Pay emblem. Renders as a bare glyph with no background
 // badge/frame. Uses only a single <path> with a solid fill (no gradients/
 // filters), so it renders identically via Tailwind in the browser and via
 // next/og's ImageResponse (satori) in app/icon.tsx, app/apple-icon.tsx, and

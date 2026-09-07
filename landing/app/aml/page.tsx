@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 export const metadata: Metadata = {
   title: "AML Policy",
   description:
-    "AsteroidPay's approach to anti-money laundering compliance, customer due diligence, and transaction monitoring.",
+    "Asteroid Pay's approach to anti-money laundering compliance, customer due diligence, and transaction monitoring.",
   alternates: { canonical: "/aml" },
   openGraph: { url: "/aml" },
 };
@@ -29,7 +29,7 @@ export default function AmlPage() {
                 1. Our Commitment
               </h2>
               <p className="mt-3 leading-relaxed">
-                AsteroidPay is committed to preventing the use of our platform for money laundering,
+                Asteroid Pay is committed to preventing the use of our platform for money laundering,
                 terrorist financing, or other financial crime. This Anti-Money Laundering (AML)
                 Policy outlines the principles and controls we apply to our merchants and
                 transactions.
@@ -87,7 +87,7 @@ export default function AmlPage() {
                 5. Transaction Monitoring
               </h2>
               <p className="mt-3 leading-relaxed">
-                Transactions processed through AsteroidPay are subject to ongoing automated and
+                Transactions processed through Asteroid Pay are subject to ongoing automated and
                 manual monitoring designed to detect patterns consistent with money laundering,
                 fraud, or other illicit activity, including unusually large, rapid, or structured
                 transactions. This includes blockchain transaction monitoring and on-chain

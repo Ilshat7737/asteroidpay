@@ -23,7 +23,7 @@ export default function OpengraphImage() {
         }}
       >
         <LogoMark size={96} />
-        <div style={{ fontSize: 48, fontWeight: 700 }}>AsteroidPay</div>
+        <div style={{ fontSize: 48, fontWeight: 700 }}>Asteroid Pay</div>
         <div style={{ fontSize: 28, color: "#9BA595" }}>Secure crypto payment</div>
       </div>
     ),

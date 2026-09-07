@@ -1,6 +1,6 @@
-# AsteroidPay Landing Site
+# Asteroid Pay Landing Site
 
-Marketing site for **AsteroidPay**, a crypto payment gateway for merchants accepting Bitcoin,
+Marketing site for **Asteroid Pay**, a crypto payment gateway for merchants accepting Bitcoin,
 Ethereum, and stablecoins across six networks. Single-page landing site with a hero, trust bar,
 services (payment gateway + supported networks), API, auto-convert explainer, white-label,
 testimonials, wallet, receive, send, convert, and a final CTA, plus three legal routes (`/terms`,

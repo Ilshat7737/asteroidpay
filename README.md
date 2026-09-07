@@ -1,4 +1,4 @@
-# AsteroidPay
+# Asteroid Pay
 
 This repository holds **two independent Next.js apps**, deployed separately on different
 subdomains:

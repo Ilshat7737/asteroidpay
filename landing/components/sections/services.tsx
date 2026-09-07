@@ -232,7 +232,7 @@ export function Services() {
           <div className="mx-auto flex w-full max-w-sm items-center justify-center lg:max-w-none">
             <Image
               src={invoiceImage}
-              alt="An AsteroidPay invoice, confirmed and ready to settle"
+              alt="An Asteroid Pay invoice, confirmed and ready to settle"
               className="h-auto w-full max-w-[320px]"
               priority={false}
             />

@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How AsteroidPay collects, uses, and protects your personal data across our website and payment services.",
+    "How Asteroid Pay collects, uses, and protects your personal data across our website and payment services.",
   alternates: { canonical: "/privacy" },
   openGraph: { url: "/privacy" },
 };

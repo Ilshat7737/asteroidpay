@@ -75,7 +75,7 @@ export function Hero() {
         <div className="hidden items-center justify-center lg:flex">
           <Image
             src={walletImage}
-            alt="An AsteroidPay wallet, ready to receive, send, and convert crypto"
+            alt="An Asteroid Pay wallet, ready to receive, send, and convert crypto"
             className="h-auto w-full max-w-[520px]"
             priority
           />

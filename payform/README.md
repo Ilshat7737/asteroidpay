@@ -1,6 +1,6 @@
-# AsteroidPay Payform
+# Asteroid Pay Payform
 
-The payment pages for **AsteroidPay** — where a payer actually sends crypto. Two routes:
+The payment pages for **Asteroid Pay** — where a payer actually sends crypto. Two routes:
 
 - **`/invoice/[uuid]`** — a fixed-amount invoice. The payer picks a currency and network (both
   searchable, server-filtered), gets an address + QR + amount to send, and the page polls until the
@@ -127,4 +127,4 @@ Every route is `noindex, nofollow, nocache` (both per-page metadata and a blanke
 `Disallow: /` in `robots.ts`) — these are private, single-use transaction pages, never meant to
 surface in search results. Meta description/OG/Twitter tags are set per-invoice (title "Pay
 Invoice", description about paying, no marketing copy), and the favicon/OG image reuse the same
-AsteroidPay mark as `landing/` (`components/logo-mark.tsx`, duplicated — see that file's comment).
+Asteroid Pay mark as `landing/` (`components/logo-mark.tsx`, duplicated — see that file's comment).

@@ -1,4 +1,4 @@
-// The final AsteroidPay emblem, supplied by the user as two flat SVGs, kept
+// The final Asteroid Pay emblem, supplied by the user as two flat SVGs, kept
 // as source references at components/images/originals/:
 // AsteroidPay-Emblem-W-V1.svg (white — used here, since every context this
 // renders in on this site has a dark background: navbar, footer, modals,

@@ -64,7 +64,7 @@ export function Wallet() {
             One wallet. Always on. Always ready.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            AsteroidPay Wallet is a hot wallet — always online, always accessible, built to hold
+            Asteroid Pay Wallet is a hot wallet — always online, always accessible, built to hold
             your funds centrally in one safe place until you&apos;re ready to use them. No cold
             storage, no seed phrases to guard, no hardware to plug in. Top up in any coin, on any
             network, and it&apos;s ready to spend, send, or convert the moment it lands.

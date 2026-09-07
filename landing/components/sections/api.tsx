@@ -70,7 +70,7 @@ export function Api() {
             One API for every network you accept.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Create a payment, get a webhook when it settles. AsteroidPay handles routing,
+            Create a payment, get a webhook when it settles. Asteroid Pay handles routing,
             conversion, and confirmations — your integration doesn&apos;t need to know which chain
             the customer used.
           </p>

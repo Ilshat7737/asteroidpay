@@ -42,7 +42,7 @@ const ITEMS: ActionItem[] = [
     visual: (
       <Image
         src={receiveImage}
-        alt="Receiving Bitcoin into an AsteroidPay wallet"
+        alt="Receiving Bitcoin into an Asteroid Pay wallet"
         className="h-auto w-full max-w-[336px]"
       />
     ),
@@ -56,7 +56,7 @@ const ITEMS: ActionItem[] = [
     visual: (
       <Image
         src={sendImage}
-        alt="Sending Bitcoin from an AsteroidPay wallet"
+        alt="Sending Bitcoin from an Asteroid Pay wallet"
         className="h-auto w-full max-w-[336px]"
       />
     ),

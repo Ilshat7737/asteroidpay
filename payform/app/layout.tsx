@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://payment.asteroidpay.io"),
   title: {
     default: "Pay Invoice",
-    template: "%s · AsteroidPay",
+    template: "%s · Asteroid Pay",
   },
   // Every route here is a private, single-use transaction page — default
   // to noindex at the root; each page also sets this explicitly itself.
