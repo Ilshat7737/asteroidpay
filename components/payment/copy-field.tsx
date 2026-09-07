@@ -3,7 +3,17 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
-export function CopyField({ label, value }: { label: string; value: string }) {
+export function CopyField({
+  label,
+  value,
+  displayValue,
+}: {
+  label: string;
+  value: string;
+  // What's shown in the box, e.g. a truncated contract address — the
+  // copy button always copies the full `value` regardless.
+  displayValue?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -21,7 +31,7 @@ export function CopyField({ label, value }: { label: string; value: string }) {
     <div className="rounded-xl bg-muted/40 px-4 py-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <div className="mt-1 flex items-start justify-between gap-3">
-        <p className="break-all font-mono text-sm text-foreground">{value}</p>
+        <p className="break-all font-mono text-sm text-foreground">{displayValue ?? value}</p>
         <button
           type="button"
           onClick={handleCopy}

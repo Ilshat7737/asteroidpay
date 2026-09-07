@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, Copy, HelpCircle, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { fetchConfirms, fetchPaymentInfo, PaymentApiError } from "@/lib/payment/api";
 import type { ConfirmsResult, PaymentInfo, PaymentInfoResult } from "@/lib/payment/types";
 import { MerchantHeader } from "./merchant-header";
@@ -11,6 +11,7 @@ import { Confirmations } from "./confirmations";
 import { CopyField } from "./copy-field";
 import { PaymentQrCode } from "./qr-code";
 import { MobileQrButton } from "./mobile-qr-button";
+import { ReceivedDetails } from "./received-details";
 
 const POLL_INTERVAL_MS = 15000;
 const SUCCESS_STATUSES = ["paid", "paid_over"];
@@ -21,10 +22,6 @@ function sameJson(a: unknown, b: unknown): boolean {
 
 function networkBadge(payment: PaymentInfo): string {
   return payment.token_standard ?? (payment.network ? payment.network.toUpperCase() : "");
-}
-
-function truncate(value: string, head = 10, tail = 8): string {
-  return value.length > head + tail + 1 ? `${value.slice(0, head)}…${value.slice(-tail)}` : value;
 }
 
 // A static wallet: network, currency, and address are fixed from creation
@@ -201,10 +198,11 @@ export function WalletFlow({ uuid }: { uuid: string }) {
             <CopyField label="Recipient's wallet address" value={payment.address ?? ""} />
             <MobileQrButton value={payment.address ?? ""} />
             {payment.contract_address && (
-              <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                Contract address {payment.contract_address.slice(0, 6)}…{payment.contract_address.slice(-4)}
-                <HelpCircle className="h-3.5 w-3.5" />
-              </p>
+              <CopyField
+                label="Contract address"
+                value={payment.contract_address}
+                displayValue={`${payment.contract_address.slice(0, 6)}…${payment.contract_address.slice(-4)}`}
+              />
             )}
           </div>
           <div className="hidden sm:block">
@@ -213,57 +211,5 @@ export function WalletFlow({ uuid }: { uuid: string }) {
         </div>
       </PaymentCard>
     </>
-  );
-}
-
-function ReceivedDetails({ payment }: { payment: PaymentInfo }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copyTxid() {
-    if (!payment.txid) return;
-    try {
-      await navigator.clipboard.writeText(payment.txid);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      // Clipboard unavailable — nothing sensible to fall back to.
-    }
-  }
-
-  return (
-    <div className="mt-4 w-full max-w-sm space-y-2 text-sm">
-      <div className="flex items-center justify-between rounded-lg bg-muted/40 px-3 py-2">
-        <span className="text-muted-foreground">Amount</span>
-        <span className="font-medium text-foreground">
-          {payment.payer_amount} {payment.payer_currency}
-        </span>
-      </div>
-      <div className="flex items-center justify-between gap-2 rounded-lg bg-muted/40 px-3 py-2">
-        <span className="text-muted-foreground">Tx hash</span>
-        <span className="flex items-center gap-1.5">
-          <span className="font-mono text-foreground">{payment.txid ? truncate(payment.txid) : "—"}</span>
-          {payment.txid && (
-            <button
-              type="button"
-              onClick={copyTxid}
-              aria-label="Copy transaction hash"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              {copied ? <Check className="h-3.5 w-3.5 text-accent" /> : <Copy className="h-3.5 w-3.5" />}
-            </button>
-          )}
-        </span>
-      </div>
-      {payment.tx_url && (
-        <a
-          href={payment.tx_url}
-          target="_blank"
-          rel="noreferrer"
-          className="block pt-2 text-center text-sm text-accent underline"
-        >
-          View on explorer
-        </a>
-      )}
-    </div>
   );
 }

@@ -20,6 +20,7 @@ import { PaymentCard } from "./payment-card";
 import { StatusScreen } from "./status-screen";
 import { Confirmations, ConfirmationsValue } from "./confirmations";
 import { MobileQrButton } from "./mobile-qr-button";
+import { ReceivedDetails } from "./received-details";
 
 const POLL_INTERVAL_MS = 15000;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -248,7 +249,9 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
               title="Payment is paid"
               message="You have successfully paid the invoice"
               action={payment.url_return ? { label: "Go back", href: payment.url_return } : undefined}
-            />
+            >
+              <ReceivedDetails payment={payment} />
+            </StatusScreen>
           </PaymentCard>
         </>
       );
@@ -326,10 +329,11 @@ export function PaymentFlow({ uuid }: { uuid: string }) {
                 <CopyField label="Amount" value={`${payment.payer_amount} ${payment.payer_currency}`} />
                 <MobileQrButton value={payment.address ?? ""} />
                 {payment.contract_address && (
-                  <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                    Contract address {payment.contract_address.slice(0, 6)}…{payment.contract_address.slice(-4)}
-                    <HelpCircle className="h-3.5 w-3.5" />
-                  </p>
+                  <CopyField
+                    label="Contract address"
+                    value={payment.contract_address}
+                    displayValue={`${payment.contract_address.slice(0, 6)}…${payment.contract_address.slice(-4)}`}
+                  />
                 )}
               </div>
               <div className="hidden sm:block">

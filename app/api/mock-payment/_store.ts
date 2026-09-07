@@ -218,6 +218,11 @@ export function tick(uuid: string): MockInvoice {
   if (invoice.confirms >= invoice.need_confirms) {
     invoice.status = "paid";
     invoice.is_final = true;
+    if (!invoice.txid && invoice.network) {
+      invoice.txid = fakeTxid(invoice.network);
+      invoice.from = fakeFromAddress(invoice.network);
+      invoice.tx_url = TX_EXPLORER[invoice.network]?.(invoice.txid) ?? null;
+    }
   }
   return invoice;
 }
